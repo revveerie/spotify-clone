@@ -151,7 +151,7 @@ module.exports = {
                 use: ['file-loader']
             },
             {
-                test: /\.(ttf|woff|woff2|eot)$/,
+                test: /\.(ttf|woff|woff2|eot|otf)$/,
                 use: ['file-loader']
             },
             {

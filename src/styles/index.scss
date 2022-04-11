@@ -14,4 +14,15 @@
   text-align: center;
 }
 
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
 // FILES
+@import './components/Login.scss';
