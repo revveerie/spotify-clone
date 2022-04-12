@@ -7,7 +7,7 @@ import Login from "./Login.jsx";
 
 const App = () => {
   const CLIENT_ID = "4d09e811e32a40f392771a0e479839d5";
-  const REDIRECT_URI = "http://localhost:8888";
+  const REDIRECT_URI = "http://localhost:8888/";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
   const SPACE_DELIMITER = "%20";
@@ -88,10 +88,10 @@ const App = () => {
     <>
       {!token ? (
         <Login
-          CLIENT_ID="4d09e811e32a40f392771a0e479839d5"
-          REDIRECT_URI="http://localhost:8888/"
-          AUTH_ENDPOINT="https://accounts.spotify.com/authorize"
-          RESPONSE_TYPE="token"
+          CLIENT_ID={CLIENT_ID}
+          REDIRECT_URI={REDIRECT_URI}
+          AUTH_ENDPOINT={AUTH_ENDPOINT}
+          RESPONSE_TYPE={RESPONSE_TYPE}
           SCOPES_URL_PARAM={SCOPES_URL_PARAM}
         />
       ) : (
