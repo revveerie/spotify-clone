@@ -24,5 +24,16 @@
   height: 100%;
 }
 
+.page {
+  margin: 0 0 0 100px;
+  padding: 15px;
+  background: #1a1a1a;
+  height: 100%;
+}
+
 // FILES
 @import './components/Login.scss';
+@import './components/Sidebar.scss';
+@import './components/Profile.scss';
+@import './components/SidebarItem.scss';
+@import './components/Icon.scss';

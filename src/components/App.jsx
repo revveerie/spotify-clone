@@ -3,7 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
 import Homepage from "./Homepage.jsx";
+import Browse from "./Browse.jsx";
+import MyMusic from "./MyMusic.jsx";
+import Profile from "./Profile.jsx";
 import Login from "./Login.jsx";
+import Sidebar from "./Sidebar.jsx";
 
 const App = () => {
   const CLIENT_ID = "4d09e811e32a40f392771a0e479839d5";
@@ -38,6 +42,8 @@ const App = () => {
   const [token, setToken] = useState("");
   const [currentUser, setCurrentUser] = useState("");
 
+  let cleanupFunction = false;
+
   const getToken = () => {
     let urlParams = new URLSearchParams(window.location.hash.replace("#", "?"));
     let token = urlParams.get("access_token");
@@ -46,7 +52,6 @@ const App = () => {
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
-
     getToken();
 
     if (!token && hash) {
@@ -58,25 +63,29 @@ const App = () => {
 
       window.location.hash = "";
       window.localStorage.setItem("token", token);
-
-      axios(CURRENT_USER_ENDPOINT, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((currentUserResponse) => {
-          console.log(currentUserResponse.data);
-          setCurrentUser(currentUserResponse.data);
-        })
-
-        .catch((error) => console.log(error));
     }
 
+    axios(CURRENT_USER_ENDPOINT, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((currentUserResponse) => {
+        console.log(currentUserResponse.data);
+        if(!cleanupFunction)
+          setCurrentUser(currentUserResponse.data);
+      })
+
+      .catch((error) => console.log(error));
+      
     setToken(token);
-    
+
+    return () => cleanupFunction = true;
+
+
   }, []);
 
   const logout = () => {
@@ -95,7 +104,18 @@ const App = () => {
           SCOPES_URL_PARAM={SCOPES_URL_PARAM}
         />
       ) : (
-        <Homepage logout={logout} />
+        <>
+          <Sidebar
+            profile={currentUser.images}
+          />
+            <Routes>
+                <Route path='/' element={<Homepage logout={logout} />} />
+                <Route path='/browse' element={<Browse />} />
+                <Route path='/my-music' element={<MyMusic />} />
+                <Route path='/profile' element={<Profile />} />
+            </Routes>
+        </>
+        
       )}
     </>
   );

@@ -3,10 +3,10 @@ import React from "react";
 const Homepage = ({logout}) => {
   return (
     <>
-      <div className="homepage">
-        Homepage
+      <div className="homepage page">
+        <p>Homepage</p>
+        <button onClick={logout}>Logout</button>
       </div>
-      <button onClick={logout}>Logout</button>
     </>
   )
 };

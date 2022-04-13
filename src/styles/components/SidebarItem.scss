@@ -1,0 +1,36 @@
+.navigation {
+    &__link {
+        display: block;
+        position: relative;
+        height: 25px;
+        &:not(:last-child) {
+            margin: 0 0 40px 0;
+        }
+        &.current {
+            .icon__image-active {
+                opacity: 1;
+                visibility: visible;
+                z-index: 2;
+            }
+
+            .icon__image {
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1;
+            }
+        }
+        &.inactive {
+            .icon__image {
+                opacity: 1;
+                visibility: visible;
+                z-index: 2;
+            }
+
+            .icon__image-active {
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1;
+            }
+        }
+    }
+}
