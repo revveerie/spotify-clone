@@ -1,11 +1,10 @@
 import React from "react";
 
-const Homepage = ({logout}) => {
+const Homepage = () => {
   return (
     <>
       <div className="homepage page">
         <p>Homepage</p>
-        <button onClick={logout}>Logout</button>
       </div>
     </>
   )

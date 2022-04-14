@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-import Homepage from "./Homepage.jsx";
-import Browse from "./Browse.jsx";
-import MyMusic from "./MyMusic.jsx";
-import Profile from "./Profile.jsx";
+import Homepage from "./pages/Homepage.jsx";
+import Browse from "./pages/Browse.jsx";
+import MyMusic from "./pages/MyMusic.jsx";
+import Profile from "./pages/Profile.jsx";
+import Artists from "./pages/Artists.jsx";
+import Albums from "./pages/Albums.jsx";
+import Songs from "./pages/Songs.jsx";
+import Playlists from "./pages/Playlists.jsx";
 import Login from "./Login.jsx";
-import Sidebar from "./Sidebar.jsx";
+import Sidebar from "./menu/Sidebar.jsx";
 
 const App = () => {
   const CLIENT_ID = "4d09e811e32a40f392771a0e479839d5";
@@ -75,17 +79,14 @@ const App = () => {
     })
       .then((currentUserResponse) => {
         console.log(currentUserResponse.data);
-        if(!cleanupFunction)
-          setCurrentUser(currentUserResponse.data);
+        if (!cleanupFunction) setCurrentUser(currentUserResponse.data);
       })
 
       .catch((error) => console.log(error));
-      
+
     setToken(token);
 
-    return () => cleanupFunction = true;
-
-
+    return () => (cleanupFunction = true);
   }, []);
 
   const logout = () => {
@@ -105,17 +106,18 @@ const App = () => {
         />
       ) : (
         <>
-          <Sidebar
-            profile={currentUser.images}
-          />
-            <Routes>
-                <Route path='/' element={<Homepage logout={logout} />} />
-                <Route path='/browse' element={<Browse />} />
-                <Route path='/my-music' element={<MyMusic />} />
-                <Route path='/profile' element={<Profile />} />
-            </Routes>
+          <Sidebar profile={currentUser.images} logout={logout} />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/browse" element={<Browse />} />
+            <Route path="/my-music" element={<MyMusic />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/artists" element={<Artists />} />
+            <Route path="/albums" element={<Albums />} />
+            <Route path="/songs" element={<Songs />} />
+            <Route path="/playlists" element={<Playlists />} />
+          </Routes>
         </>
-        
       )}
     </>
   );

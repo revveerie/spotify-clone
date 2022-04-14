@@ -1,0 +1,61 @@
+.dropdown {
+  &__submenu-item {
+    &:not(:last-child) {
+      margin: 0 0 15px 0;
+    }
+  }
+
+  &__link-icon {
+    height: 18px;
+    position: absolute;
+    left: 10px;
+    bottom: 2px;
+  }
+
+  &__link_lvl-2 {
+    font-family: "Orkney", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: $light-grey;
+    opacity: 0.7;
+    transition: 400ms;
+    display: flex;
+    align-items: center;
+    height: 18px;
+    position: relative;
+    padding: 0 0 0 40px;
+
+    &:hover {
+      opacity: 1;
+      color: $main-green;
+
+      .icon__image {
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+      }
+
+      .icon__image-active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 2;
+      }
+    }
+
+    &.current {
+      color: $main-green;
+      opacity: 1;
+      .icon__image {
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+      }
+
+      .icon__image-active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 2;
+      }
+    }
+  }
+}

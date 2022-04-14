@@ -5,6 +5,8 @@
     left: 0;
     top: 0;
     background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
     
     &__profile {
         margin: 50px auto 0;

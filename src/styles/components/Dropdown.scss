@@ -1,0 +1,32 @@
+.dropdown {
+  left: 100px;
+  top: 0;
+  background: #1d1d1d48;
+  height: 100%;
+  width: 250px;
+  position: absolute;
+  backdrop-filter: blur(5px);
+  display: block;
+  
+  &__button {
+    position: absolute;
+    left: 20px;
+    top: 80px;
+
+    p {
+      cursor: pointer;
+      transition: 400ms;
+    }
+  }
+  &__menu {
+    position: absolute;
+    left: 20px;
+    top: 228px;
+  }
+
+  &__submenu {
+    position: absolute;
+    left: 20px;
+    top: 395px;
+  }
+}
