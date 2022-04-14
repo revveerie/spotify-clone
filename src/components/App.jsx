@@ -10,6 +10,7 @@ import Artists from "./pages/Artists.jsx";
 import Albums from "./pages/Albums.jsx";
 import Songs from "./pages/Songs.jsx";
 import Playlists from "./pages/Playlists.jsx";
+import NewPlaylist from "./pages/NewPlaylist.jsx";
 import Login from "./Login.jsx";
 import Sidebar from "./menu/Sidebar.jsx";
 
@@ -116,6 +117,7 @@ const App = () => {
             <Route path="/albums" element={<Albums />} />
             <Route path="/songs" element={<Songs />} />
             <Route path="/playlists" element={<Playlists />} />
+            <Route path="/new-playlist" element={<NewPlaylist />} />
           </Routes>
         </>
       )}

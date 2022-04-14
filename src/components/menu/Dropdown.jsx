@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import DropdownMenuItem from "./DropdownMenuItem.jsx";
 import DropdownSubmenuItem from "./DropdownSubmenuItem.jsx";
@@ -27,10 +28,31 @@ const Dropdown = ({ logout }) => {
           <DropdownMenuItem path="/my-music" name="My music" />
         </div>
         <div className="dropdown__submenu">
-          <DropdownSubmenuItem path="/artists" name="Artists" image={Artist} imageActive={ArtistActive} />
-          <DropdownSubmenuItem path="/albums" name="Albums" image={Album} imageActive={AlbumActive} />
+          <DropdownSubmenuItem
+            path="/artists"
+            name="Artists"
+            image={Artist}
+            imageActive={ArtistActive}
+          />
+          <DropdownSubmenuItem
+            path="/albums"
+            name="Albums"
+            image={Album}
+            imageActive={AlbumActive}
+          />
           <DropdownSubmenuItem path="/songs" name="Songs" image={Song} imageActive={SongActive} />
-          <DropdownSubmenuItem path="/playlists" name="Playlists" image={Playlist} imageActive={PlaylistActive} />
+          <DropdownSubmenuItem
+            path="/playlists"
+            name="Playlists"
+            image={Playlist}
+            imageActive={PlaylistActive}
+          />
+        </div>
+        <div className="dropdown__button">
+          <NavLink to="/new-playlist">
+            <p className="dropdown__link_lvl-1">New playlist</p>
+          </NavLink>
+          
         </div>
       </div>
     </>
