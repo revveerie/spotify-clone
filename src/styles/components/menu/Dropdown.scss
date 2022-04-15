@@ -1,28 +1,25 @@
 .dropdown {
+  display: block;
+  position: absolute;
   left: 100px;
   top: 0;
-  background: #1d1d1d48;
   height: 100%;
   width: 230px;
-  position: absolute;
+  background: #1d1d1d48;
   backdrop-filter: blur(5px);
-  display: block;
-  
+
   &__button {
     position: absolute;
     left: 20px;
     top: 80px;
+    cursor: pointer;
 
-    p {
-      cursor: pointer;
-      transition: 400ms;
-    }
-    
     &:last-child {
       top: auto;
-      bottom: 40px;
+      bottom: 15px;
     }
   }
+
   &__menu {
     position: absolute;
     left: 20px;
@@ -32,6 +29,6 @@
   &__submenu {
     position: absolute;
     left: 20px;
-    top: 395px;
+    top: 400px;
   }
 }

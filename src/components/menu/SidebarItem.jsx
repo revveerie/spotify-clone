@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import Icon from "../Icon.jsx";
 
-const SidebarItem = ({ image, imageActive, path }) => {
+const SidebarItem = ({ image, imageActive, path, dropdown, name }) => {
   return (
     <>
       <NavLink
@@ -13,6 +13,11 @@ const SidebarItem = ({ image, imageActive, path }) => {
         to={path}
       >
         <Icon image={image} imageActive={imageActive} />
+        {dropdown && (
+          <div className="dropdown__menu-item dropdown__link_lvl-1">
+            {name}
+          </div>
+        )}
       </NavLink>
     </>
   );

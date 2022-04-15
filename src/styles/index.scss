@@ -33,10 +33,9 @@
 
 // FILES
 @import './components/Login.scss';
-@import './components/Sidebar.scss';
-@import './components/ProfileIcon.scss';
-@import './components/SidebarItem.scss';
 @import './components/Icon.scss';
-@import './components/Dropdown.scss';
-@import './components/DropdownMenuItem.scss';
-@import './components/DropdownSubmenuItem.scss';
+@import './components/ProfileIcon.scss';
+@import './components/menu/Sidebar.scss';
+@import './components/menu/SidebarItem.scss';
+@import './components/menu/Dropdown.scss';
+@import './components/menu/DropdownSubmenuItem.scss';

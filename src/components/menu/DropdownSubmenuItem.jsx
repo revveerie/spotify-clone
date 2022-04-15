@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavLink } from "react-router-dom";
 
-import Icon from "../Icon.jsx"
+import Icon from "../Icon.jsx";
 
 const DropdownSubmenuItem = ({ path, name, image, imageActive }) => {
   return (

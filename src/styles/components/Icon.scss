@@ -1,38 +1,36 @@
 .icon {
-    &__image {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, 0);
-        height: 100%;
-        opacity: 1;
-        visibility: visible;
-        z-index: 2;
-        transition: 400ms;
-    }
-    &__image-active {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, 0);
-        height: 100%;
-        opacity: 0;
-        visibility: hidden;
-        z-index: 1;
-        transition: 400ms;
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 100%;
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+  &__image-active {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  &:hover {
+    .icon__image {
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1;
     }
 
-    &:hover {
-        .icon__image {
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1;
-        }
-        
-        .icon__image-active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 2;
-        }
+    .icon__image-active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
     }
+  }
 }

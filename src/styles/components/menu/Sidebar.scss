@@ -1,39 +1,41 @@
 .sidebar {
-  position: fixed;
-  width: 100px;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: #1e1e1e;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  background: #1e1e1e;
 
   &__profile {
     margin: 50px auto 0;
     width: 70px;
   }
 
-  &__navigation-wrapper {
+  &__navigation {
     margin: 100px 0 0 0;
   }
 
   &__add-playlist {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     margin: 0 0 25px 0;
+    position: relative;
+    height: 100%;
   }
 
   &__add-playlist-button {
-    height: 50px;
-    width: 50px;
-    border: 1px solid $dark-grey;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid $dark-grey;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
     cursor: pointer;
+
     &:hover {
       .icon__image {
         opacity: 0;
@@ -46,16 +48,23 @@
         visibility: visible;
         z-index: 2;
       }
+
+      .dropdown__link_lvl-1 {
+        color: $main-green;
+      }
     }
   }
 
   &__add-playlist-button-icon {
-    height: 25px;
     position: relative;
+    height: 25px;
   }
-}
 
-.isDisabled {
-  pointer-events: none;
-   cursor: default;
+  .dropdown__menu-item {
+    position: absolute;
+    left: 120px;
+    width: 100%;
+    z-index: 5;
+    white-space: nowrap;
+  }
 }

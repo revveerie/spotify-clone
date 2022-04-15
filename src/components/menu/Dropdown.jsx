@@ -1,7 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
-import DropdownMenuItem from "./DropdownMenuItem.jsx";
 import DropdownSubmenuItem from "./DropdownSubmenuItem.jsx";
 
 import Artist from "../../assets/icons/avatar-lg.png";
@@ -22,11 +20,6 @@ const Dropdown = ({ logout }) => {
             Log out
           </p>
         </div>
-        <div className="dropdown__menu">
-          <DropdownMenuItem path="/" name="Home" />
-          <DropdownMenuItem path="/browse" name="Browse" />
-          <DropdownMenuItem path="/my-music" name="My music" />
-        </div>
         <div className="dropdown__submenu">
           <DropdownSubmenuItem
             path="/artists"
@@ -40,19 +33,18 @@ const Dropdown = ({ logout }) => {
             image={Album}
             imageActive={AlbumActive}
           />
-          <DropdownSubmenuItem path="/songs" name="Songs" image={Song} imageActive={SongActive} />
+          <DropdownSubmenuItem 
+            path="/songs" 
+            name="Songs" 
+            image={Song} 
+            imageActive={SongActive} 
+          />
           <DropdownSubmenuItem
             path="/playlists"
             name="Playlists"
             image={Playlist}
             imageActive={PlaylistActive}
           />
-        </div>
-        <div className="dropdown__button">
-          <NavLink to="/new-playlist">
-            <p className="dropdown__link_lvl-1">New playlist</p>
-          </NavLink>
-          
         </div>
       </div>
     </>

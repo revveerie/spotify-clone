@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import ProfileIcon from "../ProfileIcon.jsx";
@@ -26,21 +26,21 @@ const Sidebar = ({ profile, logout }) => {
     }
   };
 
-  const onMouseEnter= () => {
+  const onMouseEnter = () => {
     if (window.innerWidth < 768) {
       setDropdown(false);
     } else {
       setDropdown(true);
     }
-  }
+  };
 
-  const onMouseLeave= () => {
+  const onMouseLeave = () => {
     if (window.innerWidth < 768) {
       setDropdown(false);
     } else {
       setDropdown(false);
     }
-  }
+  };
 
   return (
     <>
@@ -50,25 +50,42 @@ const Sidebar = ({ profile, logout }) => {
             <ProfileIcon profile={getPhoto()} />
           </NavLink>
         </div>
-        <div className="sidebar__navigation-wrapper">
-          <nav className="sidebar__navigation navigation">
-            <SidebarItem path="/" image={HomeImg} imageActive={HomeImgActive} />
-            <SidebarItem path="/browse" image={BrowseImg} imageActive={BrowseImgActive} />
-            <SidebarItem path="/my-music" image={MyMusicImg} imageActive={MyMusicImgActive} />
-          </nav>
-        </div>
-        {dropdown && 
+        <nav className="sidebar__navigation navigation">
+          <SidebarItem
+            path="/"
+            image={HomeImg}
+            imageActive={HomeImgActive}
+            dropdown={dropdown}
+            name="Home"
+          />
+          <SidebarItem
+            path="/browse"
+            image={BrowseImg}
+            imageActive={BrowseImgActive}
+            dropdown={dropdown}
+            name="Browse"
+          />
+          <SidebarItem
+            path="/my-music"
+            image={MyMusicImg}
+            imageActive={MyMusicImgActive}
+            dropdown={dropdown}
+            name="My music"
+          />
+        </nav>
+        {dropdown && (
           <div className="sidebar__add-playlist">
-            <div className="sidebar__add-playlist-button">
-              <NavLink to="/new-playlist">
-                <div className="sidebar__add-playlist-button-icon">
-                  <Icon image={Plus} imageActive={PlusActive}/>
-                </div>
-              </NavLink>
-            </div>
+            <NavLink to="/new-playlist" className="sidebar__add-playlist-button">
+              <div className="sidebar__add-playlist-button-icon">
+                <Icon image={Plus} imageActive={PlusActive} />
+              </div>
+              <div className="dropdown__button dropdown__menu-item dropdown__link_lvl-1">
+                New playlist
+              </div>
+            </NavLink>
           </div>
-        }
-        
+        )}
+
         {dropdown && <Dropdown logout={logout} />}
       </div>
     </>
