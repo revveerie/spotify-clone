@@ -1,0 +1,21 @@
+.releases {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 40px 0;
+  }
+
+  &__title {
+    cursor: default;
+  }
+
+  &__title-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 14px;
+    font-weight: 400;
+    color: $light-grey;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+}

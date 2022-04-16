@@ -1,0 +1,70 @@
+.releases {
+  .slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slick-slider {
+    &.hidden {
+      z-index: -1;
+    }
+  }
+
+  .slick-arrow {
+    top: -56px;
+    position: absolute;
+    display: block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid $dark-grey;
+    z-index: 1000;
+    border-radius: 50%;
+  }
+
+  .slick-prev {
+    left: 160px;
+    z-index: 10;
+
+    &::before {
+      content: "";
+      width: 15px;
+      height: 15px;
+      background-image: url(../assets/icons/left-lg.png);
+      background-size: contain;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-55%, -50%);
+    }
+
+    &:hover {
+      &::before {
+        background-image: url(../assets/icons/left-gr.png);
+      }
+    }
+  }
+
+  .slick-next {
+    left: 210px;
+    
+    &::before {
+      content: "";
+      width: 15px;
+      height: 15px;
+      background-image: url(../assets/icons/right-lg.png);
+      background-size: contain;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-45%, -50%);
+    }
+    
+    &:hover {
+      &::before {
+        background-image: url(../assets/icons/right-gr.png);
+      }
+    }
+  }
+}

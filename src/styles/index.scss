@@ -8,6 +8,10 @@
 
 // INITIAL
 
+body {
+  background: #1a1a1a;
+}
+
 .container {
   margin: 0 auto;
   width: 80%;
@@ -26,8 +30,7 @@
 
 .page {
   margin: 0 0 0 100px;
-  padding: 15px;
-  background: #1a1a1a;
+  padding: 25px;
   height: 100%;
 }
 
@@ -35,7 +38,11 @@
 @import './components/Login.scss';
 @import './components/Icon.scss';
 @import './components/ProfileIcon.scss';
+@import './components/ShowMore.scss';
 @import './components/menu/Sidebar.scss';
 @import './components/menu/SidebarItem.scss';
 @import './components/menu/Dropdown.scss';
 @import './components/menu/DropdownSubmenuItem.scss';
+@import './components/Releases.scss';
+@import './components/ReleasesCard.scss';
+@import './components/Explore.scss';

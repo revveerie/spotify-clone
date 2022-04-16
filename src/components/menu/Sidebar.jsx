@@ -6,39 +6,23 @@ import SidebarItem from "./SidebarItem.jsx";
 import Dropdown from "./Dropdown.jsx";
 import Icon from "../Icon.jsx";
 
-import HomeImg from "../../assets/icons/home-dg.png";
-import HomeImgActive from "../../assets/icons/home-lg.png";
-import BrowseImg from "../../assets/icons/vynil-dg.png";
-import BrowseImgActive from "../../assets/icons/vynil-lg.png";
+import SearchImg from "../../assets/icons/search-dg.png";
+import SearchImgActive from "../../assets/icons/search-lg.png";
+import ExploreImg from "../../assets/icons/direction-dg.png";
+import ExploreImgActive from "../../assets/icons/direction-lg.png";
 import MyMusicImg from "../../assets/icons/music-dg.png";
 import MyMusicImgActive from "../../assets/icons/music-lg.png";
 import Plus from "../../assets/icons/plus-lg.png";
 import PlusActive from "../../assets/icons/plus-gr.png";
 
-const Sidebar = ({ profile, logout }) => {
-  const [dropdown, setDropdown] = useState(false);
+const Sidebar = ({ profile, logout, onMouseEnter, onMouseLeave, dropdown }) => {
+  // const [dropdown, setDropdown] = useState(false);
 
   const getPhoto = () => {
     for (let key in profile) {
       for (let innerKey in profile[key]) {
         return profile[key]["url"];
       }
-    }
-  };
-
-  const onMouseEnter = () => {
-    if (window.innerWidth < 768) {
-      setDropdown(false);
-    } else {
-      setDropdown(true);
-    }
-  };
-
-  const onMouseLeave = () => {
-    if (window.innerWidth < 768) {
-      setDropdown(false);
-    } else {
-      setDropdown(false);
     }
   };
 
@@ -53,17 +37,17 @@ const Sidebar = ({ profile, logout }) => {
         <nav className="sidebar__navigation navigation">
           <SidebarItem
             path="/"
-            image={HomeImg}
-            imageActive={HomeImgActive}
+            image={ExploreImg}
+            imageActive={ExploreImgActive}
             dropdown={dropdown}
-            name="Home"
+            name="Explore"
           />
           <SidebarItem
             path="/browse"
-            image={BrowseImg}
-            imageActive={BrowseImgActive}
+            image={SearchImg}
+            imageActive={SearchImgActive}
             dropdown={dropdown}
-            name="Browse"
+            name="Search"
           />
           <SidebarItem
             path="/my-music"

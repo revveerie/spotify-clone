@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-import Homepage from "./pages/Homepage.jsx";
+import Explore from "./pages/Explore.jsx";
 import Browse from "./pages/Browse.jsx";
 import MyMusic from "./pages/MyMusic.jsx";
 import Profile from "./pages/Profile.jsx";
 import Artists from "./pages/Artists.jsx";
 import Albums from "./pages/Albums.jsx";
+import Album from "./pages/Album.jsx";
 import Songs from "./pages/Songs.jsx";
 import Playlists from "./pages/Playlists.jsx";
 import NewPlaylist from "./pages/NewPlaylist.jsx";
+import Artist from "./pages/Artist.jsx";
 import Login from "./Login.jsx";
 import Sidebar from "./menu/Sidebar.jsx";
 
@@ -79,7 +81,6 @@ const App = () => {
       },
     })
       .then((currentUserResponse) => {
-        console.log(currentUserResponse.data);
         if (!cleanupFunction) setCurrentUser(currentUserResponse.data);
       })
 
@@ -95,6 +96,32 @@ const App = () => {
     window.localStorage.removeItem("token");
   };
 
+  const [dropdown, setDropdown] = useState(false);
+
+  const getPhoto = () => {
+    for (let key in profile) {
+      for (let innerKey in profile[key]) {
+        return profile[key]["url"];
+      }
+    }
+  };
+
+  const onMouseEnter = () => {
+    if (window.innerWidth < 768) {
+      setDropdown(false);
+    } else {
+      setDropdown(true);
+    }
+  };
+
+  const onMouseLeave = () => {
+    if (window.innerWidth < 768) {
+      setDropdown(false);
+    } else {
+      setDropdown(false);
+    }
+  };
+
   return (
     <>
       {!token ? (
@@ -107,17 +134,19 @@ const App = () => {
         />
       ) : (
         <>
-          <Sidebar profile={currentUser.images} logout={logout} />
+          <Sidebar profile={currentUser.images} logout={logout} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} dropdown={dropdown} />
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<Explore dropdown={dropdown} />} />
             <Route path="/browse" element={<Browse />} />
             <Route path="/my-music" element={<MyMusic />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/artists" element={<Artists />} />
             <Route path="/albums" element={<Albums />} />
+            <Route path="/album" element={<Album />} />
             <Route path="/songs" element={<Songs />} />
             <Route path="/playlists" element={<Playlists />} />
             <Route path="/new-playlist" element={<NewPlaylist />} />
+            <Route path="/artist" element={<Artist />} />
           </Routes>
         </>
       )}
