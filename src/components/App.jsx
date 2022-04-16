@@ -107,7 +107,7 @@ const App = () => {
   };
 
   const onMouseEnter = () => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       setDropdown(false);
     } else {
       setDropdown(true);
@@ -115,7 +115,7 @@ const App = () => {
   };
 
   const onMouseLeave = () => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       setDropdown(false);
     } else {
       setDropdown(false);

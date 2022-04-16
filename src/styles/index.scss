@@ -32,6 +32,9 @@ body {
   margin: 0 0 0 100px;
   padding: 25px;
   height: 100%;
+  @media(max-width: 1024px) {
+    margin: 0;
+  }
 }
 
 // FILES
