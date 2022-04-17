@@ -25,20 +25,6 @@
   &__profile {
     margin: 50px auto 0;
     width: 70px;
-
-    @media(max-width: 1024px) {
-      margin: auto 0 auto 20px;
-      width: 50px;
-    }
-
-    @media(max-width: 480px) {
-      width: 35px;
-      margin: auto 45px auto 0;
-    }
-
-    @media(max-width: 320px) {
-      margin: auto 30px auto 0;
-    }
   }
 
   &__navigation {
@@ -106,6 +92,13 @@
     height: 25px;
   }
 
+  .dropdown__button_logout {
+    position: absolute;
+    left: 20px;
+    top: 80px;
+    cursor: pointer;
+  }
+
   .dropdown__menu-item {
     position: absolute;
     left: 120px;
@@ -114,4 +107,5 @@
     white-space: nowrap;
     z-index: 10000;
   }
+
 }

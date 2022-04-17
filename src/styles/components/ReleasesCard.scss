@@ -2,6 +2,7 @@
   &__card {
     margin: 0 15px 0;
     background: #1d1d1d;
+
     @media (max-width: 480px) {
       margin: 0 10px 0;
     }
@@ -68,6 +69,7 @@
 
   &__name {
     margin: 0 0 8px 0;
+
     @media (max-width: 480px) {
       margin: 0 0 5px 0;
     }
@@ -148,7 +150,7 @@
       background: $dark-grey;
       border-radius: 50%;
     }
-    
+
     @media (max-width: 480px) {
       display: none;
     }
@@ -161,7 +163,7 @@
     color: $dark-grey;
     text-transform: capitalize;
 
-    @media (max-width: 102a4px) {
+    @media (max-width: 1024px) {
       font-size: 10px;
     }
   }

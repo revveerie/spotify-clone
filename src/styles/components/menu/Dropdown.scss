@@ -9,18 +9,6 @@
   backdrop-filter: blur(15px);
   z-index: 1000;
 
-  &__button {
-    position: absolute;
-    left: 20px;
-    top: 80px;
-    cursor: pointer;
-
-    &:last-child {
-      top: auto;
-      bottom: 15px;
-    }
-  }
-
   &__menu {
     position: absolute;
     left: 20px;

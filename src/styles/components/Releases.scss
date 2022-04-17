@@ -17,7 +17,8 @@
     border: 1px solid $dark-grey;
     z-index: 1000;
     border-radius: 50%;
-    @media (max-width: 768px) {
+
+    @media (max-width: 1024px) {
       top: -40px;
     }
   }
@@ -44,7 +45,7 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       left: auto;
       right: 55px;
     }
@@ -71,14 +72,14 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       left: auto;
       right: 0;
     }
   }
 
   .show-more__button {
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       position: absolute;
       top: 110%;
       left: 50%;

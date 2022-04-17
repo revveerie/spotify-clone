@@ -15,11 +15,6 @@ const Dropdown = ({ logout }) => {
   return (
     <>
       <div className="dropdown">
-        <div className="dropdown__button">
-          <p className="dropdown__link_lvl-1" onClick={logout}>
-            Log out
-          </p>
-        </div>
         <div className="dropdown__submenu">
           <DropdownSubmenuItem
             path="/artists"

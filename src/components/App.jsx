@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import Explore from "./pages/Explore.jsx";
@@ -16,6 +16,11 @@ import NewReleases from "./pages/NewReleases.jsx";
 import Artist from "./pages/Artist.jsx";
 import Login from "./Login.jsx";
 import Sidebar from "./menu/Sidebar.jsx";
+import ProfileIcon from "./ProfileIcon.jsx";
+import Icon from "./Icon.jsx";
+
+import ExitImg from "../assets/icons/exit-lg.png";
+import ExitImgActive from "../assets/icons/exit-gr.png";
 
 const App = () => {
   const CLIENT_ID = "4d09e811e32a40f392771a0e479839d5";
@@ -49,6 +54,8 @@ const App = () => {
 
   const [token, setToken] = useState("");
   const [currentUser, setCurrentUser] = useState("");
+  const [showProfile, setShowProfile] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
 
   let cleanupFunction = false;
 
@@ -89,6 +96,12 @@ const App = () => {
 
     setToken(token);
 
+    checkWidth();
+
+    window.addEventListener("resize", function () {
+      checkWidth();
+    });
+
     return () => (cleanupFunction = true);
   }, []);
 
@@ -97,14 +110,8 @@ const App = () => {
     window.localStorage.removeItem("token");
   };
 
-  const [dropdown, setDropdown] = useState(false);
-
-  const getPhoto = () => {
-    for (let key in profile) {
-      for (let innerKey in profile[key]) {
-        return profile[key]["url"];
-      }
-    }
+  const checkWidth = () => {
+    window.innerWidth <= 1024 ? setShowProfile(true) : setShowProfile(false);
   };
 
   const onMouseEnter = () => {
@@ -123,6 +130,14 @@ const App = () => {
     }
   };
 
+  const getPhoto = () => {
+    for (let key in currentUser.images) {
+      for (let innerKey in currentUser.images[key]) {
+        return currentUser.images[key]["url"];
+      }
+    }
+  };
+
   return (
     <>
       {!token ? (
@@ -135,7 +150,25 @@ const App = () => {
         />
       ) : (
         <>
-          <Sidebar profile={currentUser.images} logout={logout} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} dropdown={dropdown} />
+          <Sidebar
+            profile={currentUser.images}
+            logout={logout}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            dropdown={dropdown}
+          />
+          {showProfile ? (
+            <div className="page__top">
+              <NavLink to="/profile">
+                <ProfileIcon profile={getPhoto()} />
+              </NavLink>
+              <div className="page__top-logout" onClick={logout}>
+                <Icon image={ExitImg} imageActive={ExitImgActive} />
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
           <Routes>
             <Route path="/" element={<Explore dropdown={dropdown} />} />
             <Route path="/browse" element={<Browse />} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import ProfileIcon from "../ProfileIcon.jsx";
@@ -16,7 +16,7 @@ import Plus from "../../assets/icons/plus-lg.png";
 import PlusActive from "../../assets/icons/plus-gr.png";
 
 const Sidebar = ({ profile, logout, onMouseEnter, onMouseLeave, dropdown }) => {
-  // const [dropdown, setDropdown] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const getPhoto = () => {
     for (let key in profile) {
@@ -26,14 +26,37 @@ const Sidebar = ({ profile, logout, onMouseEnter, onMouseLeave, dropdown }) => {
     }
   };
 
+  const checkWidth = () => {
+    window.innerWidth > 1024 ? setShowProfile(true) : setShowProfile(false);
+  };
+
+  useEffect(() => {
+    checkWidth();
+
+    window.addEventListener("resize", function () {
+      checkWidth();
+    });
+  }, []);
+
   return (
     <>
       <div className="sidebar" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <div className="sidebar__profile profile">
-          <NavLink to="/profile">
-            <ProfileIcon profile={getPhoto()} />
-          </NavLink>
-        </div>
+        {showProfile ? (
+          <div className="sidebar__profile profile">
+            <NavLink to="/profile">
+              <ProfileIcon profile={getPhoto()} />
+            </NavLink>
+            {dropdown && (
+              <div className="dropdown__button dropdown__menu-item dropdown__button_logout">
+                <p className="dropdown__link_lvl-1" onClick={logout}>
+                  Log out
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
         <nav className="sidebar__navigation navigation">
           <SidebarItem
             path="/"

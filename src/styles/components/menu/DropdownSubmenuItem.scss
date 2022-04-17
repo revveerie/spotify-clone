@@ -1,5 +1,7 @@
 .dropdown {
   &__submenu-item {
+    position: relative;
+    
     &:not(:last-child) {
       margin: 0 0 15px 0;
     }
@@ -66,6 +68,7 @@
       margin: 0 0 45px 0;
     }
   }
+
   &__link_lvl-1 {
     font-family: "Orkney", sans-serif;
     font-weight: 400;

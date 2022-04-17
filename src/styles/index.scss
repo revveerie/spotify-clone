@@ -1,10 +1,10 @@
-@import './reset.scss';
+@import "./reset.scss";
 
 // FONTS
-@import './fonts.scss';
+@import "./fonts.scss";
 
 // VARIABLES
-@import './variables.scss';
+@import "./variables.scss";
 
 // INITIAL
 
@@ -50,22 +50,57 @@ body {
     text-transform: uppercase;
   }
 
-  @media(max-width: 1024px) {
+  &__top {
+    height: 30px;
+    margin: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    a {
+      width: 30px;
+    }
+
+    .profile__photo {
+      height: 100%;
+    }
+
+    .profile__no-photo {
+      height: 30px;
+      width: 30px;
+      border: 1px solid $dark-grey;
+    }
+
+    .profile__no-photo-image {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__top-logout {
+    position: relative;
+    margin: 0 0 0 20px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 1024px) {
     margin: 0;
-    padding: 25px 25px 100px;
+    padding: 25px 15px 100px;
   }
 }
 
 // FILES
-@import './components/Login.scss';
-@import './components/Icon.scss';
-@import './components/ProfileIcon.scss';
-@import './components/ShowMore.scss';
-@import './components/menu/Sidebar.scss';
-@import './components/menu/SidebarItem.scss';
-@import './components/menu/Dropdown.scss';
-@import './components/menu/DropdownSubmenuItem.scss';
-@import './components/Releases.scss';
-@import './components/ReleasesCard.scss';
-@import './components/Explore.scss';
-@import './components/NewReleases.scss';
+@import "./components/Login.scss";
+@import "./components/Icon.scss";
+@import "./components/ProfileIcon.scss";
+@import "./components/ShowMore.scss";
+@import "./components/menu/Sidebar.scss";
+@import "./components/menu/SidebarItem.scss";
+@import "./components/menu/Dropdown.scss";
+@import "./components/menu/DropdownSubmenuItem.scss";
+@import "./components/Releases.scss";
+@import "./components/ReleasesCard.scss";
+@import "./components/Explore.scss";
+@import "./components/NewReleases.scss";
