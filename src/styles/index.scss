@@ -31,9 +31,28 @@ body {
 .page {
   margin: 0 0 0 100px;
   padding: 25px;
-  height: 100%;
+
+  &.hidden {
+    position: relative;
+    z-index: -1;
+  }
+
+  &__header {
+    margin: 0 0 30px 0;
+  }
+
+  &__header-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 14px;
+    font-weight: 400;
+    color: $light-grey;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
   @media(max-width: 1024px) {
     margin: 0;
+    padding: 25px 25px 100px;
   }
 }
 
@@ -49,3 +68,4 @@ body {
 @import './components/Releases.scss';
 @import './components/ReleasesCard.scss';
 @import './components/Explore.scss';
+@import './components/NewReleases.scss';

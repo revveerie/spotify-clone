@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, NavLink } from "react-router-dom";
 
 import Slider from "react-slick";
 import ReleasesCard from "./ReleasesCard.jsx";
@@ -15,31 +14,50 @@ const Releases = ({ dropdown }) => {
 
   var settings = {
     dots: false,
-    slidesToShow: 5,
+    slidesToShow: 6,
     swipeToSlide: true,
+    slidesToScroll: 3,
     responsive: [
       {
-        breakpoint: 1650,
+        breakpoint: 1440,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 1200,
         settings: {
           slidesToShow: 4,
+          slidesToScroll: 2,
         },
       },
       {
-        breakpoint: 1350,
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 768,
         settings: {
           slidesToShow: 3,
+          slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 1050,
+        breakpoint: 650,
         settings: {
           slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 750,
-        settings: {
-          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
     ],

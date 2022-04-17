@@ -1,9 +1,5 @@
 .releases {
-  .slick-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  position: relative;
 
   .slick-slider {
     &.hidden {
@@ -12,7 +8,7 @@
   }
 
   .slick-arrow {
-    top: -56px;
+    top: -47px;
     position: absolute;
     display: block;
     width: 30px;
@@ -21,6 +17,9 @@
     border: 1px solid $dark-grey;
     z-index: 1000;
     border-radius: 50%;
+    @media (max-width: 768px) {
+      top: -40px;
+    }
   }
 
   .slick-prev {
@@ -44,11 +43,16 @@
         background-image: url(../assets/icons/left-gr.png);
       }
     }
+
+    @media (max-width: 768px) {
+      left: auto;
+      right: 55px;
+    }
   }
 
   .slick-next {
     left: 210px;
-    
+
     &::before {
       content: "";
       width: 15px;
@@ -60,11 +64,25 @@
       left: 50%;
       transform: translate(-45%, -50%);
     }
-    
+
     &:hover {
       &::before {
         background-image: url(../assets/icons/right-gr.png);
       }
+    }
+
+    @media (max-width: 768px) {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  .show-more__button {
+    @media (max-width: 768px) {
+      position: absolute;
+      top: 110%;
+      left: 50%;
+      transform: translate(-50%, 0);
     }
   }
 }

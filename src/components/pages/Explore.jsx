@@ -10,7 +10,7 @@ import Releases from "../Releases.jsx";
 const Explore = ({ dropdown }) => {
   return (
     <>
-      <div className="explore page">
+      <div className={dropdown ? "explore page hidden" : "explore page"}>
         <div className="explore__releases releases">
           <div className="releases__header">
             <div className="releases__title">

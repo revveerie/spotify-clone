@@ -1,116 +1,168 @@
 .releases {
-    &__card {
-      width: 280px !important;
-      background: #1d1d1d;
-    }
-  
-    &__image {
-      width: 100%;
-      position: relative;
-      
-      img {
-        width: 100%;
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #1d1d1d30;
-        backdrop-filter: blur(15px);
-        display: none;
-      }
-
-      &::after {
-        content: "";
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 50px;
-        height: 50px;
-        border: 1px solid $light-grey;
-        border-radius: 50%;
-        background-image: url(../assets/icons/play-button-gr.png);
-        background-size: 25px 25px;
-        background-repeat: no-repeat;
-        background-position: 65% 50%;
-      }
-
-      &:hover {
-        &::before {
-          display: block;
-        }
-
-        &:after {
-          display: block;
-        }
-      }
-    }
-  
-    &__info {
-      padding: 15px;
-      height: 80px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  
-    &__name {
-      margin: 0 0 8px 0;
-    }
-  
-    &__name-text {
-      font-family: "Orkney", sans-serf;
-      font-size: 14px;
-      font-weight: 400;
-      color: #ffffff;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-  
-    &__row {
-      display: flex;
-      align-items: baseline;
-    }
-  
-    &__artist-text {
-      font-family: "Orkney", sans-serf;
-      font-size: 12px;
-      font-weight: 300;
-      color: $dark-grey;
-
-      &:hover {
-        color: $light-grey;
-      }
-    }
-  
-    &__type {
-      margin: 0 0 0 20px;
-      position: relative;
-
-      &:before {
-        content: "";
-        position: absolute;
-        top: 4px;
-        left: -10px;
-        width: 2px;
-        height: 2px;
-        background: $dark-grey;
-        border-radius: 50%;
-      }
-    }
-  
-    &__type-text {
-      font-family: "Orkney", sans-serf;
-      font-size: 12px;
-      font-weight: 300;
-      color: $dark-grey;
-      text-transform: capitalize;
+  &__card {
+    margin: 0 15px 0;
+    background: #1d1d1d;
+    @media (max-width: 480px) {
+      margin: 0 10px 0;
     }
   }
-  
+
+  &__image {
+    width: 100%;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1d1d1d30;
+      backdrop-filter: blur(15px);
+      display: none;
+    }
+
+    &::after {
+      content: "";
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 1px solid $light-grey;
+      border-radius: 50%;
+      background-image: url(../assets/icons/play-button-gr.png);
+      background-size: 25px 25px;
+      background-repeat: no-repeat;
+      background-position: 65% 50%;
+    }
+
+    &:hover {
+      &::before {
+        display: block;
+      }
+
+      &:after {
+        display: block;
+      }
+    }
+  }
+
+  &__info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media (max-width: 1024px) {
+      padding: 10px;
+    }
+  }
+
+  &__name {
+    margin: 0 0 8px 0;
+    @media (max-width: 480px) {
+      margin: 0 0 5px 0;
+    }
+  }
+
+  &__name-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 17px;
+
+    @media (max-width: 1024px) {
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: baseline;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+  }
+
+  &__artist-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 12px;
+    font-weight: 300;
+    color: $dark-grey;
+    display: block;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 12px;
+
+    &:hover {
+      color: $light-grey;
+    }
+
+    @media (max-width: 1024px) {
+      font-size: 10px;
+    }
+  }
+
+  &__type {
+    margin: 0 0 0 20px;
+    position: relative;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: -10px;
+      width: 2px;
+      height: 2px;
+      background: $dark-grey;
+      border-radius: 50%;
+    }
+    
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+
+  &__type-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 12px;
+    font-weight: 300;
+    color: $dark-grey;
+    text-transform: capitalize;
+
+    @media (max-width: 102a4px) {
+      font-size: 10px;
+    }
+  }
+}

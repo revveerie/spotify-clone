@@ -17,5 +17,8 @@
         &:hover {
             color: $main-green;
         }
+        @media(max-width: 650px) {
+            font-size: 10px;
+        }
     }
 }
