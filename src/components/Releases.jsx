@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Slider from "react-slick";
-import ReleasesCard from "./ReleasesCard.jsx";
+import BasicCard from "./BasicCard.jsx";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -94,7 +94,7 @@ const Releases = ({ dropdown }) => {
       <Slider {...settings} className={dropdown ? "hidden" : ""}>
         {releases?.items
           ? releases.items.map((item, index) => (
-              <ReleasesCard
+              <BasicCard
                 key={index}
                 image={getItem(item.images, "url")}
                 name={item.name}

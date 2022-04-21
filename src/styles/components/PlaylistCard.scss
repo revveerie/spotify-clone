@@ -1,0 +1,19 @@
+.playlist {
+
+  &__creator-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 12px;
+    font-weight: 300;
+    color: $dark-grey;
+    display: block;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 12px;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import ReleasesCard from "../ReleasesCard.jsx";
+import BasicCard from "../BasicCard.jsx";
 
 const NewReleases = ({ dropdown }) => {
   const [releases, setReleases] = useState("");
@@ -44,7 +44,7 @@ const NewReleases = ({ dropdown }) => {
           {releases?.items
             ? releases.items.map((item, index) => (
                 <div className="grid-item" key={index}>
-                  <ReleasesCard
+                  <BasicCard
                     index={index}
                     image={getItem(item.images, "url")}
                     name={item.name}

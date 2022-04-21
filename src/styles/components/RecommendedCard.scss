@@ -1,0 +1,67 @@
+.recommended {
+  &__title {
+    margin: 0 0 8px 0;
+
+    @media (max-width: 480px) {
+      margin: 0 0 5px 0;
+    }
+  }
+
+  &__title-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 10px;
+    font-weight: 300;
+    color: $dark-grey;
+    display: block;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 12px;
+    text-transform: uppercase;
+  }
+
+  &__year {
+  }
+
+  &__year-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 12px;
+    font-weight: 300;
+    color: $dark-grey;
+    display: block;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 12px;
+  }
+
+  &__description {
+  }
+
+  &__description-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 10px;
+    font-weight: 300;
+    color: $dark-grey;
+    display: block;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 12px;
+  }
+}
