@@ -52,7 +52,7 @@ body {
 
   &__top {
     height: 30px;
-    margin: 10px;
+    margin: 10px 15px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -87,7 +87,7 @@ body {
 
   @media (max-width: 1024px) {
     margin: 0;
-    padding: 25px 15px 100px;
+    padding: 25px 15px 80px;
   }
 }
 
