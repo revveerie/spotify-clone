@@ -178,7 +178,7 @@ const App = () => {
             <Route path="/albums" element={<Albums />} />
             <Route path="/album" element={<Album />} />
             <Route path="/songs" element={<Songs />} />
-            <Route path="/playlists" element={<Playlists />} />
+            <Route path="/playlists" element={<Playlists dropdown={dropdown} />} />
             <Route path="/new-playlist" element={<NewPlaylist />} />
             <Route path="/new-releases" element={<NewReleases dropdown={dropdown} />} />
             <Route path="/artist" element={<Artist />} />

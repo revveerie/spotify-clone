@@ -1,0 +1,169 @@
+.playlists {
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px;
+
+    @media (max-width: 1440px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 650px) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 15px;
+    }
+  }
+
+  .playlist__card {
+    margin: 0;
+  }
+
+  &__saved {
+    position: relative;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    border-radius: 10px;
+    background: #1e1e1e;
+    padding: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &::after {
+      content: "";
+      display: none;
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      width: 50px;
+      height: 50px;
+      border: 1px solid $light-grey;
+      border-radius: 50%;
+      background-image: url(../assets/icons/play-button-gr.png);
+      background-size: 25px 25px;
+      background-repeat: no-repeat;
+      background-position: 65% 50%;
+    }
+
+    &:hover {
+      &:after {
+        display: block;
+        @media (max-width: 480px) {
+          display: none;
+        }
+      }
+    }
+
+    @media (max-width: 650px) {
+      margin: 0 0 20px 0;
+    }
+  }
+
+  &__saved-title {
+    margin: 0 0 10px 0;
+  }
+
+  &__saved-title-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 30px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 1;
+    z-index: 1234;
+    position: relative;
+  }
+
+  &__saved-amount {
+    z-index: 1234;
+    position: relative;
+    margin: 0 0 30px 0;
+  }
+
+  &__saved-amount-text {
+    font-family: "Orkney", sans-serf;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 2px;
+    opacity: 0.7;
+  }
+
+  &__last-saved {
+  }
+
+  &__last-saved-bg {
+    position: absolute;
+    top: 0;
+    right: 0%;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    img {
+      width: 100%;
+      top: 50%;
+      transform: translate(0, -20%);
+      filter: blur(5px) brightness(0.7);
+    }
+  }
+}
+
+.last-saved {
+  &__item {
+    z-index: 1234;
+    position: relative;
+    display: flex;
+    &:not(:last-child) {
+      margin: 0 20px 5px 0;
+    }
+  }
+
+  &__item-track {
+    font-family: "Orkney", sans-serf;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 5px 0 0;
+  }
+
+  &__item-artist {
+    font-family: "Orkney", sans-serf;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    position: relative;
+    padding: 0 0 0 7px;
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 4px;
+      height: 2px;
+      width: 2px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+  }
+}

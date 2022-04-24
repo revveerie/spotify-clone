@@ -15,5 +15,13 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 12px;
+
+    &:hover {
+      color: $light-grey;
+    }
+
+    @media (max-width: 1024px) {
+      font-size: 10px;
+    }
   }
 }

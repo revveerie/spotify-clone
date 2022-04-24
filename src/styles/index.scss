@@ -92,19 +92,31 @@ body {
 }
 
 // FILES
+
+// pages
 @import "./components/Login.scss";
-@import "./components/Icon.scss";
-@import "./components/ProfileIcon.scss";
-@import "./components/ShowMore.scss";
+@import "./components/Explore.scss";
+@import "./components/NewReleases.scss";
+@import "./components/Playlists.scss";
+
+// menu
 @import "./components/menu/Sidebar.scss";
 @import "./components/menu/SidebarItem.scss";
 @import "./components/menu/Dropdown.scss";
 @import "./components/menu/DropdownSubmenuItem.scss";
+
+// blocks on explore page
 @import "./components/Releases.scss";
+
+//cards
 @import "./components/BasicCard.scss";
 @import "./components/ArtistCard.scss";
 @import "./components/ArtistAlbumCard.scss";
 @import "./components/PlaylistCard.scss";
 @import "./components/RecommendedCard.scss";
-@import "./components/Explore.scss";
-@import "./components/NewReleases.scss";
+
+// others
+@import "./components/Icon.scss";
+@import "./components/ProfileIcon.scss";
+@import "./components/ShowMore.scss";
+
