@@ -91,6 +91,18 @@ body {
   }
 }
 
+.no-follow {
+  font-family: "Orkney", sans-serf;
+  font-size: 14px;
+  font-weight: 400;
+  color: $light-grey;
+  line-height: 18px;
+  &__link {
+    text-transform: uppercase;
+    color: $main-green;
+  }
+}
+
 // FILES
 
 // pages
@@ -98,6 +110,7 @@ body {
 @import "./components/Explore.scss";
 @import "./components/NewReleases.scss";
 @import "./components/Playlists.scss";
+@import "./components/Albums.scss";
 
 // menu
 @import "./components/menu/Sidebar.scss";
@@ -119,4 +132,3 @@ body {
 @import "./components/Icon.scss";
 @import "./components/ProfileIcon.scss";
 @import "./components/ShowMore.scss";
-
