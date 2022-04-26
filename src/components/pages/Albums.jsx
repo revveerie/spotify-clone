@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import BasicCard from "../BasicCard.jsx";
+import AlbumCard from "../AlbumCard.jsx";
+
+import NoFollow from "../../assets/icons/music-album-dg.png";
 
 const Albums = ({ dropdown }) => {
   const [albums, setAlbums] = useState("");
@@ -21,7 +23,6 @@ const Albums = ({ dropdown }) => {
       },
     })
       .then((albumsResponse) => {
-        console.log(albumsResponse.data);
         setAlbums(albumsResponse.data);
       })
 
@@ -40,21 +41,32 @@ const Albums = ({ dropdown }) => {
     <>
       <div className={dropdown ? "albums page hidden" : "albums page"}>
         <div className="page__header">
-          <div className="page__header-text">Albums</div>
+          <div className="page__header-text">Followed albums</div>
         </div>
         {albums.total == 0 ? (
-          <div className="no-follow">You don't have any saved albums, yet. Go to <Link to="/" className="no-follow__link">Explore</Link> page and find something new.</div>
+          <div className="no-follow">
+            <div className="no-follow__image">
+              <img src={NoFollow} />
+            </div>
+            <div className="no-follow__text">
+              Follow your first album
+            </div>
+            <div className="show-more__button">
+              <Link to='/' className="show-more__button-link">
+                  Explore
+              </Link>
+            </div>
+          </div>
         ) : (
           <div className="albums__wrapper">
             {albums?.items
               ? albums.items.map((item, index) => (
                   <div className="grid-item" key={index}>
-                    <BasicCard
+                    <AlbumCard
                       index={index}
                       image={getItem(item.album.images, "url")}
                       name={item.album.name}
                       artist={getItem(item.album.artists, "name")}
-                      type={item.album.type}
                       pathRelease="/album"
                       pathArtist="/artist"
                       key={index}

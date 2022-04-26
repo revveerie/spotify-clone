@@ -31,6 +31,7 @@ body {
 .page {
   margin: 0 0 0 100px;
   padding: 25px;
+  // height: 100%;
 
   &.hidden {
     position: relative;
@@ -48,6 +49,7 @@ body {
     color: $light-grey;
     letter-spacing: 2px;
     text-transform: uppercase;
+    cursor: default;
   }
 
   &__top {
@@ -92,11 +94,32 @@ body {
 }
 
 .no-follow {
-  font-family: "Orkney", sans-serf;
-  font-size: 14px;
-  font-weight: 400;
-  color: $light-grey;
-  line-height: 18px;
+  margin: 100px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__image {
+    width: 50px;
+    margin: 0 0 20px 0;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__text {
+    font-family: "Orkney", sans-serf;
+    font-size: 20px;
+    font-weight: 300;
+    color: $light-grey;
+    line-height: 18px;
+    cursor: default;
+    margin: 0 0 20px 0;
+    white-space: nowrap;
+  }
+
   &__link {
     text-transform: uppercase;
     color: $main-green;

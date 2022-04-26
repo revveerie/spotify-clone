@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
+import NoArtist from "../assets/images/no-artist-image.jpg";
+
 const ArtistCard = ({ name, image, artist, type, index, pathArtist }) => {
+  const ref = useRef(null);
+  const [width, setWidth] = useState("");
+
+  useEffect(() => {
+    setWidth(ref.current.offsetWidth);
+    window.addEventListener("resize", function () {
+      setWidth(ref.current.offsetWidth);
+    })
+  }, []);
+
+  const mystyle = {
+    height: `${width}px`
+  };
+  
   return (
     <>
       <div className="basic__card artist__card" key={index}>
         <Link className="basic__card-link artist__card-link" to={pathArtist}>
           <div className="basic__image artist__image">
-            <img src={image} alt={name} />
+            {image != null ? <img src={image} alt={name} ref={ref} style={mystyle} /> : <img src={NoArtist} alt={name} />}
           </div>
         </Link>
         <div className="basic__info artist__info">
           <div className="basic__artist artist__artist">
-            <Link className="basic__artist-text artist__artist-text" to={pathArtist}>
+            <p className="basic__artist-text artist__artist-text">
               {artist}
-            </Link>
+            </p>
           </div>
           <div className="basic__type artist__type">
             <p className="basic__type-text artist__type-text">{type}</p>

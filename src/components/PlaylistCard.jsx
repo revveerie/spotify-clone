@@ -17,9 +17,7 @@ const PlaylistCard = ({ name, image, index, pathPlaylist, creator, pathCreator }
             <p className="basic__name-text playlist__name-text">{name}</p>
           </div>
           <div className="playlist__creator">
-            <Link className="playlist__creator-text" to={pathCreator}>
-              by {creator}
-            </Link>
+            <p className="playlist__creator-text">by {creator}</p>
           </div>
         </div>
       </div>

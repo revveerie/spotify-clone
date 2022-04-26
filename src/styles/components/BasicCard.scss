@@ -94,6 +94,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 17px;
+    cursor: default;
 
     @media (max-width: 1024px) {
       font-size: 12px;
@@ -164,6 +165,7 @@
     font-weight: 300;
     color: $dark-grey;
     text-transform: capitalize;
+    cursor: default;
 
     @media (max-width: 1024px) {
       font-size: 10px;

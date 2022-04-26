@@ -100,9 +100,8 @@ const Playlists = ({ dropdown }) => {
                     index={index}
                     name={item.name}
                     image={getItem(item.images, "url")}
-                    pathPlaylist="/playlists"
+                    pathPlaylist="/playlist"
                     creator={item.owner.display_name}
-                    pathCreator="/user-profile"
                   />
                 </div>
               ))
