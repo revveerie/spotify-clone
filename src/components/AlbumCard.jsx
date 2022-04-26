@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 import NoAlbum from "../assets/images/no-album-image.jpg";
 
-const AlbumCard = ({ name, image, artist, index, pathRelease, pathArtist }) => {
+const AlbumCard = ({ name, image, artist, index, pathArtist, albumId }) => {
   return (
     <>
       <div className="basic__card" key={index}>
-        <Link className="basic__card-link" to={pathRelease}>
+        <Link className="basic__card-link" to={`/album/${albumId}`} key={albumId}>
           <div className="basic__image">
             {image != null ? <img src={image} alt={name} /> : <img src={NoAlbum} alt={name} />}
           </div>

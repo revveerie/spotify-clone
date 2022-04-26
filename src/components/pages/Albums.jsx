@@ -23,6 +23,7 @@ const Albums = ({ dropdown }) => {
       },
     })
       .then((albumsResponse) => {
+        console.log(albumsResponse.data)
         setAlbums(albumsResponse.data);
       })
 
@@ -67,9 +68,10 @@ const Albums = ({ dropdown }) => {
                       image={getItem(item.album.images, "url")}
                       name={item.album.name}
                       artist={getItem(item.album.artists, "name")}
-                      pathRelease="/album"
+                      // pathRelease="/album"
                       pathArtist="/artist"
-                      key={index}
+                      // key={index}
+                      albumId={item.album.id}
                     />
                   </div>
                 ))
