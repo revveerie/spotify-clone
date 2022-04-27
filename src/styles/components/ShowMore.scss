@@ -5,10 +5,10 @@
 
     &__button-link {
         display: inline-block;
-        padding: 9px 15px 5px;
+        padding: 9px 15px 9px;
         border: 1px solid $dark-grey;
         border-radius: 30px;
-        font-family: "Orkney", sans-serif;
+        font-family: $basic-font;
         font-weight: 400;
         font-size: 12px;
         text-transform: uppercase;

@@ -80,7 +80,7 @@
   }
 
   &__saved-title-text {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 30px;
     font-weight: 400;
     color: #ffffff;
@@ -98,7 +98,7 @@
   }
 
   &__saved-amount-text {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 14px;
     font-weight: 400;
     color: #ffffff;
@@ -131,16 +131,16 @@
     position: relative;
     display: flex;
     &:not(:last-child) {
-      margin: 0 0 3px 0;
+      margin: 0 0 2px 0;
     }
   }
 
   &__item-track {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 10px;
     font-weight: 400;
     color: #ffffff;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     padding: 0 5px 0 0;
     display: block;
@@ -156,11 +156,11 @@
   }
 
   &__item-artist {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 10px;
     font-weight: 400;
     color: #ffffff;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     opacity: 0.5;
     position: relative;

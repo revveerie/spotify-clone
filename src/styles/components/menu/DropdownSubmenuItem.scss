@@ -20,11 +20,12 @@
     position: relative;
     padding: 0 0 0 40px;
     height: 18px;
-    font-family: "Orkney", sans-serif;
+    font-family: $basic-font;
     font-weight: 300;
     font-size: 14px;
     opacity: 0.7;
     color: $light-grey;
+    letter-spacing: 1px;
     
     &:hover {
       opacity: 1;
@@ -70,11 +71,11 @@
   }
 
   &__link_lvl-1 {
-    font-family: "Orkney", sans-serif;
+    font-family: $basic-font;
     font-weight: 400;
     font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     color: $light-grey;
     
     &:hover {

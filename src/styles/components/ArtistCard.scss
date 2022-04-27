@@ -21,12 +21,12 @@
   }
 
   &__artist-text {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
     color: #ffffff;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     white-space: break-spaces;
     text-overflow: ellipsis;
@@ -63,7 +63,7 @@
   }
 
   &__type-text {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 12px;
     font-weight: 300;
     color: $dark-grey;

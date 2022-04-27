@@ -17,11 +17,11 @@
 
   &__button-link {
     display: block;
-    padding: 19px 40px 15px;
+    padding: 15px 40px 15px;
     border-radius: 30px;
-    font-family: "Orkney", sans-serif;
+    font-family: $basic-font;
     font-size: 18px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     font-weight: 500;
     text-transform: uppercase;
     white-space: nowrap;
