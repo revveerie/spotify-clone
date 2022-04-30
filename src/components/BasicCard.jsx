@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BasicCard = ({ name, image, artist, type, index, pathRelease, pathArtist }) => {
+const BasicCard = ({ name, image, artist, type, index, id, pathArtist }) => {
   return (
     <>
       <div className="basic__card" key={index}>
-        <Link className="basic__card-link" to={pathRelease}>
+        <Link className="basic__card-link" to={`/album/${id}`}>
           <div className="basic__image">
             <img src={image} alt={name} />
           </div>

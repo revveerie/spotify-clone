@@ -3,21 +3,17 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 import Icon from "../Icon.jsx";
-import AlbumPlayer from "../AlbumPlayer.jsx";
+import AudioWave from "../AudioWave.jsx";
 
 import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
-import Pause from "../../assets/icons/pause-lg.png";
-import PauseHover from "../../assets/icons/pause-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
 
 const Album = ({ dropdown }) => {
   const [album, setAlbum] = useState("");
   const [albumTracks, setAlbumTracks] = useState("");
-  const [shuffle, setShuffle] = useState(true);
   const [save, setSave] = useState(false);
   const [current, setCurrent] = useState(null);
-  const [showPlay, setShowPlay] = useState(false);
   const { albumId } = useParams();
 
   const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${albumId}`;
@@ -90,24 +86,12 @@ const Album = ({ dropdown }) => {
     }
   };
 
-  const onShuffle = () => {
-    shuffle == false ? setShuffle(true) : setShuffle(false);
-  };
-
   const onSave = () => {
     save == false ? setSave(true) : setSave(false);
   };
 
   const handleClick = (e) => {
     setCurrent(e);
-  };
-
-  const onMouseEnter = () => {
-    setShowPlay(true);
-  };
-
-  const onMouseLeave = () => {
-    setShowPlay(false);
   };
 
   return (
@@ -124,7 +108,7 @@ const Album = ({ dropdown }) => {
               </div>
               <div className="album__info-content info-content">
                 <div className="info-content__type">
-                  <p className="info-content__type-text">{album.type}</p>
+                  <p className="info-content__type-text">{album.album_type}</p>
                 </div>
                 <div className="info-content__title">
                   <p className="info-content__title-text">{album.name}</p>
@@ -154,10 +138,7 @@ const Album = ({ dropdown }) => {
                   </p>
                 </div>
                 <div className="info-content__buttons">
-                  <div
-                    className="info-content__button info-content__button_play"
-                    onClick={onShuffle}
-                  >
+                  <div className="info-content__button info-content__button_play">
                     <div className="info-content__button-icon">
                       <Icon image={Shuffle} imageActive={ShuffleHover}></Icon>
                     </div>
@@ -185,20 +166,14 @@ const Album = ({ dropdown }) => {
                       className={current === item ? "album__track active" : "album__track"}
                       key={index}
                       onClick={() => handleClick(item)}
-                      onMouseEnter={onMouseEnter}
-                      onMouseLeave={onMouseLeave}
                     >
-                      {current === item ? (
-                        <div className="album__track-number">
-                          <div className="album__track-number-icon">
-                            <Icon image={Pause} imageActive={PauseHover}></Icon>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="album__track-number">
+                      <div className="album__track-number">
+                        {current === item ? (
+                          <AudioWave />
+                        ) : (
                           <p className="album__track-number-text">{index + 1}</p>
-                        </div>
-                      )}
+                        )}
+                      </div>
 
                       <div className="album__track-title">
                         <p className="album__track-title-text">{item.name}</p>

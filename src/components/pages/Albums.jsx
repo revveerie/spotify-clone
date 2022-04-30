@@ -68,9 +68,7 @@ const Albums = ({ dropdown }) => {
                       image={getItem(item.album.images, "url")}
                       name={item.album.name}
                       artist={getItem(item.album.artists, "name")}
-                      // pathRelease="/album"
                       pathArtist="/artist"
-                      // key={index}
                       albumId={item.album.id}
                     />
                   </div>

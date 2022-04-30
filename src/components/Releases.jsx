@@ -1,67 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import Slider from "react-slick";
 import BasicCard from "./BasicCard.jsx";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { Navigation, FreeMode} from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
 
 const Releases = ({ dropdown }) => {
   const [releases, setReleases] = useState("");
 
-  const RELEASES_ENDPOINT = "https://api.spotify.com/v1/browse/new-releases?country=US";
+  const navigationPrevRef = React.useRef(null)
+  const navigationNextRef = React.useRef(null)
 
-  var settings = {
-    dots: false,
-    slidesToShow: 6,
-    swipeToSlide: true,
-    slidesToScroll: 3,
-    responsive: [
-      {
-        breakpoint: 1440,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 650,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+  const RELEASES_ENDPOINT = "https://api.spotify.com/v1/browse/new-releases?country=US";
 
   useEffect(() => {
     let token = localStorage.getItem("token");
@@ -91,21 +45,62 @@ const Releases = ({ dropdown }) => {
 
   return (
     <>
-      <Slider {...settings} className={dropdown ? "hidden" : ""}>
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={6}
+        freeMode={true}
+        loop={true}
+        navigation={{
+          prevEl: navigationPrevRef.current,
+          nextEl: navigationNextRef.current,
+        }}
+       onBeforeInit={(swiper) => {
+            swiper.params.navigation.prevEl = navigationPrevRef.current;
+            swiper.params.navigation.nextEl = navigationNextRef.current;
+       }}
+        modules={[Navigation, FreeMode]}
+        breakpoints={{
+          1440: {
+            slidesPerView: 6,
+          },
+          1200: {
+            slidesPerView: 5,
+          },
+          1024: {
+            slidesPerView: 4
+          },
+          991: {
+            slidesPerView: 5
+          },
+          768: {
+            slidesPerView: 4
+          },
+          650: {
+            slidesPerView: 3
+          },
+          0: {
+            slidesPerView: 2
+          }
+        }}
+      >
         {releases?.items
           ? releases.items.map((item, index) => (
+            <SwiperSlide key={index}>
               <BasicCard
-                key={index}
+                
                 image={getItem(item.images, "url")}
                 name={item.name}
                 artist={getItem(item.artists, "name")}
-                type={item.type}
-                pathRelease="/album"
+                type={item.album_type}
                 pathArtist="/artist"
+                id = {item.id}
               />
+              </SwiperSlide>
             ))
           : null}
-      </Slider>
+      </Swiper>
+      <div ref={navigationPrevRef} className="slick-arrow slick-prev" />
+      <div ref={navigationNextRef} className="slick-arrow slick-next" />
     </>
   );
 };

@@ -63,21 +63,22 @@
     align-items: center;
     height: 50px;
     cursor: pointer;
-    
+
     &.active {
       .album__track-title-text {
         color: $main-green;
       }
     }
     &:hover {
-        .album__track-title-text {
-            color: $main-green;
-          }
+      .album__track-title-text {
+        color: $main-green;
+      }
     }
   }
 
   &__track-number {
     flex: 0 1 5%;
+    margin: 0 15px 0 0;
   }
 
   &__track-number-icon {
@@ -93,23 +94,23 @@
     left: -10px;
 
     .icon {
-        height: 15px;
-        width: 15px;
-        position: relative;
+      height: 15px;
+      width: 15px;
+      position: relative;
     }
 
     &:hover {
-        .icon__image-active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 2;
-          }
-    
-          .icon__image {
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1;
-          }
+      .icon__image-active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 2;
+      }
+
+      .icon__image {
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+      }
     }
   }
 
@@ -124,6 +125,7 @@
 
   &__track-title {
     flex: 0 1 90%;
+    margin: 0 15px 0 0;
   }
 
   &__track-title-text {
@@ -215,6 +217,10 @@
     line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+      font-size: 25px;
+    }
   }
 
   &__row {
@@ -255,7 +261,7 @@
         right: 0;
         height: 2px;
         width: 2px;
-        background: #ffffff;
+        background: $dark-grey;
         border-radius: 50%;
         @media (max-width: 768px) {
           display: none;
@@ -264,6 +270,7 @@
     }
 
     &_number {
+      cursor: default;
       @media (max-width: 768px) {
         display: none;
       }
@@ -271,6 +278,7 @@
 
     &_time {
       margin: 0 0 0 3px;
+      cursor: default;
       @media (max-width: 768px) {
         display: none;
       }

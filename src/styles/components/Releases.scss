@@ -8,7 +8,7 @@
   }
 
   .slick-arrow {
-    top: -47px;
+    top: 16px;
     position: absolute;
     display: block;
     width: 30px;
@@ -19,7 +19,7 @@
     border-radius: 50%;
 
     @media (max-width: 1024px) {
-      top: -40px;
+      top: 16px;
     }
   }
 

@@ -20,6 +20,7 @@ const NewReleases = ({ dropdown }) => {
       },
     })
       .then((releasesResponse) => {
+        console.log(releasesResponse.data.albums)
         setReleases(releasesResponse.data.albums);
       })
 
@@ -49,10 +50,11 @@ const NewReleases = ({ dropdown }) => {
                     image={getItem(item.images, "url")}
                     name={item.name}
                     artist={getItem(item.artists, "name")}
-                    type={item.type}
+                    type={item.album_type}
                     pathRelease="/album"
                     pathArtist="/artist"
                     key={index}
+                    id = {item.id}
                   />
                 </div>
               ))
