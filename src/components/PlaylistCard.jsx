@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 import NoPlaylist from "../assets/images/no-playlist-image.jpg";
 
-const PlaylistCard = ({ name, image, index, pathPlaylist, creator, pathCreator }) => {
+const PlaylistCard = ({ name, image, index, id, creator }) => {
   return (
     <>
       <div className="basic__card playlist__card" key={index}>
-        <Link className="basic__card-link playlist__card-link" to={pathPlaylist}>
+        <Link className="basic__card-link playlist__card-link" to={`/playlist/${id}`}>
           <div className="basic__image playlist__image">
             {image != null ? <img src={image} alt={name} /> : <img src={NoPlaylist} alt={name} />}
           </div>

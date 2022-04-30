@@ -1,0 +1,30 @@
+.playlist {
+  &__row-text_number {
+    padding: 0 7px;
+    margin: 0 5px;
+    position: relative;
+    cursor: default;
+
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      top: 5px;
+      left: 0;
+      height: 2px;
+      width: 2px;
+      background: $dark-grey;
+      border-radius: 50%;
+    }
+  }
+
+  &__track-title-artist {
+    font-family: $basic-font;
+    font-weight: 400;
+    color: $dark-grey;
+    font-size: 10px;
+    &:hover {
+      color: $light-grey;
+    }
+  }
+}

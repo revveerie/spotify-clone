@@ -25,6 +25,7 @@ const Playlists = ({ dropdown }) => {
       },
     })
       .then((playlistsResponse) => {
+        console.log(playlistsResponse.data)
         setPlaylists(playlistsResponse.data);
       })
 
@@ -100,8 +101,8 @@ const Playlists = ({ dropdown }) => {
                     index={index}
                     name={item.name}
                     image={getItem(item.images, "url")}
-                    pathPlaylist="/playlist"
                     creator={item.owner.display_name}
+                    id={item.id}
                   />
                 </div>
               ))
