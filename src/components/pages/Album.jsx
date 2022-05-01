@@ -8,6 +8,7 @@ import AudioWave from "../AudioWave.jsx";
 import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
+import NoAlbum from "../../assets/images/no-album-image.jpg";
 
 const Album = ({ dropdown }) => {
   const [album, setAlbum] = useState("");
@@ -15,9 +16,49 @@ const Album = ({ dropdown }) => {
   const [save, setSave] = useState(false);
   const [current, setCurrent] = useState(null);
   const { albumId } = useParams();
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [fetch, setFetch] = useState(true);
 
   const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${albumId}`;
-  const ALBUM_TRACKS_ENDPOINT = `https://api.spotify.com/v1/albums/${albumId}/tracks`;
+  useEffect(() => {
+    if (fetch) {
+      let token = localStorage.getItem("token");
+
+      axios(`https://api.spotify.com/v1/albums/${albumId}/tracks?offset=${currentOffset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((albumTracksResponse) => {
+          setAlbumTracks([...albumTracks, ...albumTracksResponse.data.items]);
+          setCurrentOffset((prevState) => prevState + 50);
+        })
+        .finally(() => setFetch(false))
+
+        .catch((error) => console.log(error));
+    }
+  }, [fetch]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  const scrollHandler = (e) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetch(true);
+    }
+  };
 
   useEffect(() => {
     let token = localStorage.getItem("token");
@@ -32,20 +73,6 @@ const Album = ({ dropdown }) => {
     })
       .then((albumResponse) => {
         setAlbum(albumResponse.data);
-      })
-
-      .catch((error) => console.log(error));
-
-    axios(ALBUM_TRACKS_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((albumTracksResponse) => {
-        setAlbumTracks(albumTracksResponse.data);
       })
 
       .catch((error) => console.log(error));
@@ -104,7 +131,11 @@ const Album = ({ dropdown }) => {
           <div className="container">
             <div className="basic-page__info album__info">
               <div className="basic-page__info-image album__info-image">
-                <img src={getItem(album.images, "url")} />
+                {getItem(album.images, "url") ? (
+                  <img src={getItem(album.images, "url")} />
+                ) : (
+                  <img src={NoAlbum} />
+                )}
               </div>
               <div className="basic-page__info-content album__info-content info-content">
                 <div className="info-content__type">
@@ -128,13 +159,13 @@ const Album = ({ dropdown }) => {
                   </p>
                   <p className="info-content__row-text info-content__row-text_time">
                     {getTimeMin(
-                      albumTracks?.items
-                        ? albumTracks.items.reduce(
+                      albumTracks
+                        ? albumTracks.reduce(
                             (totalDuration, albumTrack) => totalDuration + albumTrack.duration_ms,
                             0
                           )
                         : null
-                    )}{" "}
+                    )}
                   </p>
                 </div>
                 <div className="info-content__buttons">
@@ -160,10 +191,14 @@ const Album = ({ dropdown }) => {
               </div>
             </div>
             <div className="basic-page__tracks album__tracks">
-              {albumTracks?.items
-                ? albumTracks.items.map((item, index) => (
+              {albumTracks
+                ? albumTracks.map((item, index) => (
                     <div
-                      className={current === item ? "basic-page__track album__track active" : "basic-page__track album__track"}
+                      className={
+                        current === item
+                          ? "basic-page__track album__track active"
+                          : "basic-page__track album__track"
+                      }
                       key={index}
                       onClick={() => handleClick(item)}
                     >
@@ -171,12 +206,16 @@ const Album = ({ dropdown }) => {
                         {current === item ? (
                           <AudioWave />
                         ) : (
-                          <p className="basic-page__track-number-text album__track-number-text">{index + 1}</p>
+                          <p className="basic-page__track-number-text album__track-number-text">
+                            {index + 1}
+                          </p>
                         )}
                       </div>
 
                       <div className="basic-page__track-title album__track-title">
-                        <p className="basic-page__track-title-text album__track-title-text">{item.name}</p>
+                        <p className="basic-page__track-title-text album__track-title-text">
+                          {item.name}
+                        </p>
                       </div>
                       <div className="basic-page__track-duration album__track-duration">
                         <p className="basic-page__track-duration-text album__track-duration-text">

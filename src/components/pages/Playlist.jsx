@@ -8,6 +8,8 @@ import AudioWave from "../AudioWave.jsx";
 import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
+import NoPlaylist from "../../assets/images/no-playlist-image.jpg";
+import NoAlbum from "../../assets/images/no-album-image.jpg";
 
 const Playlist = ({ dropdown }) => {
   const [playlist, setPlaylist] = useState("");
@@ -15,9 +17,50 @@ const Playlist = ({ dropdown }) => {
   const [save, setSave] = useState(false);
   const [current, setCurrent] = useState(null);
   const { id } = useParams();
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [fetch, setFetch] = useState(true);
 
   const PLAYLIST_ENDPOINT = `https://api.spotify.com/v1/playlists/${id}`;
-  const PLAYLIST_TRACKS_ENDPOINT = `https://api.spotify.com/v1/playlists/${id}/tracks`;
+
+  useEffect(() => {
+    if (fetch) {
+      let token = localStorage.getItem("token");
+
+      axios(`https://api.spotify.com/v1/playlists/${id}/tracks?limit=50&offset=${currentOffset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((playlistTracksResponse) => {
+          console.log(playlistTracksResponse.data.items)
+          setPlaylistTracks([...playlistTracks, ...playlistTracksResponse.data.items]);
+          setCurrentOffset((prevState) => prevState + 50);
+        })
+        .finally(() => setFetch(false))
+        .catch((error) => console.log(error));
+    }
+  }, [fetch]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  const scrollHandler = (e) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetch(true);
+    }
+  };
 
   useEffect(() => {
     let token = localStorage.getItem("token");
@@ -31,23 +74,7 @@ const Playlist = ({ dropdown }) => {
       },
     })
       .then((playlistResponse) => {
-        console.log(playlistResponse.data);
         setPlaylist(playlistResponse.data);
-      })
-
-      .catch((error) => console.log(error));
-
-    axios(PLAYLIST_TRACKS_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((playlistTracksResponse) => {
-        // console.log(playlistTracksResponse.data);
-        setPlaylistTracks(playlistTracksResponse.data);
       })
 
       .catch((error) => console.log(error));
@@ -90,13 +117,21 @@ const Playlist = ({ dropdown }) => {
     <>
       <div className={dropdown ? "playlist page hidden" : "album page"}>
         <div className="basic-page__top">
-          <img src={getItem(playlist.images, "url")} />
+          {getItem(playlist.images, "url") ? (
+            <img src={getItem(playlist.images, "url")} />
+          ) : (
+            <img src={NoPlaylist} />
+          )}
         </div>
         <div className="basic-page__content">
           <div className="container">
             <div className="basic-page__info">
               <div className="basic-page__info-image">
-                <img src={getItem(playlist.images, "url")} />
+                {getItem(playlist.images, "url") ? (
+                  <img src={getItem(playlist.images, "url")} />
+                ) : (
+                  <img src={NoPlaylist} />
+                )}
               </div>
               <div className="basic-page__info-content info-content">
                 <div className="info-content__type">
@@ -139,8 +174,8 @@ const Playlist = ({ dropdown }) => {
               </div>
             </div>
             <div className="basic-page__tracks">
-              {playlistTracks?.items
-                ? playlistTracks.items.map((item, index) => (
+              {playlistTracks
+                ? playlistTracks.map((item, index) => (
                     <div
                       className={
                         current === item
@@ -158,7 +193,11 @@ const Playlist = ({ dropdown }) => {
                         )}
                       </div>
                       <div className="basic-page__track-image playlist__track-image">
-                        <img src={getItem(item.track.album.images, "url")} alt="" />
+                        {getItem(item.track.album.images, "url") ? (
+                          <img src={getItem(item.track.album.images, "url")} alt="" />
+                        ) : (
+                          <img src={NoAlbum} alt="" />
+                        )}
                       </div>
                       <div className="basic-page__track-title playlist__track-title">
                         <p className="basic-page__track-title-text">{item.track.name}</p>

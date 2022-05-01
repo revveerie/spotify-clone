@@ -9,31 +9,55 @@ import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import MainImage from "../../assets/images/saved.png";
 import SavedTop from "../../assets/images/saved-top.png";
+import NoAlbum from "../../assets/images/no-album-image.jpg";
 
 const Songs = ({ dropdown }) => {
-  const [saved, setSaved] = useState("");
+  const [saved, setSaved] = useState([]);
+  const [savedInfo, setSavedInfo] = useState("");
   const [current, setCurrent] = useState(null);
-
-  const SAVED_SONGS_ENDPOINT = "https://api.spotify.com/v1/me/tracks?limit=50";
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [fetch, setFetch] = useState(true);
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    if (fetch) {
+      let token = localStorage.getItem("token");
 
-    axios(SAVED_SONGS_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((savedResponse) => {
-        console.log(savedResponse.data);
-        setSaved(savedResponse.data);
+      axios(`https://api.spotify.com/v1/me/tracks?limit=50&offset=${currentOffset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((savedResponse) => {
+          setSavedInfo(savedResponse.data);
+          setSaved([...saved, ...savedResponse.data.items]);
+          setCurrentOffset((prevState) => prevState + 50);
+        })
+        .finally(() => setFetch(false))
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
+    }
+  }, [fetch]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
   }, []);
+
+  const scrollHandler = (e) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetch(true);
+    }
+  };
 
   const getItem = (item, keyword) => {
     for (let key in item) {
@@ -85,7 +109,7 @@ const Songs = ({ dropdown }) => {
                 </div>
                 <div className="info-content__row">
                   <p className="info-content__row-text info-content__row-text_number">
-                    {saved.total} songs
+                    {savedInfo.total} songs
                   </p>
                 </div>
                 <div className="info-content__buttons">
@@ -99,8 +123,8 @@ const Songs = ({ dropdown }) => {
               </div>
             </div>
             <div className="basic-page__tracks">
-              {saved?.items
-                ? saved.items.map((item, index) => (
+              {saved
+                ? saved.map((item, index) => (
                     <div
                       className={
                         current === item
@@ -118,7 +142,11 @@ const Songs = ({ dropdown }) => {
                         )}
                       </div>
                       <div className="basic-page__track-image playlist__track-image">
-                        <img src={getItem(item.track.album.images, "url")} alt="" />
+                        {getItem(item.track.album.images, "url") ? (
+                          <img src={getItem(item.track.album.images, "url")} alt="" />
+                        ) : (
+                          <img src={NoAlbum} alt="" />
+                        )}
                       </div>
                       <div className="basic-page__track-title playlist__track-title">
                         <p className="basic-page__track-title-text">{item.track.name}</p>
