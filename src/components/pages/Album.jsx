@@ -97,16 +97,16 @@ const Album = ({ dropdown }) => {
   return (
     <>
       <div className={dropdown ? "album page hidden" : "album page"}>
-        <div className="album__top">
+        <div className="basic-page__top album__top">
           <img src={getItem(album.images, "url")} />
         </div>
-        <div className="album__content">
+        <div className="basic-page__content album__content">
           <div className="container">
-            <div className="album__info">
-              <div className="album__info-image">
+            <div className="basic-page__info album__info">
+              <div className="basic-page__info-image album__info-image">
                 <img src={getItem(album.images, "url")} />
               </div>
-              <div className="album__info-content info-content">
+              <div className="basic-page__info-content album__info-content info-content">
                 <div className="info-content__type">
                   <p className="info-content__type-text">{album.album_type}</p>
                 </div>
@@ -159,27 +159,27 @@ const Album = ({ dropdown }) => {
                 </div>
               </div>
             </div>
-            <div className="album__tracks">
+            <div className="basic-page__tracks album__tracks">
               {albumTracks?.items
                 ? albumTracks.items.map((item, index) => (
                     <div
-                      className={current === item ? "album__track active" : "album__track"}
+                      className={current === item ? "basic-page__track album__track active" : "basic-page__track album__track"}
                       key={index}
                       onClick={() => handleClick(item)}
                     >
-                      <div className="album__track-number">
+                      <div className="basic-page__track-number album__track-number">
                         {current === item ? (
                           <AudioWave />
                         ) : (
-                          <p className="album__track-number-text">{index + 1}</p>
+                          <p className="basic-page__track-number-text album__track-number-text">{index + 1}</p>
                         )}
                       </div>
 
-                      <div className="album__track-title">
-                        <p className="album__track-title-text">{item.name}</p>
+                      <div className="basic-page__track-title album__track-title">
+                        <p className="basic-page__track-title-text album__track-title-text">{item.name}</p>
                       </div>
-                      <div className="album__track-duration">
-                        <p className="album__track-duration-text">
+                      <div className="basic-page__track-duration album__track-duration">
+                        <p className="basic-page__track-duration-text album__track-duration-text">
                           {getTimeMinSec(Number(item.duration_ms))}
                         </p>
                       </div>

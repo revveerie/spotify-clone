@@ -1,4 +1,4 @@
-.album {
+.basic-page {
   &__top {
     position: absolute;
     top: 0;
@@ -61,16 +61,17 @@
   &__track {
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 70px;
     cursor: pointer;
 
     &.active {
-      .album__track-title-text {
+      .basic-page__track-title-text {
         color: $main-green;
       }
     }
+
     &:hover {
-      .album__track-title-text {
+      .basic-page__track-title-text {
         color: $main-green;
       }
     }
@@ -79,6 +80,10 @@
   &__track-number {
     flex: 0 1 5%;
     margin: 0 15px 0 0;
+
+    @media (max-width: 768px) {
+      flex: 0 1 10%;
+    }
   }
 
   &__track-number-icon {
@@ -126,6 +131,10 @@
   &__track-title {
     flex: 0 1 90%;
     margin: 0 15px 0 0;
+
+    @media (max-width: 768px) {
+      flex: 0 1 85%;
+    }
   }
 
   &__track-title-text {
@@ -143,7 +152,7 @@
     line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 25px;
+    line-height: 18px;
   }
 
   &__track-duration {
@@ -151,6 +160,7 @@
     justify-content: flex-end;
     flex: 0 1 5%;
     padding: 0 10px 0 0;
+
     @media (max-width: 480px) {
       display: none;
     }
@@ -179,6 +189,7 @@
   &__type {
     margin: 0 0 10px 0;
     cursor: default;
+
     @media (max-width: 768px) {
       margin: 0 0 15px 0;
     }
@@ -196,6 +207,7 @@
   &__title {
     margin: 0 0 10px 0;
     cursor: default;
+
     @media (max-width: 768px) {
       margin: 0 0 15px 0;
     }
@@ -263,6 +275,7 @@
         width: 2px;
         background: $dark-grey;
         border-radius: 50%;
+
         @media (max-width: 768px) {
           display: none;
         }
@@ -271,6 +284,7 @@
 
     &_number {
       cursor: default;
+
       @media (max-width: 768px) {
         display: none;
       }
@@ -279,6 +293,7 @@
     &_time {
       margin: 0 0 0 3px;
       cursor: default;
+      
       @media (max-width: 768px) {
         display: none;
       }

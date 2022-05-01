@@ -31,6 +31,7 @@ const Playlist = ({ dropdown }) => {
       },
     })
       .then((playlistResponse) => {
+        console.log(playlistResponse.data);
         setPlaylist(playlistResponse.data);
       })
 
@@ -45,6 +46,7 @@ const Playlist = ({ dropdown }) => {
       },
     })
       .then((playlistTracksResponse) => {
+        // console.log(playlistTracksResponse.data);
         setPlaylistTracks(playlistTracksResponse.data);
       })
 
@@ -59,19 +61,11 @@ const Playlist = ({ dropdown }) => {
     }
   };
 
-  const getOwner = (item) => {
+  const getInfo = (item, keyword) => {
     for (let key in item) {
-      return item[key];
+      if (key == keyword) return item[key];
     }
   };
-
-  const getTrack = (item) => {
-    for (let key in item) {
-      if (key == 'total')
-        return item[key];
-    }
-  };
-
 
   const getTimeMinSec = (time) => {
     let min = time / 1000 / 60;
@@ -82,22 +76,6 @@ const Playlist = ({ dropdown }) => {
     }
     min = Math.floor(min);
     return `${min}:${sec}`;
-  };
-
-  const getTimeMin = (time) => {
-    let min = time / 1000 / 60;
-    let r = min % 1;
-    let sec = Math.floor(r * 60);
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    min = Math.floor(min);
-    if (min <= 60) return `${min} min`;
-    else {
-      let hours = Math.trunc(min / 60);
-      let minutes = min % 60;
-      return `${hours} h ${minutes} min`;
-    }
   };
 
   const onSave = () => {
@@ -111,16 +89,16 @@ const Playlist = ({ dropdown }) => {
   return (
     <>
       <div className={dropdown ? "playlist page hidden" : "album page"}>
-        <div className="album__top">
+        <div className="basic-page__top">
           <img src={getItem(playlist.images, "url")} />
         </div>
-        <div className="album__content">
+        <div className="basic-page__content">
           <div className="container">
-            <div className="album__info">
-              <div className="album__info-image">
+            <div className="basic-page__info">
+              <div className="basic-page__info-image">
                 <img src={getItem(playlist.images, "url")} />
               </div>
-              <div className="album__info-content info-content">
+              <div className="basic-page__info-content info-content">
                 <div className="info-content__type">
                   <p className="info-content__type-text">Playlist</p>
                 </div>
@@ -132,10 +110,10 @@ const Playlist = ({ dropdown }) => {
                     className="info-content__row-text info-content__row-text_artist"
                     to="/profile"
                   >
-                    {getOwner(playlist.owner)}
+                    {getInfo(playlist.owner, "display_name")}
                   </Link>
                   <p className="info-content__row-text info-content__row-text_number playlist__row-text_number">
-                    {getTrack(playlist.tracks)} songs
+                    {getInfo(playlist.tracks, "total")} songs
                   </p>
                 </div>
                 <div className="info-content__buttons">
@@ -160,28 +138,44 @@ const Playlist = ({ dropdown }) => {
                 </div>
               </div>
             </div>
-            <div className="album__tracks">
+            <div className="basic-page__tracks">
               {playlistTracks?.items
                 ? playlistTracks.items.map((item, index) => (
                     <div
-                      className={current === item ? "album__track active" : "album__track"}
+                      className={
+                        current === item
+                          ? "basic-page__track playlist__track active"
+                          : "basic-page__track playlist__track"
+                      }
                       key={index}
                       onClick={() => handleClick(item)}
                     >
-                      <div className="album__track-number">
+                      <div className="basic-page__track-number playlist__track-number">
                         {current === item ? (
                           <AudioWave />
                         ) : (
-                          <p className="album__track-number-text">{index + 1}</p>
+                          <p className="basic-page__track-number-text">{index + 1}</p>
                         )}
                       </div>
-
-                      <div className="album__track-title">
-                        <p className="album__track-title-text">{item.track.name}</p>
-                        <Link className="playlist__track-title-artist" to="/artist/">{getItem(item.track.artists, "name")}</Link>
+                      <div className="basic-page__track-image playlist__track-image">
+                        <img src={getItem(item.track.album.images, "url")} alt="" />
                       </div>
-                      <div className="album__track-duration">
-                        <p className="album__track-duration-text">
+                      <div className="basic-page__track-title playlist__track-title">
+                        <p className="basic-page__track-title-text">{item.track.name}</p>
+                        <div className="playlist__row">
+                          <Link className="playlist__track-title-artist" to="/artist/">
+                            {getItem(item.track.artists, "name")}
+                          </Link>
+                          <Link
+                            className="playlist__track-title-artist playlist__track-title-album"
+                            to={`/album/${getInfo(item.track.album, "id")}`}
+                          >
+                            {getInfo(item.track.album, "name")}
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="basic-page__track-duration playlist__track-duration">
+                        <p className="basic-page__track-duration-text">
                           {getTimeMinSec(Number(item.track.duration_ms))}
                         </p>
                       </div>

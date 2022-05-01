@@ -1,0 +1,7 @@
+.songs {
+    &__top {
+        &::before {
+            backdrop-filter: blur(10px);
+        }
+    }
+}
