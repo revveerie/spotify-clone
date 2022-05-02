@@ -12,13 +12,16 @@ import NoPlaylist from "../../assets/images/no-playlist-image.jpg";
 import NoAlbum from "../../assets/images/no-album-image.jpg";
 
 const Playlist = ({ dropdown }) => {
+  const [user, setUser] = useState("");
   const [playlist, setPlaylist] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState("");
   const [save, setSave] = useState(false);
+  const [remove, setRemove] = useState(false);
   const [current, setCurrent] = useState(null);
   const { id } = useParams();
   const [currentOffset, setCurrentOffset] = useState(0);
   const [fetch, setFetch] = useState(true);
+  const [isFollow, setIsFollow] = useState("");
 
   const PLAYLIST_ENDPOINT = `https://api.spotify.com/v1/playlists/${id}`;
 
@@ -35,7 +38,6 @@ const Playlist = ({ dropdown }) => {
         },
       })
         .then((playlistTracksResponse) => {
-          console.log(playlistTracksResponse.data.items)
           setPlaylistTracks([...playlistTracks, ...playlistTracksResponse.data.items]);
           setCurrentOffset((prevState) => prevState + 50);
         })
@@ -46,6 +48,38 @@ const Playlist = ({ dropdown }) => {
 
   useEffect(() => {
     document.addEventListener("scroll", scrollHandler);
+
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((userResponse) => {
+        setUser(userResponse.data.id);
+        axios(
+          `https://api.spotify.com/v1/playlists/${id}/followers/contains?ids=${userResponse.data.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        )
+          .then((isFollowResponse) => {
+            setIsFollow(isFollowResponse.data[0]);
+          })
+
+          .catch((error) => console.log(error));
+      })
+
+      .catch((error) => console.log(error));
 
     return function () {
       document.removeEventListener("scroll", scrollHandler);
@@ -105,12 +139,46 @@ const Playlist = ({ dropdown }) => {
     return `${min}:${sec}`;
   };
 
-  const onSave = () => {
-    save == false ? setSave(true) : setSave(false);
-  };
-
   const handleClick = (e) => {
     setCurrent(e);
+  };
+
+  const onSave = () => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/playlists/${id}/followers`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((saveResponse) => {
+        setSave(saveResponse.data);
+        setIsFollow(true);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
+  const onRemove = () => {
+    let token = localStorage.getItem("token");
+
+    axios(`	https://api.spotify.com/v1/playlists/${id}/followers`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((removeResponse) => {
+        setRemove(removeResponse.data);
+        setIsFollow(false);
+      })
+
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -158,18 +226,25 @@ const Playlist = ({ dropdown }) => {
                     </div>
                     <div className="info-content__button-text">Play</div>
                   </div>
-                  <div className="info-content__button info-content__button_save" onClick={onSave}>
-                    {save ? (
-                      <>
-                        <div className="info-content__button-icon">
-                          <Icon image={Save} imageActive={Save}></Icon>
-                        </div>
-                        <div className="info-content__button-text">Saved</div>
-                      </>
-                    ) : (
-                      <div className="info-content__button-text">Save</div>
-                    )}
-                  </div>
+                  {getInfo(playlist.owner, "id") != user ? (
+                    <div
+                      className="info-content__button info-content__button_save"
+                      onClick={isFollow ? onRemove : onSave}
+                    >
+                      {isFollow ? (
+                        <>
+                          <div className="info-content__button-icon">
+                            <Icon image={Save} imageActive={Save}></Icon>
+                          </div>
+                          <div className="info-content__button-text">Saved</div>
+                        </>
+                      ) : (
+                        <div className="info-content__button-text">Save</div>
+                      )}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

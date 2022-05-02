@@ -25,7 +25,6 @@ const Playlists = ({ dropdown }) => {
       },
     })
       .then((playlistsResponse) => {
-        console.log(playlistsResponse.data)
         setPlaylists(playlistsResponse.data);
       })
 

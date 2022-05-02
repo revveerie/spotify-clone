@@ -23,7 +23,6 @@ const Albums = ({ dropdown }) => {
       },
     })
       .then((albumsResponse) => {
-        console.log(albumsResponse.data)
         setAlbums(albumsResponse.data);
       })
 

@@ -14,10 +14,12 @@ const Album = ({ dropdown }) => {
   const [album, setAlbum] = useState("");
   const [albumTracks, setAlbumTracks] = useState("");
   const [save, setSave] = useState(false);
+  const [remove, setRemove] = useState(false);
   const [current, setCurrent] = useState(null);
   const { albumId } = useParams();
   const [currentOffset, setCurrentOffset] = useState(0);
   const [fetch, setFetch] = useState(true);
+  const [isFollow, setIsFollow] = useState("");
 
   const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${albumId}`;
   useEffect(() => {
@@ -43,6 +45,22 @@ const Album = ({ dropdown }) => {
   }, [fetch]);
 
   useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/albums/contains?ids=${albumId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((isFollowResponse) => {
+        setIsFollow(isFollowResponse.data[0]);
+      })
+
+      .catch((error) => console.log(error));
+
     document.addEventListener("scroll", scrollHandler);
 
     return function () {
@@ -112,9 +130,43 @@ const Album = ({ dropdown }) => {
       return `${hours} h ${minutes} min`;
     }
   };
-
+  
   const onSave = () => {
-    save == false ? setSave(true) : setSave(false);
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((saveResponse) => {
+        setSave(saveResponse.data);
+        setIsFollow(true);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
+  const onRemove = () => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((removeResponse) => {
+        setRemove(removeResponse.data);
+        setIsFollow(false);
+      })
+
+      .catch((error) => console.log(error));
   };
 
   const handleClick = (e) => {
@@ -175,8 +227,8 @@ const Album = ({ dropdown }) => {
                     </div>
                     <div className="info-content__button-text">Play</div>
                   </div>
-                  <div className="info-content__button info-content__button_save" onClick={onSave}>
-                    {save ? (
+                  <div className="info-content__button info-content__button_save" onClick={isFollow ? (onRemove) : (onSave)}>
+                    {isFollow ? (
                       <>
                         <div className="info-content__button-icon">
                           <Icon image={Save} imageActive={Save}></Icon>
