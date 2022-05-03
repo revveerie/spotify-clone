@@ -199,7 +199,7 @@ const Album = ({ dropdown }) => {
                 <div className="info-content__row">
                   <Link
                     className="info-content__row-text info-content__row-text_artist"
-                    to="/artist"
+                    to={`/artist/${getItem(album.artists, "id")}`}
                   >
                     {getItem(album.artists, "name")}
                   </Link>

@@ -29,6 +29,7 @@ const Releases = ({ dropdown }) => {
       },
     })
       .then((releasesResponse) => {
+        console.log(releasesResponse.data.albums);
         setReleases(releasesResponse.data.albums);
       })
 
@@ -87,12 +88,11 @@ const Releases = ({ dropdown }) => {
           ? releases.items.map((item, index) => (
             <SwiperSlide key={index}>
               <BasicCard
-                
                 image={getItem(item.images, "url")}
                 name={item.name}
                 artist={getItem(item.artists, "name")}
                 type={item.album_type}
-                pathArtist="/artist"
+                pathArtist={`artist/${getItem(item.artists, "id")}`}
                 id = {item.id}
               />
               </SwiperSlide>

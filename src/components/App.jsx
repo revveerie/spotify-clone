@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, Switch } from "react-router-dom";
 import axios from "axios";
 
 import Explore from "./pages/Explore.jsx";
@@ -183,7 +183,7 @@ const App = () => {
             <Route path="/playlist/:id" element={<Playlist dropdown={dropdown} />} />
             <Route path="/new-playlist" element={<NewPlaylist />} />
             <Route path="/new-releases" element={<NewReleases dropdown={dropdown} />} />
-            <Route path="/artist" element={<Artist />} />
+            <Route path="/artist/:id" element={<Artist dropdown={dropdown} />} />
           </Routes>
         </>
       )}

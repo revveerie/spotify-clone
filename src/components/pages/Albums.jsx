@@ -23,6 +23,7 @@ const Albums = ({ dropdown }) => {
       },
     })
       .then((albumsResponse) => {
+        console.log(albumsResponse.data);
         setAlbums(albumsResponse.data);
       })
 
@@ -67,7 +68,7 @@ const Albums = ({ dropdown }) => {
                       image={getItem(item.album.images, "url")}
                       name={item.album.name}
                       artist={getItem(item.album.artists, "name")}
-                      pathArtist="/artist"
+                      pathArtist={`/artist/${getItem(item.album.artists, "id")}`}
                       albumId={item.album.id}
                     />
                   </div>

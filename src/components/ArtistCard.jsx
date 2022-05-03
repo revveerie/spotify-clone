@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import NoArtist from "../assets/images/no-artist-image.jpg";
 
-const ArtistCard = ({ name, image, artist, type, index, pathArtist }) => {
+const ArtistCard = ({ name, image, artist, type, index, id }) => {
   const ref = useRef(null);
   const [width, setWidth] = useState("");
 
@@ -21,7 +21,7 @@ const ArtistCard = ({ name, image, artist, type, index, pathArtist }) => {
   return (
     <>
       <div className="basic__card artist__card" key={index}>
-        <Link className="basic__card-link artist__card-link" to={pathArtist}>
+        <Link className="basic__card-link artist__card-link" to={`/artist/${id}`}>
           <div className="basic__image artist__image">
             {image != null ? <img src={image} alt={name} ref={ref} style={mystyle} /> : <img src={NoArtist} alt={name} />}
           </div>

@@ -277,7 +277,7 @@ const Playlist = ({ dropdown }) => {
                       <div className="basic-page__track-title playlist__track-title">
                         <p className="basic-page__track-title-text">{item.track.name}</p>
                         <div className="playlist__row">
-                          <Link className="playlist__track-title-artist" to="/artist/">
+                          <Link className="playlist__track-title-artist" to={`/artist/${getItem(item.track.artists, "id")}`}>
                             {getItem(item.track.artists, "name")}
                           </Link>
                           <Link

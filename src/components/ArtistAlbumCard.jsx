@@ -14,9 +14,6 @@ const ArtistAlbumCard = ({ name, image, index, pathAlbum }) => {
           <div className="basic__name basic__name">
             <p className="basic__name-text basic__name-text">{name}</p>
           </div>
-          <div className="artist-album__year">
-            <p className="artist-album__year-text">{year}</p>
-          </div>
         </div>
       </div>
     </>

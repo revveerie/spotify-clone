@@ -66,7 +66,7 @@ const Artists = ({ dropdown }) => {
                       name={item.name}
                       artist={item.name}
                       type={item.type}
-                      pathArtist="/artist"
+                      id={item.id}
                       key={index}
                     />
                   </div>
