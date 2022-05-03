@@ -81,7 +81,7 @@
   .show-more__button {
     @media (max-width: 1024px) {
       position: absolute;
-      top: 110%;
+      bottom: -60px;
       left: 50%;
       transform: translate(-50%, 0);
     }
