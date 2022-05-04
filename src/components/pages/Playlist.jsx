@@ -10,6 +10,8 @@ import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
 import NoPlaylist from "../../assets/images/no-playlist-image.jpg";
 import NoAlbum from "../../assets/images/no-album-image.jpg";
+import TickNotSaved from "../../assets/icons/tick-lg.png";
+import TickSaved from "../../assets/icons/tick-gr.png";
 
 const Playlist = ({ dropdown }) => {
   const [user, setUser] = useState("");
@@ -22,6 +24,8 @@ const Playlist = ({ dropdown }) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [fetch, setFetch] = useState(true);
   const [isFollow, setIsFollow] = useState("");
+  const [isSaved, setIsSaved] = useState("");
+  const [currentSaved, setCurrentSaved] = useState(null);
 
   const PLAYLIST_ENDPOINT = `https://api.spotify.com/v1/playlists/${id}`;
 
@@ -181,6 +185,26 @@ const Playlist = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleClickSaved = (e, id) => {
+    setCurrentSaved(e);
+
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((isSavedResponse) => {
+        setIsSaved(isSavedResponse.data[0]);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <div className={dropdown ? "playlist page hidden" : "album page"}>
@@ -259,6 +283,7 @@ const Playlist = ({ dropdown }) => {
                       }
                       key={index}
                       onClick={() => handleClick(item)}
+                      onMouseEnter={() => handleClickSaved(item, item.track.id)}
                     >
                       <div className="basic-page__track-number playlist__track-number">
                         {current === item ? (
@@ -287,6 +312,29 @@ const Playlist = ({ dropdown }) => {
                             {getInfo(item.track.album, "name")}
                           </Link>
                         </div>
+                      </div>
+                      <div className="basic-page__track-saved">
+                        {currentSaved === item ? (
+                          isSaved ? (
+                            <>
+                              <div className="basic-page__icon-wrapper">
+                                <div className="basic-page__icon">
+                                  <Icon image={TickSaved} imageActive={TickSaved} />
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="basic-page__icon-wrapper">
+                                <div className="basic-page__icon">
+                                  <Icon image={TickNotSaved} imageActive={TickNotSaved} />
+                                </div>
+                              </div>
+                            </>
+                          )
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <div className="basic-page__track-duration playlist__track-duration">
                         <p className="basic-page__track-duration-text">

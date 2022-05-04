@@ -9,6 +9,8 @@ import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
 import NoAlbum from "../../assets/images/no-album-image.jpg";
+import TickNotSaved from "../../assets/icons/tick-lg.png";
+import TickSaved from "../../assets/icons/tick-gr.png";
 
 const Album = ({ dropdown }) => {
   const [album, setAlbum] = useState("");
@@ -20,6 +22,8 @@ const Album = ({ dropdown }) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [fetch, setFetch] = useState(true);
   const [isFollow, setIsFollow] = useState("");
+  const [isSaved, setIsSaved] = useState("");
+  const [currentSaved, setCurrentSaved] = useState(null);
 
   const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${albumId}`;
   useEffect(() => {
@@ -130,7 +134,7 @@ const Album = ({ dropdown }) => {
       return `${hours} h ${minutes} min`;
     }
   };
-  
+
   const onSave = () => {
     let token = localStorage.getItem("token");
 
@@ -171,6 +175,26 @@ const Album = ({ dropdown }) => {
 
   const handleClick = (e) => {
     setCurrent(e);
+  };
+
+  const handleClickSaved = (e, id) => {
+    setCurrentSaved(e);
+
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((isSavedResponse) => {
+        setIsSaved(isSavedResponse.data[0]);
+      })
+
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -227,7 +251,10 @@ const Album = ({ dropdown }) => {
                     </div>
                     <div className="info-content__button-text">Play</div>
                   </div>
-                  <div className="info-content__button info-content__button_save" onClick={isFollow ? (onRemove) : (onSave)}>
+                  <div
+                    className="info-content__button info-content__button_save"
+                    onClick={isFollow ? onRemove : onSave}
+                  >
                     {isFollow ? (
                       <>
                         <div className="info-content__button-icon">
@@ -253,6 +280,7 @@ const Album = ({ dropdown }) => {
                       }
                       key={index}
                       onClick={() => handleClick(item)}
+                      onMouseEnter={() => handleClickSaved(item, item.id)}
                     >
                       <div className="basic-page__track-number album__track-number">
                         {current === item ? (
@@ -263,11 +291,33 @@ const Album = ({ dropdown }) => {
                           </p>
                         )}
                       </div>
-
                       <div className="basic-page__track-title album__track-title">
                         <p className="basic-page__track-title-text album__track-title-text">
                           {item.name}
                         </p>
+                      </div>
+                      <div className="basic-page__track-saved">
+                        {currentSaved === item ? (
+                          isSaved ? (
+                            <>
+                              <div className="basic-page__icon-wrapper">
+                                <div className="basic-page__icon">
+                                  <Icon image={TickSaved} imageActive={TickSaved} />
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="basic-page__icon-wrapper">
+                                <div className="basic-page__icon">
+                                  <Icon image={TickNotSaved} imageActive={TickNotSaved} />
+                                </div>
+                              </div>
+                            </>
+                          )
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <div className="basic-page__track-duration album__track-duration">
                         <p className="basic-page__track-duration-text album__track-duration-text">

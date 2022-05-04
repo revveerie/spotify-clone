@@ -10,6 +10,8 @@ import NoArtist from "../../assets/images/no-artist-image.jpg";
 import Play from "../../assets/icons/play-button.png";
 import PlayHover from "../../assets/icons/play-button-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
+import TickNotSaved from "../../assets/icons/tick-lg.png";
+import TickSaved from "../../assets/icons/tick-gr.png";
 
 const Artist = ({ dropdown }) => {
   const [artist, setArtist] = useState("");
@@ -23,6 +25,8 @@ const Artist = ({ dropdown }) => {
   const [moreRelated, setMoreRelated] = useState(false);
   const [current, setCurrent] = useState(null);
   const { id } = useParams();
+  const [isSaved, setIsSaved] = useState("");
+  const [currentSaved, setCurrentSaved] = useState(null);
 
   let savedBackground = true;
   useEffect(() => {
@@ -163,6 +167,26 @@ const Artist = ({ dropdown }) => {
     }
   };
 
+  const handleClickSaved = (e, id) => {
+    setCurrentSaved(e);
+
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((isSavedResponse) => {
+        setIsSaved(isSavedResponse.data[0]);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <div className={dropdown ? "artist-page page hidden" : "artist-page page"}>
@@ -236,6 +260,7 @@ const Artist = ({ dropdown }) => {
                               }
                               key={index}
                               onClick={() => handleClick(item)}
+                              onMouseEnter={() => handleClickSaved(item, item.id)}
                             >
                               <div className="basic-page__track-image artist-page__track-image">
                                 {getItem(item.album.images, "url") ? (
@@ -266,6 +291,29 @@ const Artist = ({ dropdown }) => {
                                     {getInfo(item.album, "name")}
                                   </Link>
                                 </div>
+                              </div>
+                              <div className="basic-page__track-saved artist-page__track-saved">
+                                {currentSaved === item ? (
+                                  isSaved ? (
+                                    <>
+                                      <div className="basic-page__icon-wrapper">
+                                        <div className="basic-page__icon">
+                                          <Icon image={TickSaved} imageActive={TickSaved} />
+                                        </div>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div className="basic-page__icon-wrapper">
+                                        <div className="basic-page__icon">
+                                          <Icon image={TickNotSaved} imageActive={TickNotSaved} />
+                                        </div>
+                                      </div>
+                                    </>
+                                  )
+                                ) : (
+                                  <></>
+                                )}
                               </div>
                             </div>
                           ) : (

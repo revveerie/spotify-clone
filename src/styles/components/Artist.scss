@@ -258,4 +258,9 @@
       gap: 15px;
     }
   }
+
+  &__track-saved {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

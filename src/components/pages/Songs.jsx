@@ -10,6 +10,8 @@ import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import MainImage from "../../assets/images/saved.png";
 import SavedTop from "../../assets/images/saved-top.png";
 import NoAlbum from "../../assets/images/no-album-image.jpg";
+import TickNotSaved from "../../assets/icons/tick-lg.png";
+import TickSaved from "../../assets/icons/tick-gr.png";
 
 const Songs = ({ dropdown }) => {
   const [saved, setSaved] = useState([]);
@@ -17,6 +19,8 @@ const Songs = ({ dropdown }) => {
   const [current, setCurrent] = useState(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [fetch, setFetch] = useState(true);
+  const [isSaved, setIsSaved] = useState("");
+  const [currentSaved, setCurrentSaved] = useState(null);
 
   useEffect(() => {
     if (fetch) {
@@ -88,6 +92,26 @@ const Songs = ({ dropdown }) => {
     return `${min}:${sec}`;
   };
 
+  const handleClickSaved = (e, id) => {
+    setCurrentSaved(e);
+
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((isSavedResponse) => {
+        setIsSaved(isSavedResponse.data[0]);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <div className={dropdown ? "songs page hidden" : "songs page"}>
@@ -133,6 +157,7 @@ const Songs = ({ dropdown }) => {
                       }
                       key={index}
                       onClick={() => handleClick(item)}
+                      onMouseEnter={() => handleClickSaved(item, item.track.id)}
                     >
                       <div className="basic-page__track-number playlist__track-number">
                         {current === item ? (
@@ -151,7 +176,10 @@ const Songs = ({ dropdown }) => {
                       <div className="basic-page__track-title playlist__track-title">
                         <p className="basic-page__track-title-text">{item.track.name}</p>
                         <div className="playlist__row">
-                          <Link className="playlist__track-title-artist" to={`/artist/${getItem(item.track.artists, "id")}`}>
+                          <Link
+                            className="playlist__track-title-artist"
+                            to={`/artist/${getItem(item.track.artists, "id")}`}
+                          >
                             {getItem(item.track.artists, "name")}
                           </Link>
                           <Link
@@ -161,6 +189,29 @@ const Songs = ({ dropdown }) => {
                             {getInfo(item.track.album, "name")}
                           </Link>
                         </div>
+                      </div>
+                      <div className="basic-page__track-saved">
+                        {currentSaved === item ? (
+                          isSaved ? (
+                            <>
+                              <div className="basic-page__icon-wrapper">
+                                <div className="basic-page__icon">
+                                  <Icon image={TickSaved} imageActive={TickSaved} />
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="basic-page__icon-wrapper">
+                                <div className="basic-page__icon">
+                                  <Icon image={TickNotSaved} imageActive={TickNotSaved} />
+                                </div>
+                              </div>
+                            </>
+                          )
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <div className="basic-page__track-duration playlist__track-duration">
                         <p className="basic-page__track-duration-text">
