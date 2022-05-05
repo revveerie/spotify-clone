@@ -132,8 +132,11 @@
   }
 
   &__track-title {
-    flex: 0 1 100%;
+    flex: 0 1 73%;
     margin: 0 15px 0 0;
+    @media (max-width: 768px) {
+      flex: 0 1 78%;
+    }
   }
 
   &__row {

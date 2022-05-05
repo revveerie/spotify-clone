@@ -18,7 +18,9 @@ const Artist = ({ dropdown }) => {
   const [artistAlbums, setArtistAlbums] = useState("");
   const [isFollow, setIsFollow] = useState("");
   const [save, setSave] = useState(false);
+  const [saveTrack, setSaveTrack] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [removeTrack, setRemoveTrack] = useState(false);
   const [popular, setPopular] = useState("");
   const [morePopular, setMorePopular] = useState(false);
   const [related, setRelated] = useState("");
@@ -187,6 +189,48 @@ const Artist = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleOutSaved = () => {
+    setCurrentSaved();
+  };
+
+  const onSaveTrack = (e, id) => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks?ids=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((saveTrackResponse) => {
+        setSaveTrack(saveTrackResponse.data);
+        setIsSaved(true);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
+  const onRemoveTrack = (e, id) => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks?ids=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((removeTrackResponse) => {
+        setRemoveTrack(removeTrackResponse.data);
+        setIsSaved(false);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <div className={dropdown ? "artist-page page hidden" : "artist-page page"}>
@@ -259,8 +303,8 @@ const Artist = ({ dropdown }) => {
                                   : "basic-page__track artist-page__track"
                               }
                               key={index}
-                              onClick={() => handleClick(item)}
                               onMouseEnter={() => handleClickSaved(item, item.id)}
+                              onMouseLeave={() => handleOutSaved()}
                             >
                               <div className="basic-page__track-image artist-page__track-image">
                                 {getItem(item.album.images, "url") ? (
@@ -269,18 +313,21 @@ const Artist = ({ dropdown }) => {
                                   <img src={NoAlbum} alt="" />
                                 )}
                               </div>
-                              <div className="basic-page__track-number album__track-number">
+                              <div className="basic-page__track-number artist-page__track-number">
                                 {current === item ? (
                                   <AudioWave />
                                 ) : (
-                                  <p className="basic-page__track-number-text album__track-number-text">
+                                  <p className="basic-page__track-number-text artist-page__track-number-text">
                                     {index + 1}
                                   </p>
                                 )}
                               </div>
 
-                              <div className="basic-page__track-title album__track-title">
-                                <p className="basic-page__track-title-text album__track-title-text">
+                              <div
+                                className="basic-page__track-title artist-page__track-title"
+                                onClick={() => handleClick(item)}
+                              >
+                                <p className="basic-page__track-title-text artist-page__track-title-text">
                                   {item.name}
                                 </p>
                                 <div className="artist-page__row">
@@ -292,7 +339,14 @@ const Artist = ({ dropdown }) => {
                                   </Link>
                                 </div>
                               </div>
-                              <div className="basic-page__track-saved artist-page__track-saved">
+                              <div
+                                className="basic-page__track-saved artist-page__track-saved"
+                                onClick={() =>
+                                  isSaved
+                                    ? onRemoveTrack(item, item.id)
+                                    : onSaveTrack(item, item.id)
+                                }
+                              >
                                 {currentSaved === item ? (
                                   isSaved ? (
                                     <>
@@ -332,7 +386,9 @@ const Artist = ({ dropdown }) => {
                                   : "basic-page__track artist-page__track"
                               }
                               key={index}
-                              onClick={() => handleClick(item)}
+                              
+                              onMouseEnter={() => handleClickSaved(item, item.id)}
+                              onMouseLeave={() => handleOutSaved()}
                             >
                               <div className="basic-page__track-image artist-page__track-image">
                                 {getItem(item.album.images, "url") ? (
@@ -341,18 +397,18 @@ const Artist = ({ dropdown }) => {
                                   <img src={NoAlbum} alt="" />
                                 )}
                               </div>
-                              <div className="basic-page__track-number album__track-number">
+                              <div className="basic-page__track-number artist-page__track-number">
                                 {current === item ? (
                                   <AudioWave />
                                 ) : (
-                                  <p className="basic-page__track-number-text album__track-number-text">
+                                  <p className="basic-page__track-number-text artist-page__track-number-text">
                                     {index + 1}
                                   </p>
                                 )}
                               </div>
 
-                              <div className="basic-page__track-title album__track-title">
-                                <p className="basic-page__track-title-text album__track-title-text">
+                              <div className="basic-page__track-title artist-page__track-title" onClick={() => handleClick(item)}>
+                                <p className="basic-page__track-title-text artist-page__track-title-text">
                                   {item.name}
                                 </p>
                                 <div className="artist-page__row">
@@ -363,6 +419,36 @@ const Artist = ({ dropdown }) => {
                                     {getInfo(item.album, "name")}
                                   </Link>
                                 </div>
+                              </div>
+                              <div
+                                className="basic-page__track-saved artist-page__track-saved"
+                                onClick={() =>
+                                  isSaved
+                                    ? onRemoveTrack(item, item.id)
+                                    : onSaveTrack(item, item.id)
+                                }
+                              >
+                                {currentSaved === item ? (
+                                  isSaved ? (
+                                    <>
+                                      <div className="basic-page__icon-wrapper">
+                                        <div className="basic-page__icon">
+                                          <Icon image={TickSaved} imageActive={TickSaved} />
+                                        </div>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div className="basic-page__icon-wrapper">
+                                        <div className="basic-page__icon">
+                                          <Icon image={TickNotSaved} imageActive={TickNotSaved} />
+                                        </div>
+                                      </div>
+                                    </>
+                                  )
+                                ) : (
+                                  <></>
+                                )}
                               </div>
                             </div>
                           ) : (

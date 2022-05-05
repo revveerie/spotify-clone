@@ -16,7 +16,9 @@ const Album = ({ dropdown }) => {
   const [album, setAlbum] = useState("");
   const [albumTracks, setAlbumTracks] = useState("");
   const [save, setSave] = useState(false);
+  const [saveTrack, setSaveTrack] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [removeTrack, setRemoveTrack] = useState(false);
   const [current, setCurrent] = useState(null);
   const { albumId } = useParams();
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -197,6 +199,48 @@ const Album = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleOutSaved = () => {
+    setCurrentSaved();
+  };
+
+  const onSaveTrack = (e, id) => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks?ids=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((saveTrackResponse) => {
+        setSaveTrack(saveTrackResponse.data);
+        setIsSaved(true);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
+  const onRemoveTrack = (e, id) => {
+    let token = localStorage.getItem("token");
+
+    axios(`https://api.spotify.com/v1/me/tracks?ids=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((removeTrackResponse) => {
+        setRemoveTrack(removeTrackResponse.data);
+        setIsSaved(false);
+      })
+
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <div className={dropdown ? "album page hidden" : "album page"}>
@@ -279,8 +323,8 @@ const Album = ({ dropdown }) => {
                           : "basic-page__track album__track"
                       }
                       key={index}
-                      onClick={() => handleClick(item)}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
+                      onMouseLeave = {() => handleOutSaved()}
                     >
                       <div className="basic-page__track-number album__track-number">
                         {current === item ? (
@@ -291,12 +335,12 @@ const Album = ({ dropdown }) => {
                           </p>
                         )}
                       </div>
-                      <div className="basic-page__track-title album__track-title">
+                      <div className="basic-page__track-title album__track-title" onClick={() => handleClick(item)}>
                         <p className="basic-page__track-title-text album__track-title-text">
                           {item.name}
                         </p>
                       </div>
-                      <div className="basic-page__track-saved">
+                      <div className="basic-page__track-saved" onClick={() => isSaved ? onRemoveTrack(item, item.id) : onSaveTrack(item, item.id)}>
                         {currentSaved === item ? (
                           isSaved ? (
                             <>
