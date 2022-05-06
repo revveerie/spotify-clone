@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import Icon from "../Icon.jsx";
@@ -13,7 +13,7 @@ import Save from "../../assets/icons/tick-gr.png";
 import TickNotSaved from "../../assets/icons/tick-lg.png";
 import TickSaved from "../../assets/icons/tick-gr.png";
 
-const Artist = ({ dropdown }) => {
+const Artist = ({ dropdown, props }) => {
   const [artist, setArtist] = useState("");
   const [artistAlbums, setArtistAlbums] = useState("");
   const [isFollow, setIsFollow] = useState("");
@@ -32,78 +32,80 @@ const Artist = ({ dropdown }) => {
 
   let savedBackground = true;
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    if (id) {
+      let token = localStorage.getItem("token");
 
-    axios(`https://api.spotify.com/v1/artists/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((artistResponse) => {
-        setArtist(artistResponse.data);
+      axios(`https://api.spotify.com/v1/artists/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((artistResponse) => {
+          setArtist(artistResponse.data);
+        })
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((isFollowResponse) => {
-        setIsFollow(isFollowResponse.data[0]);
+      axios(`https://api.spotify.com/v1/me/following/contains?type=artist&ids=${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((isFollowResponse) => {
+          setIsFollow(isFollowResponse.data[0]);
+        })
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=ES`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((popularResponse) => {
-        setPopular(popularResponse.data.tracks);
+      axios(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=ES`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((popularResponse) => {
+          setPopular(popularResponse.data.tracks);
+        })
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((relatedResponse) => {
-        setRelated(relatedResponse.data.artists);
+      axios(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((relatedResponse) => {
+          setRelated(relatedResponse.data.artists);
+        })
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/artists/${id}/albums?limit=50`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((albumsResponse) => {
-        setArtistAlbums(albumsResponse.data.items);
+      axios(`https://api.spotify.com/v1/artists/${id}/albums?limit=50`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((albumsResponse) => {
+          setArtistAlbums(albumsResponse.data.items);
+        })
 
-      .catch((error) => console.log(error));
-  }, []);
+        .catch((error) => console.log(error));
+    }
+  }, [id]);
 
   const getItem = (item, keyword) => {
     for (let key in item) {
@@ -231,9 +233,14 @@ const Artist = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+  function topFunction() {
+    document.body.scrollTop = 0; // Для Safari
+    document.documentElement.scrollTop = 0; // Для Chrome, Firefox, IE и Opera
+  }
+
   return (
     <>
-      <div className={dropdown ? "artist-page page hidden" : "artist-page page"}>
+      <div className={dropdown ? "artist-page page hidden" : "artist-page page"} id="top">
         <div className="basic-page__top artist-page__top">
           <img src={getItem(artist.images, "url")} />
         </div>
@@ -386,7 +393,6 @@ const Artist = ({ dropdown }) => {
                                   : "basic-page__track artist-page__track"
                               }
                               key={index}
-                              
                               onMouseEnter={() => handleClickSaved(item, item.id)}
                               onMouseLeave={() => handleOutSaved()}
                             >
@@ -407,7 +413,10 @@ const Artist = ({ dropdown }) => {
                                 )}
                               </div>
 
-                              <div className="basic-page__track-title artist-page__track-title" onClick={() => handleClick(item)}>
+                              <div
+                                className="basic-page__track-title artist-page__track-title"
+                                onClick={() => handleClick(item)}
+                              >
                                 <p className="basic-page__track-title-text artist-page__track-title-text">
                                   {item.name}
                                 </p>
@@ -502,7 +511,8 @@ const Artist = ({ dropdown }) => {
                             <Link
                               className="artist-page__related-row"
                               key={index}
-                              to={`/artist/${item.id}`}
+                              to={`/artist/${item.id}/#top`}
+                              onClick={topFunction()}
                             >
                               <div className="artist-page__related-image">
                                 {getItem(item.images, "url") ? (
