@@ -10,7 +10,7 @@ const ArtistCard = ({ name, image, artist, type, index, id }) => {
   useEffect(() => {
     setWidth(ref.current.offsetWidth);
     window.addEventListener("resize", function () {
-      setWidth(ref.current.offsetWidth);
+      ref.current ? setWidth(ref.current.offsetWidth): false;
     })
   }, []);
 

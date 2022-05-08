@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 import Icon from "../Icon.jsx";
@@ -100,6 +100,7 @@ const Artist = ({ dropdown, props }) => {
         },
       })
         .then((albumsResponse) => {
+          console.log(albumsResponse.data)
           setArtistAlbums(albumsResponse.data.items);
         })
 
@@ -237,7 +238,7 @@ const Artist = ({ dropdown, props }) => {
     document.body.scrollTop = 0; // Для Safari
     document.documentElement.scrollTop = 0; // Для Chrome, Firefox, IE и Opera
   }
-
+  
   return (
     <>
       <div className={dropdown ? "artist-page page hidden" : "artist-page page"} id="top">
@@ -511,8 +512,8 @@ const Artist = ({ dropdown, props }) => {
                             <Link
                               className="artist-page__related-row"
                               key={index}
-                              to={`/artist/${item.id}/#top`}
-                              onClick={topFunction()}
+                              to={`/artist/${item.id}`}
+                              onClick={topFunction}
                             >
                               <div className="artist-page__related-image">
                                 {getItem(item.images, "url") ? (
