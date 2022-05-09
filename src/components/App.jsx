@@ -20,6 +20,7 @@ import Login from "./Login.jsx";
 import Sidebar from "./menu/Sidebar.jsx";
 import ProfileIcon from "./ProfileIcon.jsx";
 import Icon from "./Icon.jsx";
+import ArtistAlbums from "./pages/ArtistAlbums.jsx";
 
 import ExitImg from "../assets/icons/exit-lg.png";
 import ExitImgActive from "../assets/icons/exit-gr.png";
@@ -186,6 +187,7 @@ const App = () => {
             <Route path="/new-releases" element={<NewReleases dropdown={dropdown} />} />
             <Route path="/artist/:id" element={<Artist dropdown={dropdown} />} />
             <Route path="/recent-tracks" element={<RecentTracks dropdown={dropdown} />} />
+            <Route path="/artist-albums/:id" element={<ArtistAlbums dropdown={dropdown} />} />
           </Routes>
         </>
       )}

@@ -170,8 +170,8 @@
 
   &__related {
     position: relative;
-    @media (max-width: 1024px) {
-      margin: 50px 0 0 0;
+    @media(max-width: 1024px) {
+      margin: 100px 0 0 0;
     }
   }
 
@@ -241,9 +241,36 @@
 
   &__albums {
     margin: 50px 0 0 0;
+    position: relative;
     @media(max-width: 1024px) {
       margin: 100px 0 0 0;
     }
+    // .grid-item {
+    //   @media (max-width: 1200px) {
+    //     &:last-child {
+    //       display: none;
+    //     }
+    //     &:nth-child(5) {
+    //       display: none;
+    //     }
+    //   }
+    //   @media (max-width: 1024px) {
+    //     &:last-child {
+    //       display: block;
+    //     }
+    //     &:nth-child(5) {
+    //       display: block;
+    //     }
+    //   }
+    //   @media (max-width: 650px) {
+    //     &:last-child {
+    //       display: none;
+    //     }
+    //     &:nth-child(5) {
+    //       display: none;
+    //     }
+    //   }
+    // }
   }
 
   &__grid {

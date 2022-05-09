@@ -13,7 +13,7 @@ import Save from "../../assets/icons/tick-gr.png";
 import TickNotSaved from "../../assets/icons/tick-lg.png";
 import TickSaved from "../../assets/icons/tick-gr.png";
 
-const Artist = ({ dropdown, props }) => {
+const Artist = ({ dropdown }) => {
   const [artist, setArtist] = useState("");
   const [artistAlbums, setArtistAlbums] = useState("");
   const [isFollow, setIsFollow] = useState("");
@@ -29,10 +29,22 @@ const Artist = ({ dropdown, props }) => {
   const { id } = useParams();
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
+  const [artistSingles, setArtistSingles] = useState("");
+  const [itemsForShow, setItemsForShow] = useState("");
 
   let savedBackground = true;
   useEffect(() => {
+
     if (id) {
+      if (window.innerWidth > 1200) {
+        setItemsForShow(3);
+      } else if (window.innerWidth > 1024 && window.innerWidth <= 1200) {
+        setItemsForShow(2);
+      } else if (window.innerWidth > 650 && window.innerWidth <= 1024) {
+        setItemsForShow(3);
+      } else if (window.innerWidth <= 650) {
+        setItemsForShow(2);
+      }
       let token = localStorage.getItem("token");
 
       axios(`https://api.spotify.com/v1/artists/${id}`, {
@@ -91,7 +103,7 @@ const Artist = ({ dropdown, props }) => {
 
         .catch((error) => console.log(error));
 
-      axios(`https://api.spotify.com/v1/artists/${id}/albums?limit=50`, {
+      axios(`https://api.spotify.com/v1/artists/${id}/albums?limit=6&include_groups=album`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -100,11 +112,21 @@ const Artist = ({ dropdown, props }) => {
         },
       })
         .then((albumsResponse) => {
-          console.log(albumsResponse.data)
           setArtistAlbums(albumsResponse.data.items);
         })
 
         .catch((error) => console.log(error));
+
+      axios(`https://api.spotify.com/v1/artists/${id}/albums?limit=6&include_groups=single`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }).then((singlesResponse) => {
+        setArtistSingles(singlesResponse.data.items);
+      });
     }
   }, [id]);
 
@@ -238,10 +260,22 @@ const Artist = ({ dropdown, props }) => {
     document.body.scrollTop = 0; // Для Safari
     document.documentElement.scrollTop = 0; // Для Chrome, Firefox, IE и Opera
   }
-  
+
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 1200) {
+      setItemsForShow(3);
+    } else if (window.innerWidth > 1024 && window.innerWidth <= 1200) {
+      setItemsForShow(2);
+    } else if (window.innerWidth > 650 && window.innerWidth <= 1024) {
+      setItemsForShow(3);
+    } else if (window.innerWidth <= 650) {
+      setItemsForShow(2);
+    }
+  });
+
   return (
     <>
-      <div className={dropdown ? "artist-page page hidden" : "artist-page page"} id="top">
+      <div className={dropdown ? "artist-page page hidden" : "artist-page page"}>
         <div className="basic-page__top artist-page__top">
           <img src={getItem(artist.images, "url")} />
         </div>
@@ -474,22 +508,46 @@ const Artist = ({ dropdown, props }) => {
                 <div className="artist-page__albums">
                   <div className="artist-page__header">
                     <div className="artist-page__title">
-                      <p className="artist-page__title-text-top">Albums</p>
+                      <p className="artist-page__title-text-top">
+                        {artistAlbums.length != 0 ? "Albums" : "Singles"}
+                      </p>
+                    </div>
+                    <div className="show-more__button">
+                      <Link to={`/artist-albums/${id}`} className="show-more__button-link">
+                        Show more
+                      </Link>
                     </div>
                   </div>
                   <div className="artist-page__grid">
-                    {artistAlbums
-                      ? artistAlbums.map((item, index) => (
-                          <div className="grid-item" key={index}>
-                            <ArtistAlbumCard
-                              index={index}
-                              image={getItem(item.images, "url")}
-                              name={item.name}
-                              pathAlbum={`/album/${item.id}`}
-                            />
-                          </div>
-                        ))
-                      : null}
+                    {artistAlbums.length != 0
+                      ? artistAlbums
+                        ? artistAlbums.map((item, index) =>
+                            index < itemsForShow ? (
+                              <div className="grid-item" key={index}>
+                                <ArtistAlbumCard
+                                  index={index}
+                                  image={getItem(item.images, "url")}
+                                  name={item.name}
+                                  pathAlbum={`/album/${item.id}`}
+                                />
+                              </div>
+                            ) : null
+                          )
+                        : null
+                      : artistSingles
+                      ? artistSingles.map((item, index) =>
+                          index < itemsForShow ? (
+                            <div className="grid-item" key={index}>
+                              <ArtistAlbumCard
+                                index={index}
+                                image={getItem(item.images, "url")}
+                                name={item.name}
+                                pathAlbum={`/album/${item.id}`}
+                              />
+                            </div>
+                          ) : null
+                        )
+                      : false}
                   </div>
                 </div>
               </div>
