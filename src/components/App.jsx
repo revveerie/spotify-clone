@@ -11,6 +11,7 @@ import Albums from "./pages/Albums.jsx";
 import Album from "./pages/Album.jsx";
 import Songs from "./pages/Songs.jsx";
 import Playlists from "./pages/Playlists.jsx";
+import RecentTracks from "./pages/RecentTracks.jsx"
 import Playlist from "./pages/Playlist.jsx";
 import NewPlaylist from "./pages/NewPlaylist.jsx";
 import NewReleases from "./pages/NewReleases.jsx";
@@ -184,6 +185,7 @@ const App = () => {
             <Route path="/new-playlist" element={<NewPlaylist />} />
             <Route path="/new-releases" element={<NewReleases dropdown={dropdown} />} />
             <Route path="/artist/:id" element={<Artist dropdown={dropdown} />} />
+            <Route path="/recent-tracks" element={<RecentTracks dropdown={dropdown} />} />
           </Routes>
         </>
       )}

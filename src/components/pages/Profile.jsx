@@ -6,7 +6,8 @@ import ArtistCard from "../ArtistCard.jsx";
 import AudioWave from "../AudioWave.jsx";
 import Icon from "../Icon.jsx";
 import PlaylistCard from "../PlaylistCard.jsx";
-import ShowMore from "../ShowMore.jsx"
+import ShowMore from "../ShowMore.jsx";
+import NoArtist from "../../assets/images/no-artist-image.jpg";
 
 import NoAlbum from "../../assets/images/no-album-image.jpg";
 import TickNotSaved from "../../assets/icons/tick-lg.png";
@@ -25,10 +26,27 @@ const Profile = ({ dropdown }) => {
   const [artist, setArtist] = useState("");
   const [moreTopArtists, setMoreTopArtists] = useState(false);
   const [moreTopTracks, setMoreTopTracks] = useState(false);
+  const [itemsForShow, setItemsForShow] = useState("");
 
   let savedBackground = true;
 
   useEffect(() => {
+    if (window.innerWidth > 1440) {
+      setItemsForShow(6);
+    } else if (window.innerWidth > 1200 && window.innerWidth <= 1440) {
+      setItemsForShow(5);
+    } else if (window.innerWidth > 1024 && window.innerWidth <= 1200) {
+      setItemsForShow(4);
+    } else if (window.innerWidth > 991 && window.innerWidth <= 1024) {
+      setItemsForShow(5);
+    } else if (window.innerWidth > 768 && window.innerWidth <= 991) {
+      setItemsForShow(4);
+    } else if (window.innerWidth > 650 && window.innerWidth <= 768) {
+      setItemsForShow(3);
+    } else if (window.innerWidth <= 650) {
+      setItemsForShow(2);
+    }
+
     let token = localStorage.getItem("token");
 
     axios(`https://api.spotify.com/v1/me/top/artists?limit=10`, {
@@ -57,7 +75,7 @@ const Profile = ({ dropdown }) => {
       })
       .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/me/player/recently-played?limit=50`, {
+    axios(`https://api.spotify.com/v1/me/player/recently-played?limit=5`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +84,8 @@ const Profile = ({ dropdown }) => {
       },
     })
       .then((recentResponse) => {
-        setRecent(recentResponse.data);
+        console.log(recentResponse.data.items);
+        setRecent(recentResponse.data.items);
       })
       .catch((error) => console.log(error));
 
@@ -92,7 +111,6 @@ const Profile = ({ dropdown }) => {
       },
     })
       .then((artistResponse) => {
-        console.log(artistResponse.data.artists);
         setArtist(artistResponse.data.artists);
       })
       .catch((error) => console.log(error));
@@ -196,6 +214,24 @@ const Profile = ({ dropdown }) => {
     moreTopTracks == false ? setMoreTopTracks(true) : setMoreTopTracks(false);
   };
 
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 1440) {
+      setItemsForShow(6);
+    } else if (window.innerWidth > 1200 && window.innerWidth <= 1440) {
+      setItemsForShow(5);
+    } else if (window.innerWidth > 1024 && window.innerWidth <= 1200) {
+      setItemsForShow(4);
+    } else if (window.innerWidth > 991 && window.innerWidth <= 1024) {
+      setItemsForShow(5);
+    } else if (window.innerWidth > 768 && window.innerWidth <= 991) {
+      setItemsForShow(4);
+    } else if (window.innerWidth > 650 && window.innerWidth <= 768) {
+      setItemsForShow(3);
+    } else if (window.innerWidth <= 650) {
+      setItemsForShow(2);
+    }
+  });
+
   return (
     <>
       <div className={dropdown ? "profile-page page hidden" : "profile-page page"}>
@@ -213,7 +249,7 @@ const Profile = ({ dropdown }) => {
           <div className="profile-page__top-artists-grid">
             {topArtists?.items
               ? topArtists.items.map((item, index) =>
-                  index < 6 ? (
+                  index < itemsForShow ? (
                     <div className={moreTopArtists ? "grid-item show" : "grid-item"} key={index}>
                       <ArtistCard
                         index={index}
@@ -233,7 +269,7 @@ const Profile = ({ dropdown }) => {
             {moreTopArtists ? (
               topArtists?.items ? (
                 topArtists.items.map((item, index) =>
-                  index >= 6 ? (
+                  index >= itemsForShow ? (
                     <div className={moreTopArtists ? "grid-item show" : "grid-item"} key={index}>
                       <ArtistCard
                         index={index}
@@ -261,7 +297,9 @@ const Profile = ({ dropdown }) => {
               <p className="artist-page__title-text-top">Top tracks</p>
             </div>
             <div className="show-more__button" onClick={onMoreTopTracks}>
-              <div className="show-more__button-link">{moreTopTracks ? "Show less" : "Show more"}</div>
+              <div className="show-more__button-link">
+                {moreTopTracks ? "Show less" : "Show more"}
+              </div>
             </div>
           </div>
           <div className="basic-page__tracks">
@@ -352,8 +390,8 @@ const Profile = ({ dropdown }) => {
                 )
               : null}
             {moreTopTracks ? (
-              topTracks
-              ? topTracks.map((item, index) =>
+              topTracks ? (
+                topTracks.map((item, index) =>
                   index >= 5 ? (
                     <div
                       className={
@@ -437,11 +475,103 @@ const Profile = ({ dropdown }) => {
                     (savedBackground = false)
                   )
                 )
-              : null
-            ): (
+              ) : null
+            ) : (
               <></>
             )}
           </div>
+        </div>
+        <div className="profile-page__recent">
+          <div className="artist-page__header">
+            <div className="artist-page__title">
+              <p className="artist-page__title-text-top">Recently played</p>
+            </div>
+            <div className="show-more__button">
+              <Link to="/recent-tracks" className="show-more__button-link">Show more</Link>
+            </div>
+          </div>
+            {recent
+              ? recent.map((item, index) => (
+                  <div
+                    className={
+                      current === item
+                        ? "basic-page__track playlist__track active"
+                        : "basic-page__track playlist__track"
+                    }
+                    key={index}
+                    onMouseLeave={() => handleOutSaved()}
+                    onMouseEnter={() => handleClickSaved(item, item.track.id)}
+                  >
+                    <div className="basic-page__track-number playlist__track-number">
+                      {current === item ? (
+                        <AudioWave />
+                      ) : (
+                        <p className="basic-page__track-number-text">{index + 1}</p>
+                      )}
+                    </div>
+                    <div className="basic-page__track-image playlist__track-image">
+                      {getItem(item.track.album.images, "url") ? (
+                        <img src={getItem(item.track.album.images, "url")} alt="" />
+                      ) : (
+                        <img src={NoAlbum} alt="" />
+                      )}
+                    </div>
+                    <div
+                      className="basic-page__track-title playlist__track-title"
+                      onClick={() => handleClick(item)}
+                    >
+                      <p className="basic-page__track-title-text">{item.track.name}</p>
+                      <div className="playlist__row">
+                        <Link
+                          className="playlist__track-title-artist"
+                          to={`/artist/${getItem(item.track.artists, "id")}`}
+                        >
+                          {getItem(item.track.artists, "name")}
+                        </Link>
+                        <Link
+                          className="playlist__track-title-artist playlist__track-title-album"
+                          to={`/album/${getInfo(item.track.album, "id")}`}
+                        >
+                          {getInfo(item.track.album, "name")}
+                        </Link>
+                      </div>
+                    </div>
+                    <div
+                      className="basic-page__track-saved"
+                      onClick={() =>
+                        isSaved ? onRemoveTrack(item, item.id) : onSaveTrack(item, item.id)
+                      }
+                    >
+                      {currentSaved === item ? (
+                        isSaved ? (
+                          <>
+                            <div className="basic-page__icon-wrapper">
+                              <div className="basic-page__icon">
+                                <Icon image={TickSaved} imageActive={TickSaved} />
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="basic-page__icon-wrapper">
+                              <div className="basic-page__icon">
+                                <Icon image={TickNotSaved} imageActive={TickNotSaved} />
+                              </div>
+                            </div>
+                          </>
+                        )
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className="basic-page__track-duration playlist__track-duration">
+                      <p className="basic-page__track-duration-text">
+                        {getTimeMinSec(Number(item.track.duration_ms))}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              : null}
         </div>
         <div className="profile-page__playlists-wrapper">
           <div className="artist-page__header">

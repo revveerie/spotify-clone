@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import NoArtist from "../assets/images/no-artist-image.jpg";
 
-const ArtistCard = ({ name, image, artist, type, index, id }) => {
+const ArtistCard = ({ image, artist, type, index, id }) => {
   const ref = useRef(null);
   const [width, setWidth] = useState("");
 
