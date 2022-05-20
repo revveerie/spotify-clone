@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import BasicCard from "./BasicCard.jsx";
+import CategoryCard from "./CategoryCard.jsx";
 
 import { Navigation, FreeMode} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
@@ -9,18 +9,16 @@ import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
-const Releases = ({ dropdown }) => {
-  const [releases, setReleases] = useState("");
+const Categories = ({ dropdown }) => {
 
   const navigationPrevRef = React.useRef(null)
   const navigationNextRef = React.useRef(null)
 
-  const RELEASES_ENDPOINT = "https://api.spotify.com/v1/browse/new-releases?country=US";
+  const [category, setCategory] = useState("")
 
-  useEffect(() => {
+  useEffect (() => {
     let token = localStorage.getItem("token");
-
-    axios(RELEASES_ENDPOINT, {
+    axios(`	https://api.spotify.com/v1/browse/categories`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,12 +26,13 @@ const Releases = ({ dropdown }) => {
         Authorization: "Bearer " + token,
       },
     })
-      .then((releasesResponse) => {
-        setReleases(releasesResponse.data.albums);
+      .then((categoryResponse) => {
+        console.log(categoryResponse.data.categories);
+        setCategory(categoryResponse.data.categories);
       })
 
       .catch((error) => console.log(error));
-  }, []);
+  }, [])
 
   const getItem = (item, keyword) => {
     for (let key in item) {
@@ -47,7 +46,7 @@ const Releases = ({ dropdown }) => {
     <>
       <Swiper
         spaceBetween={50}
-        slidesPerView={6}
+        slidesPerView={5}
         freeMode={true}
         loop={true}
         navigation={{
@@ -83,18 +82,16 @@ const Releases = ({ dropdown }) => {
           }
         }}
       >
-        {releases?.items
-          ? releases.items.map((item, index) => (
+        {category?.items
+          ? category.items.map((item, index) => (
             <SwiperSlide key={index}>
-              <BasicCard
-                image={getItem(item.images, "url")}
+              <CategoryCard
+                image={getItem(item.icons, "url")}
                 name={item.name}
-                artist={getItem(item.artists, "name")}
-                type={item.album_type}
-                pathArtist={`artist/${getItem(item.artists, "id")}`}
-                id = {item.id}
+                index={index}
+                pathCat={`category/${(item.id)}`}
               />
-              </SwiperSlide>
+            </SwiperSlide>
             ))
           : null}
       </Swiper>
@@ -104,4 +101,4 @@ const Releases = ({ dropdown }) => {
   );
 };
 
-export default Releases;
+export default Categories;

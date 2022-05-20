@@ -19,3 +19,10 @@
     text-transform: uppercase;
   }
 }
+
+.categories {
+  margin: 50px 0 0 0;
+  @media (max-width: 1024px) {
+    margin: 100px 0 0 0;
+  }
+}
