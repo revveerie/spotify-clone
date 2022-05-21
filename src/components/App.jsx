@@ -18,6 +18,7 @@ import NewReleases from "./pages/NewReleases.jsx";
 import Artist from "./pages/Artist.jsx";
 import Categories from "./pages/Categories.jsx";
 import Category from "./pages/Category.jsx";
+import Featured from "./pages/Featured.jsx";
 import Login from "./Login.jsx";
 import Sidebar from "./menu/Sidebar.jsx";
 import ProfileIcon from "./ProfileIcon.jsx";
@@ -190,6 +191,7 @@ const App = () => {
             <Route path="/artist/:id" element={<Artist dropdown={dropdown} />} />
             <Route path="/recent-tracks" element={<RecentTracks dropdown={dropdown} />} />
             <Route path="/categories" element={<Categories dropdown={dropdown} />} />
+            <Route path="/featured" element={<Featured dropdown={dropdown} />} />
             <Route path="/category/:id" element={<Category dropdown={dropdown} />} />
             <Route path="/artist-albums/:id" element={<ArtistAlbums dropdown={dropdown} />} />
           </Routes>

@@ -8,6 +8,7 @@ import ShowMore from "../ShowMore.jsx";
 
 import Releases from "../Releases.jsx";
 import Categories from "../Categories.jsx";
+import Featured from '../Featured.jsx';
 
 const Explore = ({ dropdown }) => {
   return (
@@ -33,6 +34,17 @@ const Explore = ({ dropdown }) => {
           </div>
           <div className="releases__cards">
             <Categories dropdown={dropdown} />
+          </div>
+        </div>
+        <div className="explore__releases releases categories">
+          <div className="releases__header">
+            <div className="releases__title">
+              <p className="releases__title-text">Featured</p>
+            </div>
+            <ShowMore path="/featured" />
+          </div>
+          <div className="releases__cards">
+            <Featured dropdown={dropdown} />
           </div>
         </div>
       </div>

@@ -1,3 +1,9 @@
+.explore {
+  @media (max-width: 1024px) {
+    padding: 25px 15px 150px;
+  }
+}
+
 .releases {
   &__header {
     display: flex;
