@@ -288,7 +288,7 @@ const Playlist = ({ dropdown }) => {
                   </p>
                 </div>
                 <div className="info-content__buttons">
-                  <div className="info-content__button  info-content__button_play_m">
+                  <div className="info-content__button  info-content__button_play">
                     <div className="info-content__button-icon">
                       <Icon image={Shuffle} imageActive={ShuffleHover}></Icon>
                     </div>

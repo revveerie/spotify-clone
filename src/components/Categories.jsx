@@ -89,7 +89,7 @@ const Categories = ({ dropdown }) => {
                 image={getItem(item.icons, "url")}
                 name={item.name}
                 index={index}
-                pathCat={`category/${(item.id)}`}
+                id={item.id}
               />
             </SwiperSlide>
             ))

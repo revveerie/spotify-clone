@@ -3,12 +3,7 @@ import axios from "axios";
 
 import CategoryCard from "../CategoryCard.jsx";
 
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
-
 const Categories = ({ dropdown }) => {
-  const navigationPrevRef = React.useRef(null);
-  const navigationNextRef = React.useRef(null);
 
   const [category, setCategory] = useState("");
 
@@ -52,7 +47,7 @@ const Categories = ({ dropdown }) => {
                   image={getItem(item.icons, "url")}
                   name={item.name}
                   index={index}
-                  pathCat={`category/${item.id}`}
+                  id = {item.id}
                 />
               ))
             : null}

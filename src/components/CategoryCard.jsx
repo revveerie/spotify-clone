@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CategoryCard = ({ name, image, index, pathCat }) => {
+const CategoryCard = ({ name, image, index, id }) => {
   return (
     <>
       <div className="category__card" key={index}>
-        <Link className="category__card-link" to={pathCat}>
+        <Link className="category__card-link" to={`/category/${(id)}`}>
           <div className="category__image">
             <img src={image} alt={name} />
           </div>
