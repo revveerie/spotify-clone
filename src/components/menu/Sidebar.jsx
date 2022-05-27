@@ -73,7 +73,7 @@ const Sidebar = ({ profile, logout, onMouseEnter, onMouseLeave, dropdown }) => {
             name="Search"
           />
           <SidebarItem
-            path="/my-music"
+            path="/songs"
             image={MyMusicImg}
             imageActive={MyMusicImgActive}
             dropdown={dropdown}

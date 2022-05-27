@@ -177,7 +177,7 @@ const App = () => {
           )}
           <Routes>
             <Route path="/" element={<Explore dropdown={dropdown} />} />
-            <Route path="/browse" element={<Browse />} />
+            <Route path="/browse" element={<Browse dropdown={dropdown} />} />
             <Route path="/my-music" element={<MyMusic />} />
             <Route path="/profile" element={<Profile dropdown={dropdown} />} />
             <Route path="/artists" element={<Artists dropdown={dropdown} />} />

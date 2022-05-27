@@ -1,0 +1,52 @@
+.browse {
+    &__wrapper {
+        display: flex;
+        margin: 40px 0 0 0;
+    }
+    &__clear-wrapper {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        border: 1px solid $dark-grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+            .icon__image {
+              opacity: 0;
+              visibility: hidden;
+              z-index: 1;
+            }
+      
+            .icon__image-active {
+              opacity: 1;
+              visibility: visible;
+              z-index: 2;
+            }
+          }
+    }
+    &__clear-button {
+        position: relative;
+        display: inline-block;
+        height: 15px;
+    }
+    &__input-wrapper {
+        height: 100%;
+        width: 70%;
+        margin: 0 0 0 30px;
+    }
+    &__input {
+        input {
+            height: 60px;
+            border-bottom: 1px solid $dark-grey;
+            background: transparent;
+            width: 100%;
+            color: #ffffff;
+            font-size: 30px;
+            font-family: $basic-font;
+            font-weight: 200;
+            letter-spacing: 2px;
+        }
+    }
+}
