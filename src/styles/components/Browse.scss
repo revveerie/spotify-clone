@@ -1,52 +1,169 @@
 .browse {
-    &__wrapper {
-        display: flex;
-        margin: 40px 0 0 0;
+  &__result {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 70px;
+    @media(max-width: 1440px) {
+      gap: 30px;
     }
-    &__clear-wrapper {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        border: 1px solid $dark-grey;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        &:hover {
-            .icon__image {
-              opacity: 0;
-              visibility: hidden;
-              z-index: 1;
-            }
-      
-            .icon__image-active {
-              opacity: 1;
-              visibility: visible;
-              z-index: 2;
-            }
-          }
+    @media(max-width: 1280px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      row-gap: 90px;
     }
-    &__clear-button {
-        position: relative;
-        display: inline-block;
-        height: 15px;
+    @media(max-width: 650px) {
+      grid-template-columns: 1fr;
+      gap: 30px;
     }
-    &__input-wrapper {
-        height: 100%;
-        width: 70%;
-        margin: 0 0 0 30px;
+  }
+  &__wrapper {
+    display: flex;
+    margin: 40px 0 0 0;
+    @media(max-width: 768px) {
+        margin: 0;
     }
-    &__input {
-        input {
-            height: 60px;
-            border-bottom: 1px solid $dark-grey;
-            background: transparent;
-            width: 100%;
-            color: #ffffff;
-            font-size: 30px;
-            font-family: $basic-font;
-            font-weight: 200;
-            letter-spacing: 2px;
-        }
+  }
+  &__clear-wrapper {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid $dark-grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      .icon__image {
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+      }
+
+      .icon__image-active {
+        opacity: 1;
+        visibility: visible;
+        z-index: 2;
+      }
     }
+    @media(max-width: 768px) {
+        width: 30px;
+        height: 30px;
+    }
+  }
+  &__clear-button {
+    position: relative;
+    display: inline-block;
+    height: 15px;
+    @media(max-width: 768px) {
+        height: 10px;
+    }
+  }
+  &__input-wrapper {
+    height: 100%;
+    width: 70%;
+    margin: 0 0 0 30px;
+    @media (max-width: 1024px) {
+      width: 80%;
+      margin: 0 0 0 20px;
+    }
+  }
+  &__input {
+    input {
+      height: 60px;
+      border-bottom: 1px solid $dark-grey;
+      background: transparent;
+      width: 100%;
+      color: #ffffff;
+      font-size: 30px;
+      font-family: $basic-font;
+      font-weight: 200;
+      letter-spacing: 2px;
+      @media (max-width: 768px) {
+        font-size: 20px;
+        height: 30px;
+      }
+    }
+  }
+  &__result {
+    margin: 30px 0 0 0;
+  }
+  &__artist-item {
+    display: flex;
+    align-items: center;
+    &:not(:last-child) {
+      margin: 0 0 20px 0;
+    }
+    
+    &:hover {
+      .artist-page__related-name-text {
+        color: $main-green;
+      }
+    }
+  }
+
+  &__artist-image {
+    margin: 0 20px 0 0;
+    overflow: hidden;
+    border-radius: 50%;
+    display: inline-block;
+    img {
+      height: 60px;
+      width: 60px;
+      object-fit: cover;
+    }
+    &_main {
+      img {
+        width: 100px;
+
+        height: 100px;
+      }
+    }
+  }
+
+  &__artist-name-text {
+    font-family: $basic-font;
+    color: $light-grey;
+  }
+  &__albums {
+    @media(max-width: 650px) {
+      height: 360px;
+    }
+  }
+  &__albums-wrapper {
+    position: relative;
+  }
+  &__album-item {
+
+  }
+  &__album-image {
+    &_first {
+      position: absolute;
+      left: 20px;
+      img {
+        height: 150px;
+        width: 150px;
+      }
+    }
+    &_second {
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      img {
+        height: 170px;
+        width: 170px;
+      }
+    }
+    &_third {
+      position: absolute;
+      top: 80px;
+      img {
+        height: 190px;
+        width: 190px;
+      }
+    }
+  }
+  &__album-name {
+    position: absolute;
+    top: 270px;
+  }
 }
