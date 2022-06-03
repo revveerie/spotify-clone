@@ -87,6 +87,9 @@
   &__result {
     margin: 30px 0 0 0;
   }
+  &__all-result {
+    margin: 30px 0 0 0;
+  }
   &__artist-item {
     display: flex;
     align-items: center;
@@ -95,7 +98,7 @@
     }
     
     &:hover {
-      .artist-page__related-name-text {
+      .browse__artist-name-text {
         color: $main-green;
       }
     }
@@ -138,7 +141,8 @@
   &__album-image {
     &_first {
       position: absolute;
-      left: 20px;
+      left: 50%;
+      transform: translate(-55%, 0);
       img {
         height: 150px;
         width: 150px;
@@ -147,7 +151,8 @@
     &_second {
       position: absolute;
       top: 40px;
-      left: 10px;
+      left: 50%;
+      transform: translate(-55%, 0);
       img {
         height: 170px;
         width: 170px;
@@ -156,6 +161,8 @@
     &_third {
       position: absolute;
       top: 80px;
+      left: 50%;
+      transform: translate(-55%, 0);
       img {
         height: 190px;
         width: 190px;
@@ -164,6 +171,12 @@
   }
   &__album-name {
     position: absolute;
-    top: 270px;
+    top: 280px;
+  }
+  &__release-date {
+    font-family: $basic-font;
+    font-size: 12px;
+    color: $dark-grey;
+    margin: 8px 0 0 0;
   }
 }
