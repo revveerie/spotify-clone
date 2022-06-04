@@ -80,7 +80,7 @@ const Sidebar = ({ profile, logout, onMouseEnter, onMouseLeave, dropdown }) => {
             name="My music"
           />
         </nav>
-        {dropdown && (
+        {/* {dropdown && (
           <div className="sidebar__add-playlist">
             <NavLink to="/new-playlist" className="sidebar__add-playlist-button">
               <div className="sidebar__add-playlist-button-icon">
@@ -91,7 +91,7 @@ const Sidebar = ({ profile, logout, onMouseEnter, onMouseLeave, dropdown }) => {
               </div>
             </NavLink>
           </div>
-        )}
+        )}  */}
 
         {dropdown && <Dropdown logout={logout} />}
       </div>

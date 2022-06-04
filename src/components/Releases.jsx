@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import BasicCard from "./BasicCard.jsx";
+import BasicCard from "./cards/BasicCard.jsx";
 
 import { Navigation, FreeMode} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';

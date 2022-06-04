@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-import ArtistCard from "../ArtistCard.jsx";
+import ArtistCard from "../cards/ArtistCard.jsx";
 import AudioWave from "../AudioWave.jsx";
 import Icon from "../Icon.jsx";
-import PlaylistCard from "../PlaylistCard.jsx";
+import PlaylistCard from "../cards/PlaylistCard.jsx";
 import ShowMore from "../ShowMore.jsx";
 import NoArtist from "../../assets/images/no-artist-image.jpg";
 

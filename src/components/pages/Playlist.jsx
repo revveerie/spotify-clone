@@ -277,12 +277,11 @@ const Playlist = ({ dropdown }) => {
                   <p className="info-content__title-text">{playlist.name}</p>
                 </div>
                 <div className="info-content__row">
-                  <Link
-                    className="info-content__row-text info-content__row-text_artist"
-                    to="/profile"
+                  <div
+                    className="info-content__row-text"
                   >
                     {getInfo(playlist.owner, "display_name")}
-                  </Link>
+                  </div>
                   <p className="info-content__row-text info-content__row-text_number playlist__row-text_number">
                     {getInfo(playlist.tracks, "total")} songs
                   </p>

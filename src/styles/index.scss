@@ -131,18 +131,18 @@ body {
 // FILES
 
 // pages
-@import "./components/Login.scss";
-@import "./components/Explore.scss";
-@import "./components/NewReleases.scss";
-@import "./components/Albums.scss";
-@import "./components/Playlists.scss";
-@import "./components/Album.scss";
-@import "./components/Playlist.scss";
-@import "./components/Songs.scss";
-@import "./components/Artist.scss";
-@import "./components/Profile.scss";
-@import "./components/Categories.scss";
-@import "./components/Browse.scss";
+@import "./components/pages/Login.scss";
+@import "./components/pages/Explore.scss";
+@import "./components/pages/NewReleases.scss";
+@import "./components/pages/Albums.scss";
+@import "./components/pages/Playlists.scss";
+@import "./components/pages/Album.scss";
+@import "./components/pages/Playlist.scss";
+@import "./components/pages/Songs.scss";
+@import "./components/pages/Artist.scss";
+@import "./components/pages/Profile.scss";
+@import "./components/pages/Categories.scss";
+@import "./components/pages/Browse.scss";
  
 // menu
 @import "./components/menu/Sidebar.scss";
@@ -154,12 +154,9 @@ body {
 @import "./components/Releases.scss";
 
 //cards
-@import "./components/BasicCard.scss";
-@import "./components/ArtistCard.scss";
-@import "./components/ArtistAlbumCard.scss";
-@import "./components/PlaylistCard.scss";
-@import "./components/RecommendedCard.scss";
-@import "./components/CategoryCard.scss";
+@import "./components/cards/BasicCard.scss";
+@import "./components/cards/ArtistCard.scss";
+@import "./components/cards/PlaylistCard.scss";
 
 // others
 @import "./components/Icon.scss";

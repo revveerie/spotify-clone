@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import FeaturedCard from "../FeaturedCard.jsx";
+import FeaturedCard from "../cards/FeaturedCard.jsx";
 
 const Featured = ({ dropdown }) => {
 

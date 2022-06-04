@@ -20,19 +20,19 @@ const Album = ({ dropdown }) => {
   const [remove, setRemove] = useState(false);
   const [removeTrack, setRemoveTrack] = useState(false);
   const [current, setCurrent] = useState(null);
-  const { albumId } = useParams();
+  const { id } = useParams();
   const [currentOffset, setCurrentOffset] = useState(0);
   const [fetch, setFetch] = useState(true);
   const [isFollow, setIsFollow] = useState("");
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
 
-  const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${albumId}`;
+  const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${id}`;
   useEffect(() => {
     if (fetch) {
       let token = localStorage.getItem("token");
 
-      axios(`https://api.spotify.com/v1/albums/${albumId}/tracks?offset=${currentOffset}`, {
+      axios(`https://api.spotify.com/v1/albums/${id}/tracks?offset=${currentOffset}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const Album = ({ dropdown }) => {
   useEffect(() => {
     let token = localStorage.getItem("token");
 
-    axios(`https://api.spotify.com/v1/me/albums/contains?ids=${albumId}`, {
+    axios(`https://api.spotify.com/v1/me/albums/contains?ids=${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

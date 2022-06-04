@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import BasicCard from "../BasicCard.jsx";
+import BasicCard from "../cards/BasicCard.jsx";
 
 const NewReleases = ({ dropdown }) => {
   const [releases, setReleases] = useState("");

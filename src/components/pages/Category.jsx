@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
-import PlaylistCard from "../PlaylistCard.jsx";
+import PlaylistCard from "../cards/PlaylistCard.jsx";
 
 const Category = ({ dropdown }) => {
   const [category, setCategory] = useState("");

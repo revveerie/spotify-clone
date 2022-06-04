@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import FeaturedCard from "./FeaturedCard.jsx";
+import FeaturedCard from "./cards/FeaturedCard.jsx";
 
 import { Navigation, FreeMode} from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';

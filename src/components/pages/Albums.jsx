@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import AlbumCard from "../AlbumCard.jsx";
+import AlbumCard from "../cards/AlbumCard.jsx";
 
 import NoFollow from "../../assets/icons/music-album-dg.png";
 

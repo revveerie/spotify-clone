@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import ArtistAlbumCard from "../ArtistAlbumCard.jsx";
+import ArtistAlbumCard from "../cards/ArtistAlbumCard.jsx";
 
 const ArtistAlbums = ({ dropdown }) => {
   const { id } = useParams();
@@ -69,7 +69,9 @@ const ArtistAlbums = ({ dropdown }) => {
       <div className={dropdown ? "artist-albums page hidden" : "artist-albums page"} id="top">
         <div className="artist-page__header">
           <div className="artist-page__title">
-            <p className="artist-page__title-text-top">{artistAlbums.length != 0 ? "Albums" : "Singles"} by {artist.name}</p>
+            <p className="artist-page__title-text-top">
+              {artistAlbums.length != 0 ? "Albums" : "Singles"} by {artist.name}
+            </p>
           </div>
         </div>
         <div className="albums__wrapper">

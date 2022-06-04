@@ -3,9 +3,9 @@ import { Link, Route, Routes } from "react-router-dom";
 import axios from "axios";
 
 import Icon from "../Icon.jsx";
-import ArtistCard from "../ArtistCard.jsx";
-import AlbumCard from "../AlbumCard.jsx";
-import PlaylistCard from "../PlaylistCard.jsx";
+import ArtistCard from "../cards/ArtistCard.jsx";
+import AlbumCard from "../cards/AlbumCard.jsx";
+import PlaylistCard from "../cards/PlaylistCard.jsx";
 import AudioWave from "../AudioWave.jsx";
 
 import Cross from "../../assets/icons/cancel.png";
@@ -28,14 +28,14 @@ const Browse = ({ dropdown }) => {
   const [current, setCurrent] = useState(null);
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
-  const [save, setSave] = useState(false);
   const [saveTrack, setSaveTrack] = useState(false);
-  const [remove, setRemove] = useState(false);
   const [removeTrack, setRemoveTrack] = useState(false);
 
   const SPACE_DELIMITER = "%20";
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, []);
 
   const getInputValue = (event) => {
     let token = localStorage.getItem("token");
@@ -49,7 +49,7 @@ const Browse = ({ dropdown }) => {
 
     if (value != "") {
       axios(
-        `https://api.spotify.com/v1/search?q=${query}&type=artist%2Ctrack%2Calbum%2Cplaylist&limit=3`,
+        `https://api.spotify.com/v1/search?q=${query}&type=artist%2Ctrack%2Calbum%2Cplaylist&limit=50`,
         {
           method: "GET",
           headers: {
@@ -224,31 +224,33 @@ const Browse = ({ dropdown }) => {
                 </div>
               </div>
               {browseArtist?.items
-                ? browseArtist.items.map((item, index) => (
-                    <Link
-                      className="browse__artist-item"
-                      key={index}
-                      to={`/artist/${item.id}`}
-                      onClick={topFunction}
-                    >
-                      <div
-                        className={
-                          index == 0
-                            ? "browse__artist-image browse__artist-image_main"
-                            : "browse__artist-image"
-                        }
+                ? browseArtist.items.map((item, index) =>
+                    index < 3 ? (
+                      <Link
+                        className="browse__artist-item"
+                        key={index}
+                        to={`/artist/${item.id}`}
+                        onClick={topFunction}
                       >
-                        {getItem(item.images, "url") ? (
-                          <img src={getItem(item.images, "url")} alt="" />
-                        ) : (
-                          <img src={NoFollow} alt="" />
-                        )}
-                      </div>
-                      <div className="browse__artist-name">
-                        <p className="browse__artist-name-text">{item.name}</p>
-                      </div>
-                    </Link>
-                  ))
+                        <div
+                          className={
+                            index == 0
+                              ? "browse__artist-image browse__artist-image_main"
+                              : "browse__artist-image"
+                          }
+                        >
+                          {getItem(item.images, "url") ? (
+                            <img src={getItem(item.images, "url")} alt="" />
+                          ) : (
+                            <img src={NoFollow} alt="" />
+                          )}
+                        </div>
+                        <div className="browse__artist-name">
+                          <p className="browse__artist-name-text">{item.name}</p>
+                        </div>
+                      </Link>
+                    ) : null
+                  )
                 : null}
             </div>
             <div className="browse__albums">
@@ -262,30 +264,32 @@ const Browse = ({ dropdown }) => {
               </div>
               <div className="browse__albums-wrapper">
                 {browseAlbum?.items
-                  ? browseAlbum.items.map((item, index) => (
-                      <Link
-                        className="browse__album-item"
-                        key={index}
-                        to={`/album/${item.id}`}
-                        onClick={topFunction}
-                      >
-                        <div
-                          className={
-                            index == 0
-                              ? "browse__album-image_first"
-                              : index == 1
-                              ? "browse__album-image_second"
-                              : "browse__album-image_third"
-                          }
+                  ? browseAlbum.items.map((item, index) =>
+                      index < 3 ? (
+                        <Link
+                          className="browse__album-item"
+                          key={index}
+                          to={`/album/${item.id}`}
+                          onClick={topFunction}
                         >
-                          {getItem(item.images, "url") ? (
-                            <img src={getItem(item.images, "url")} alt="" />
-                          ) : (
-                            <img src={NoFollow} alt="" />
-                          )}
-                        </div>
-                      </Link>
-                    ))
+                          <div
+                            className={
+                              index == 0
+                                ? "browse__album-image_first"
+                                : index == 1
+                                ? "browse__album-image_second"
+                                : "browse__album-image_third"
+                            }
+                          >
+                            {getItem(item.images, "url") ? (
+                              <img src={getItem(item.images, "url")} alt="" />
+                            ) : (
+                              <img src={NoFollow} alt="" />
+                            )}
+                          </div>
+                        </Link>
+                      ) : null
+                    )
                   : null}
               </div>
             </div>
@@ -299,31 +303,33 @@ const Browse = ({ dropdown }) => {
                 </div>
               </div>
               {browseTrack?.items
-                ? browseTrack.items.map((item, index) => (
-                    <div className="basic-page__track artist-page__track" key={index}>
-                      <div className="basic-page__track-image artist-page__track-image">
-                        {getItem(item.album.images, "url") ? (
-                          <img src={getItem(item.album.images, "url")} alt="" />
-                        ) : (
-                          <img src={NoFollow} alt="" />
-                        )}
-                      </div>
+                ? browseTrack.items.map((item, index) =>
+                    index < 3 ? (
+                      <div className="basic-page__track artist-page__track" key={index}>
+                        <div className="basic-page__track-image artist-page__track-image">
+                          {getItem(item.album.images, "url") ? (
+                            <img src={getItem(item.album.images, "url")} alt="" />
+                          ) : (
+                            <img src={NoFollow} alt="" />
+                          )}
+                        </div>
 
-                      <div className="basic-page__track-title artist-page__track-title">
-                        <p className="basic-page__track-title-text artist-page__track-title-text">
-                          {item.name}
-                        </p>
-                        <div className="artist-page__row">
-                          <Link
-                            className="artist-page__track-title-artist artist-page__track-title-album"
-                            to={`/album/${getInfo(item.album, "id")}`}
-                          >
-                            {getInfo(item.album, "name")}
-                          </Link>
+                        <div className="basic-page__track-title artist-page__track-title">
+                          <p className="basic-page__track-title-text artist-page__track-title-text">
+                            {item.name}
+                          </p>
+                          <div className="artist-page__row">
+                            <Link
+                              className="artist-page__track-title-artist artist-page__track-title-album"
+                              to={`/album/${getInfo(item.album, "id")}`}
+                            >
+                              {getInfo(item.album, "name")}
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ) : null
+                  )
                 : null}
             </div>
             <div className="browse__playlists">
@@ -336,26 +342,28 @@ const Browse = ({ dropdown }) => {
                 </div>
               </div>
               {browsePlaylist?.items
-                ? browsePlaylist.items.map((item, index) => (
-                    <Link
-                      to={`/playlist/${item.id}`}
-                      className="basic-page__track artist-page__track"
-                      key={index}
-                    >
-                      <div className="basic-page__track-image artist-page__track-image">
-                        {getItem(item.images, "url") ? (
-                          <img src={getItem(item.images, "url")} alt="" />
-                        ) : (
-                          <img src={NoFollow} alt="" />
-                        )}
-                      </div>
-                      <div className="basic-page__track-title artist-page__track-title">
-                        <p className="basic-page__track-title-text artist-page__track-title-text">
-                          {item.name}
-                        </p>
-                      </div>
-                    </Link>
-                  ))
+                ? browsePlaylist.items.map((item, index) =>
+                    index < 3 ? (
+                      <Link
+                        to={`/playlist/${item.id}`}
+                        className="basic-page__track artist-page__track"
+                        key={index}
+                      >
+                        <div className="basic-page__track-image artist-page__track-image">
+                          {getItem(item.images, "url") ? (
+                            <img src={getItem(item.images, "url")} alt="" />
+                          ) : (
+                            <img src={NoFollow} alt="" />
+                          )}
+                        </div>
+                        <div className="basic-page__track-title artist-page__track-title">
+                          <p className="basic-page__track-title-text artist-page__track-title-text">
+                            {item.name}
+                          </p>
+                        </div>
+                      </Link>
+                    ) : null
+                  )
                 : null}
             </div>
           </div>
@@ -479,9 +487,7 @@ const Browse = ({ dropdown }) => {
                       <div
                         className="basic-page__track-saved"
                         onClick={() =>
-                          isSaved
-                            ? onRemoveTrack(item, item.id)
-                            : onSaveTrack(item, item.id)
+                          isSaved ? onRemoveTrack(item, item.id) : onSaveTrack(item, item.id)
                         }
                       >
                         {currentSaved === item ? (

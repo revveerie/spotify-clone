@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
-import ArtistAlbumCard from "../ArtistAlbumCard.jsx";
+import ArtistAlbumCard from "../cards/ArtistAlbumCard.jsx";
 
 import NoArtist from "../../assets/images/no-artist-image.jpg";
 import Play from "../../assets/icons/play-button.png";

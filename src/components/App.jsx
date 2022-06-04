@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, NavLink, Switch } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import Explore from "./pages/Explore.jsx";
@@ -11,7 +11,7 @@ import Albums from "./pages/Albums.jsx";
 import Album from "./pages/Album.jsx";
 import Songs from "./pages/Songs.jsx";
 import Playlists from "./pages/Playlists.jsx";
-import RecentTracks from "./pages/RecentTracks.jsx"
+import RecentTracks from "./pages/RecentTracks.jsx";
 import Playlist from "./pages/Playlist.jsx";
 import NewPlaylist from "./pages/NewPlaylist.jsx";
 import NewReleases from "./pages/NewReleases.jsx";
@@ -182,7 +182,7 @@ const App = () => {
             <Route path="/profile" element={<Profile dropdown={dropdown} />} />
             <Route path="/artists" element={<Artists dropdown={dropdown} />} />
             <Route path="/albums" element={<Albums dropdown={dropdown} />} />
-            <Route path="/album/:albumId" element={<Album dropdown={dropdown}/>} />
+            <Route path="/album/:id" element={<Album dropdown={dropdown} />} />
             <Route path="/songs" element={<Songs dropdown={dropdown} />} />
             <Route path="/playlists" element={<Playlists dropdown={dropdown} />} />
             <Route path="/playlist/:id" element={<Playlist dropdown={dropdown} />} />

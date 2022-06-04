@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import NoPlaylist from "../assets/images/no-playlist-image.jpg";
+import NoPlaylist from "../../assets/images/no-playlist-image.jpg";
 
 const PlaylistCard = ({ name, image, index, id, creator }) => {
   return (
