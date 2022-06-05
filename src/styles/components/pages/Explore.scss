@@ -2,9 +2,7 @@
   @media (max-width: 1024px) {
     padding: 25px 15px 150px;
   }
-}
 
-.releases {
   &__header {
     display: flex;
     align-items: center;
@@ -24,11 +22,21 @@
     letter-spacing: 2px;
     text-transform: uppercase;
   }
-}
 
-.categories {
-  margin: 50px 0 0 0;
-  @media (max-width: 1024px) {
-    margin: 100px 0 0 0;
+  .show-more__button {
+    @media (max-width: 1024px) {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .categories,
+  .featured {
+    margin: 50px 0 0 0;
+    @media (max-width: 1024px) {
+      margin: 100px 0 0 0;
+    }
   }
 }

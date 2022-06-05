@@ -1,4 +1,6 @@
-.releases {
+.releases, 
+.categories, 
+.featured {
   position: relative;
 
   .slick-slider {
@@ -75,15 +77,6 @@
     @media (max-width: 1024px) {
       left: auto;
       right: 0;
-    }
-  }
-
-  .show-more__button {
-    @media (max-width: 1024px) {
-      position: absolute;
-      bottom: -60px;
-      left: 50%;
-      transform: translate(-50%, 0);
     }
   }
 }

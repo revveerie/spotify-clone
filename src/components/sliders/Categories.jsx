@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import CategoryCard from "./cards/CategoryCard.jsx";
+import CategoryCard from "../cards/CategoryCard.jsx";
 
-import { Navigation, FreeMode} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Navigation, FreeMode } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
+
+import getItem from "../../helpers/getItem.js";
 
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
-const Categories = ({ dropdown }) => {
+const Categories = () => {
+  const navigationPrevRef = React.useRef(null);
+  const navigationNextRef = React.useRef(null);
 
-  const navigationPrevRef = React.useRef(null)
-  const navigationNextRef = React.useRef(null)
+  const [category, setCategory] = useState("");
 
-  const [category, setCategory] = useState("")
-
-  useEffect (() => {
+  useEffect(() => {
     let token = localStorage.getItem("token");
     axios(`	https://api.spotify.com/v1/browse/categories`, {
       method: "GET",
@@ -32,15 +33,7 @@ const Categories = ({ dropdown }) => {
       })
 
       .catch((error) => console.log(error));
-  }, [])
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -53,10 +46,10 @@ const Categories = ({ dropdown }) => {
           prevEl: navigationPrevRef.current,
           nextEl: navigationNextRef.current,
         }}
-       onBeforeInit={(swiper) => {
-            swiper.params.navigation.prevEl = navigationPrevRef.current;
-            swiper.params.navigation.nextEl = navigationNextRef.current;
-       }}
+        onBeforeInit={(swiper) => {
+          swiper.params.navigation.prevEl = navigationPrevRef.current;
+          swiper.params.navigation.nextEl = navigationNextRef.current;
+        }}
         modules={[Navigation, FreeMode]}
         breakpoints={{
           1440: {
@@ -66,32 +59,32 @@ const Categories = ({ dropdown }) => {
             slidesPerView: 5,
           },
           1024: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           991: {
-            slidesPerView: 5
+            slidesPerView: 5,
           },
           768: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           650: {
-            slidesPerView: 3
+            slidesPerView: 3,
           },
           0: {
-            slidesPerView: 2
-          }
+            slidesPerView: 2,
+          },
         }}
       >
         {category?.items
           ? category.items.map((item, index) => (
-            <SwiperSlide key={index}>
-              <CategoryCard
-                image={getItem(item.icons, "url")}
-                name={item.name}
-                index={index}
-                id={item.id}
-              />
-            </SwiperSlide>
+              <SwiperSlide key={index}>
+                <CategoryCard
+                  image={getItem(item.icons, "url")}
+                  name={item.name}
+                  index={index}
+                  id={item.id}
+                />
+              </SwiperSlide>
             ))
           : null}
       </Swiper>

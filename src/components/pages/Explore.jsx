@@ -1,50 +1,49 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import ShowMore from "../ShowMore.jsx";
 
-import Releases from "../Releases.jsx";
-import Categories from "../Categories.jsx";
-import Featured from '../Featured.jsx';
+import Releases from "../sliders/Releases.jsx";
+import Categories from "../sliders/Categories.jsx";
+import Featured from '../sliders/Featured.jsx';
 
 const Explore = ({ dropdown }) => {
   return (
     <>
       <div className={dropdown ? "explore page hidden" : "explore page"}>
-        <div className="explore__releases releases">
-          <div className="releases__header">
-            <div className="releases__title">
-              <p className="releases__title-text">New releases</p>
+        <div className="explore__slider releases">
+          <div className="explore__header">
+            <div className="explore__title">
+              <p className="explore__title-text">New releases</p>
             </div>
             <ShowMore path="/new-releases" />
           </div>
-          <div className="releases__cards">
-            <Releases dropdown={dropdown} />
+          <div className="explore__cards">
+            <Releases />
           </div>
         </div>
-        <div className="explore__releases releases categories">
-          <div className="releases__header">
-            <div className="releases__title">
-              <p className="releases__title-text">Categories</p>
+        <div className="explore__slider categories">
+          <div className="explore__header">
+            <div className="explore__title">
+              <p className="explore__title-text">Categories</p>
             </div>
             <ShowMore path="/categories" />
           </div>
-          <div className="releases__cards">
-            <Categories dropdown={dropdown} />
+          <div className="explore__cards">
+            <Categories />
           </div>
         </div>
-        <div className="explore__releases releases categories">
-          <div className="releases__header">
-            <div className="releases__title">
-              <p className="releases__title-text">Featured</p>
+        <div className="explore__slider featured">
+          <div className="explore__header">
+            <div className="explore__title">
+              <p className="explore__title-text">Featured</p>
             </div>
             <ShowMore path="/featured" />
           </div>
-          <div className="releases__cards">
-            <Featured dropdown={dropdown} />
+          <div className="explore__cards">
+            <Featured />
           </div>
         </div>
       </div>

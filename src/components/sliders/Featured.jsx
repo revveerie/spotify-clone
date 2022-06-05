@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import BasicCard from "./cards/BasicCard.jsx";
+import FeaturedCard from "../cards/FeaturedCard.jsx";
 
-import { Navigation, FreeMode} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Navigation, FreeMode } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react.js";
+
+import getItem from "../../helpers/getItem.js";
 
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 
-const Releases = ({ dropdown }) => {
+const Featured = () => {
   const [releases, setReleases] = useState("");
 
-  const navigationPrevRef = React.useRef(null)
-  const navigationNextRef = React.useRef(null)
+  const navigationPrevRef = React.useRef(null);
+  const navigationNextRef = React.useRef(null);
 
-  const RELEASES_ENDPOINT = "https://api.spotify.com/v1/browse/new-releases?country=US";
+  const RELEASES_ENDPOINT = "https://api.spotify.com/v1/browse/featured-playlists";
 
   useEffect(() => {
     let token = localStorage.getItem("token");
@@ -29,19 +31,12 @@ const Releases = ({ dropdown }) => {
       },
     })
       .then((releasesResponse) => {
-        setReleases(releasesResponse.data.albums);
+        console.log(releasesResponse.data.playlists);
+        setReleases(releasesResponse.data.playlists);
       })
 
       .catch((error) => console.log(error));
   }, []);
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
 
   return (
     <>
@@ -54,10 +49,10 @@ const Releases = ({ dropdown }) => {
           prevEl: navigationPrevRef.current,
           nextEl: navigationNextRef.current,
         }}
-       onBeforeInit={(swiper) => {
-            swiper.params.navigation.prevEl = navigationPrevRef.current;
-            swiper.params.navigation.nextEl = navigationNextRef.current;
-       }}
+        onBeforeInit={(swiper) => {
+          swiper.params.navigation.prevEl = navigationPrevRef.current;
+          swiper.params.navigation.nextEl = navigationNextRef.current;
+        }}
         modules={[Navigation, FreeMode]}
         breakpoints={{
           1440: {
@@ -67,33 +62,31 @@ const Releases = ({ dropdown }) => {
             slidesPerView: 5,
           },
           1024: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           991: {
-            slidesPerView: 5
+            slidesPerView: 5,
           },
           768: {
-            slidesPerView: 4
+            slidesPerView: 4,
           },
           650: {
-            slidesPerView: 3
+            slidesPerView: 3,
           },
           0: {
-            slidesPerView: 2
-          }
+            slidesPerView: 2,
+          },
         }}
       >
         {releases?.items
           ? releases.items.map((item, index) => (
-            <SwiperSlide key={index}>
-              <BasicCard
-                image={getItem(item.images, "url")}
-                name={item.name}
-                artist={getItem(item.artists, "name")}
-                type={item.album_type}
-                pathArtist={`artist/${getItem(item.artists, "id")}`}
-                id = {item.id}
-              />
+              <SwiperSlide key={index}>
+                <FeaturedCard
+                  image={getItem(item.images, "url")}
+                  name={item.name}
+                  index={index}
+                  id={item.id}
+                />
               </SwiperSlide>
             ))
           : null}
@@ -104,4 +97,4 @@ const Releases = ({ dropdown }) => {
   );
 };
 
-export default Releases;
+export default Featured;
