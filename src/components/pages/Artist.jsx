@@ -6,6 +6,9 @@ import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
 import ArtistAlbumCard from "../cards/ArtistAlbumCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+import getInfo from "../../helpers/getInfo.js";
+
 import NoArtist from "../../assets/images/no-artist-image.jpg";
 import Play from "../../assets/icons/play-button.png";
 import PlayHover from "../../assets/icons/play-button-gr.png";
@@ -34,7 +37,6 @@ const Artist = ({ dropdown }) => {
 
   let savedBackground = true;
   useEffect(() => {
-
     if (id) {
       if (window.innerWidth > 1200) {
         setItemsForShow(3);
@@ -130,14 +132,6 @@ const Artist = ({ dropdown }) => {
     }
   }, [id]);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
   const onSave = () => {
     let token = localStorage.getItem("token");
 
@@ -186,12 +180,6 @@ const Artist = ({ dropdown }) => {
 
   const onMoreRelated = () => {
     moreRelated == false ? setMoreRelated(true) : setMoreRelated(false);
-  };
-
-  const getInfo = (item, keyword) => {
-    for (let key in item) {
-      if (key == keyword) return item[key];
-    }
   };
 
   const handleClickSaved = (e, id) => {

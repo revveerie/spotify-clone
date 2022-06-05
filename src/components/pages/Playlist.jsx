@@ -5,6 +5,10 @@ import axios from "axios";
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
 
+import getItem from "../../helpers/getItem.js";
+import getInfo from "../../helpers/getInfo.js";
+import getTimeMinSec from "../../helpers/getTimeMinSec.js";
+
 import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
@@ -119,31 +123,6 @@ const Playlist = ({ dropdown }) => {
 
       .catch((error) => console.log(error));
   }, []);
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
-  const getInfo = (item, keyword) => {
-    for (let key in item) {
-      if (key == keyword) return item[key];
-    }
-  };
-
-  const getTimeMinSec = (time) => {
-    let min = time / 1000 / 60;
-    let r = min % 1;
-    let sec = Math.floor(r * 60);
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    min = Math.floor(min);
-    return `${min}:${sec}`;
-  };
 
   const handleClick = (e) => {
     setCurrent(e);
@@ -287,7 +266,7 @@ const Playlist = ({ dropdown }) => {
                   </p>
                 </div>
                 <div className="info-content__buttons">
-                  <div className="info-content__button  info-content__button_play">
+                  <div className="info-content__button info-content__button_play">
                     <div className="info-content__button-icon">
                       <Icon image={Shuffle} imageActive={ShuffleHover}></Icon>
                     </div>

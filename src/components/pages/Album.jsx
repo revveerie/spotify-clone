@@ -5,6 +5,10 @@ import axios from "axios";
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
 
+import getItem from "../../helpers/getItem.js";
+import getTimeMin from "../../helpers/getTimeMin.js";
+import getTimeMinSec from "../../helpers/getTimeMinSec";
+
 import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
@@ -102,45 +106,10 @@ const Album = ({ dropdown }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
-  const getTimeMinSec = (time) => {
-    let min = time / 1000 / 60;
-    let r = min % 1;
-    let sec = Math.floor(r * 60);
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    min = Math.floor(min);
-    return `${min}:${sec}`;
-  };
-
-  const getTimeMin = (time) => {
-    let min = time / 1000 / 60;
-    let r = min % 1;
-    let sec = Math.floor(r * 60);
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    min = Math.floor(min);
-    if (min <= 60) return `${min} min`;
-    else {
-      let hours = Math.trunc(min / 60);
-      let minutes = min % 60;
-      return `${hours} h ${minutes} min`;
-    }
-  };
-
   const onSave = () => {
     let token = localStorage.getItem("token");
 
-    axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
+    axios(`https://api.spotify.com/v1/me/albums?ids=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +128,7 @@ const Album = ({ dropdown }) => {
   const onRemove = () => {
     let token = localStorage.getItem("token");
 
-    axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
+    axios(`https://api.spotify.com/v1/me/albums?ids=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -324,7 +293,7 @@ const Album = ({ dropdown }) => {
                       }
                       key={index}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
-                      onMouseLeave = {() => handleOutSaved()}
+                      onMouseLeave={() => handleOutSaved()}
                     >
                       <div className="basic-page__track-number album__track-number">
                         {current === item ? (
@@ -335,12 +304,20 @@ const Album = ({ dropdown }) => {
                           </p>
                         )}
                       </div>
-                      <div className="basic-page__track-title album__track-title" onClick={() => handleClick(item)}>
+                      <div
+                        className="basic-page__track-title album__track-title"
+                        onClick={() => handleClick(item)}
+                      >
                         <p className="basic-page__track-title-text album__track-title-text">
                           {item.name}
                         </p>
                       </div>
-                      <div className="basic-page__track-saved" onClick={() => isSaved ? onRemoveTrack(item, item.id) : onSaveTrack(item, item.id)}>
+                      <div
+                        className="basic-page__track-saved"
+                        onClick={() =>
+                          isSaved ? onRemoveTrack(item, item.id) : onSaveTrack(item, item.id)
+                        }
+                      >
                         {currentSaved === item ? (
                           isSaved ? (
                             <>
