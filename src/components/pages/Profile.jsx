@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import ArtistCard from "../cards/ArtistCard.jsx";
-import AudioWave from "../AudioWave.jsx";
-import Icon from "../Icon.jsx";
 import PlaylistCard from "../cards/PlaylistCard.jsx";
+import Icon from "../Icon.jsx";
+import AudioWave from "../AudioWave.jsx";
 import ShowMore from "../ShowMore.jsx";
-import NoArtist from "../../assets/images/no-artist-image.jpg";
+
+import getItem from "../../helpers/getItem.js";
+import getTimeMinSec from "../../helpers/getTimeMinSec.js";
+import getInfo from "../../helpers/getInfo.js";
 
 import NoAlbum from "../../assets/images/no-album-image.jpg";
 import TickNotSaved from "../../assets/icons/tick-lg.png";
@@ -16,17 +19,23 @@ import TickSaved from "../../assets/icons/tick-gr.png";
 const Profile = ({ dropdown }) => {
   const [topArtists, setTopArtists] = useState("");
   const [topTracks, setTopTracks] = useState("");
+  const [moreTopArtists, setMoreTopArtists] = useState(false);
+  const [moreTopTracks, setMoreTopTracks] = useState(false);
+  const [playlist, setPlaylist] = useState("");
+  const [artist, setArtist] = useState("");
+  const [recent, setRecent] = useState("");
   const [current, setCurrent] = useState(null);
   const [saveTrack, setSaveTrack] = useState(false);
   const [removeTrack, setRemoveTrack] = useState(false);
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
-  const [recent, setRecent] = useState("");
-  const [playlist, setPlaylist] = useState("");
-  const [artist, setArtist] = useState("");
-  const [moreTopArtists, setMoreTopArtists] = useState(false);
-  const [moreTopTracks, setMoreTopTracks] = useState(false);
   const [itemsForShow, setItemsForShow] = useState("");
+
+  const TOP_ARTISTS = "https://api.spotify.com/v1/me/top/artists?limit=10";
+  const TOP_TRACKS = "https://api.spotify.com/v1/me/top/tracks?limit=10";
+  const RECENTLY_PLAYED = "https://api.spotify.com/v1/me/player/recently-played?limit=5";
+  const USER_PLAYLISTS = "https://api.spotify.com/v1/me/playlists?limit=6";
+  const USER_ARTISTS = "https://api.spotify.com/v1/me/following?type=artist&limit=6";
 
   let savedBackground = true;
 
@@ -49,7 +58,7 @@ const Profile = ({ dropdown }) => {
 
     let token = localStorage.getItem("token");
 
-    axios(`https://api.spotify.com/v1/me/top/artists?limit=10`, {
+    axios(TOP_ARTISTS, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +71,7 @@ const Profile = ({ dropdown }) => {
       })
       .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/me/top/tracks?limit=10`, {
+    axios(TOP_TRACKS, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +84,7 @@ const Profile = ({ dropdown }) => {
       })
       .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/me/player/recently-played?limit=5`, {
+    axios(RECENTLY_PLAYED, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -84,12 +93,11 @@ const Profile = ({ dropdown }) => {
       },
     })
       .then((recentResponse) => {
-        console.log(recentResponse.data.items);
         setRecent(recentResponse.data.items);
       })
       .catch((error) => console.log(error));
 
-    axios(`	https://api.spotify.com/v1/me/playlists?limit=6`, {
+    axios(USER_PLAYLISTS, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +110,7 @@ const Profile = ({ dropdown }) => {
       })
       .catch((error) => console.log(error));
 
-    axios(`https://api.spotify.com/v1/me/following?type=artist&limit=6`, {
+    axios(USER_ARTISTS, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -115,14 +123,6 @@ const Profile = ({ dropdown }) => {
       })
       .catch((error) => console.log(error));
   }, []);
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
 
   const handleClick = (e) => {
     setCurrent(e);
@@ -189,23 +189,6 @@ const Profile = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
-  const getInfo = (item, keyword) => {
-    for (let key in item) {
-      if (key == keyword) return item[key];
-    }
-  };
-
-  const getTimeMinSec = (time) => {
-    let min = time / 1000 / 60;
-    let r = min % 1;
-    let sec = Math.floor(r * 60);
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    min = Math.floor(min);
-    return `${min}:${sec}`;
-  };
-
   const onMoreTopArtists = () => {
     moreTopArtists == false ? setMoreTopArtists(true) : setMoreTopArtists(false);
   };
@@ -236,9 +219,9 @@ const Profile = ({ dropdown }) => {
     <>
       <div className={dropdown ? "profile-page page hidden" : "profile-page page"}>
         <div className="profile-page__top-artists-wrapper">
-          <div className="artist-page__header">
-            <div className="artist-page__title">
-              <p className="artist-page__title-text-top">Top artists</p>
+          <div className="profile-page__header">
+            <div className="profile-page__title">
+              <p className="profile-page__title-text-top">Top artists</p>
             </div>
             <div className="show-more__button" onClick={onMoreTopArtists}>
               <div className="show-more__button-link">
@@ -292,9 +275,9 @@ const Profile = ({ dropdown }) => {
           </div>
         </div>
         <div className="profile-page__tracks-wrapper">
-          <div className="artist-page__header">
-            <div className="artist-page__title">
-              <p className="artist-page__title-text-top">Top tracks</p>
+          <div className="profile-page__header">
+            <div className="profile-page__title">
+              <p className="profile-page__title-text-top">Top tracks</p>
             </div>
             <div className="show-more__button" onClick={onMoreTopTracks}>
               <div className="show-more__button-link">
@@ -308,22 +291,20 @@ const Profile = ({ dropdown }) => {
                   index < 5 ? (
                     <div
                       className={
-                        current === item
-                          ? "basic-page__track playlist__track active"
-                          : "basic-page__track playlist__track"
+                        current === item ? "basic-page__track active" : "basic-page__track"
                       }
                       key={index}
                       onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
                     >
-                      <div className="basic-page__track-number playlist__track-number">
+                      <div className="basic-page__track-number">
                         {current === item ? (
                           <AudioWave />
                         ) : (
                           <p className="basic-page__track-number-text">{index + 1}</p>
                         )}
                       </div>
-                      <div className="basic-page__track-image playlist__track-image">
+                      <div className="basic-page__track-image">
                         {getItem(item.album.images, "url") ? (
                           <img src={getItem(item.album.images, "url")} alt="" />
                         ) : (
@@ -331,19 +312,19 @@ const Profile = ({ dropdown }) => {
                         )}
                       </div>
                       <div
-                        className="basic-page__track-title playlist__track-title"
+                        className="basic-page__track-title profile-page__track-title"
                         onClick={() => handleClick(item)}
                       >
                         <p className="basic-page__track-title-text">{item.name}</p>
-                        <div className="playlist__row">
+                        <div className="basic-page__row">
                           <Link
-                            className="playlist__track-title-artist"
+                            className="basic-page__track-title-artist"
                             to={`/artist/${getItem(item.album.artists, "id")}`}
                           >
                             {getItem(item.album.artists, "name")}
                           </Link>
                           <Link
-                            className="playlist__track-title-artist playlist__track-title-album"
+                            className="basic-page__track-title-artist basic-page__track-title-album"
                             to={`/album/${getInfo(item.album, "id")}`}
                           >
                             {getInfo(item.album, "name")}
@@ -378,7 +359,7 @@ const Profile = ({ dropdown }) => {
                           <></>
                         )}
                       </div>
-                      <div className="basic-page__track-duration playlist__track-duration">
+                      <div className="basic-page__track-duration">
                         <p className="basic-page__track-duration-text">
                           {getTimeMinSec(Number(item.duration_ms))}
                         </p>
@@ -395,22 +376,20 @@ const Profile = ({ dropdown }) => {
                   index >= 5 ? (
                     <div
                       className={
-                        current === item
-                          ? "basic-page__track playlist__track active"
-                          : "basic-page__track playlist__track"
+                        current === item ? "basic-page__track active" : "basic-page__track"
                       }
                       key={index}
                       onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
                     >
-                      <div className="basic-page__track-number playlist__track-number">
+                      <div className="basic-page__track-number">
                         {current === item ? (
                           <AudioWave />
                         ) : (
                           <p className="basic-page__track-number-text">{index + 1}</p>
                         )}
                       </div>
-                      <div className="basic-page__track-image playlist__track-image">
+                      <div className="basic-page__track-image">
                         {getItem(item.album.images, "url") ? (
                           <img src={getItem(item.album.images, "url")} alt="" />
                         ) : (
@@ -418,19 +397,19 @@ const Profile = ({ dropdown }) => {
                         )}
                       </div>
                       <div
-                        className="basic-page__track-title playlist__track-title"
+                        className="basic-page__track-title profile-page__track-title"
                         onClick={() => handleClick(item)}
                       >
                         <p className="basic-page__track-title-text">{item.name}</p>
-                        <div className="playlist__row">
+                        <div className="basic-page__row">
                           <Link
-                            className="playlist__track-title-artist"
+                            className="basic-page__track-title-artist"
                             to={`/artist/${getItem(item.album.artists, "id")}`}
                           >
                             {getItem(item.album.artists, "name")}
                           </Link>
                           <Link
-                            className="playlist__track-title-artist playlist__track-title-album"
+                            className="basic-page__track-title-artist basic-page__track-title-album"
                             to={`/album/${getInfo(item.album, "id")}`}
                           >
                             {getInfo(item.album, "name")}
@@ -465,7 +444,7 @@ const Profile = ({ dropdown }) => {
                           <></>
                         )}
                       </div>
-                      <div className="basic-page__track-duration playlist__track-duration">
+                      <div className="basic-page__track-duration">
                         <p className="basic-page__track-duration-text">
                           {getTimeMinSec(Number(item.duration_ms))}
                         </p>
@@ -473,6 +452,7 @@ const Profile = ({ dropdown }) => {
                     </div>
                   ) : (
                     (savedBackground = false)
+                  
                   )
                 )
               ) : null
@@ -481,35 +461,38 @@ const Profile = ({ dropdown }) => {
             )}
           </div>
         </div>
-        <div className="profile-page__recent">
-          <div className="artist-page__header">
-            <div className="artist-page__title">
-              <p className="artist-page__title-text-top">Recently played</p>
+        <div className="profile-page__recent-wrapper">
+          <div className="profile-page__header">
+            <div className="profile-page__title">
+              <p className="profile-page__title-text-top">Recently played</p>
             </div>
             <div className="show-more__button">
-              <Link to="/recent-tracks" className="show-more__button-link">Show more</Link>
+              <Link to="/recent-tracks" className="show-more__button-link">
+                Show more
+              </Link>
             </div>
           </div>
+          <div className="basic-page__tracks">
             {recent
               ? recent.map((item, index) => (
                   <div
                     className={
                       current === item
-                        ? "basic-page__track playlist__track active"
-                        : "basic-page__track playlist__track"
+                        ? "basic-page__track active"
+                        : "basic-page__track"
                     }
                     key={index}
                     onMouseLeave={() => handleOutSaved()}
                     onMouseEnter={() => handleClickSaved(item, item.track.id)}
                   >
-                    <div className="basic-page__track-number playlist__track-number">
+                    <div className="basic-page__track-number">
                       {current === item ? (
                         <AudioWave />
                       ) : (
                         <p className="basic-page__track-number-text">{index + 1}</p>
                       )}
                     </div>
-                    <div className="basic-page__track-image playlist__track-image">
+                    <div className="basic-page__track-image">
                       {getItem(item.track.album.images, "url") ? (
                         <img src={getItem(item.track.album.images, "url")} alt="" />
                       ) : (
@@ -517,19 +500,19 @@ const Profile = ({ dropdown }) => {
                       )}
                     </div>
                     <div
-                      className="basic-page__track-title playlist__track-title"
+                      className="basic-page__track-title profile-page__track-title"
                       onClick={() => handleClick(item)}
                     >
                       <p className="basic-page__track-title-text">{item.track.name}</p>
-                      <div className="playlist__row">
+                      <div className="basic-page__row">
                         <Link
-                          className="playlist__track-title-artist"
+                          className="basic-page__track-title-artist"
                           to={`/artist/${getItem(item.track.artists, "id")}`}
                         >
                           {getItem(item.track.artists, "name")}
                         </Link>
                         <Link
-                          className="playlist__track-title-artist playlist__track-title-album"
+                          className="basic-page__track-title-artist basic-page__track-title-album"
                           to={`/album/${getInfo(item.track.album, "id")}`}
                         >
                           {getInfo(item.track.album, "name")}
@@ -564,7 +547,7 @@ const Profile = ({ dropdown }) => {
                         <></>
                       )}
                     </div>
-                    <div className="basic-page__track-duration playlist__track-duration">
+                    <div className="basic-page__track-duration">
                       <p className="basic-page__track-duration-text">
                         {getTimeMinSec(Number(item.track.duration_ms))}
                       </p>
@@ -572,11 +555,12 @@ const Profile = ({ dropdown }) => {
                   </div>
                 ))
               : null}
+          </div>
         </div>
         <div className="profile-page__playlists-wrapper">
-          <div className="artist-page__header">
-            <div className="artist-page__title">
-              <p className="artist-page__title-text-top">Playlists</p>
+          <div className="profile-page__header">
+            <div className="profile-page__title">
+              <p className="profile-page__title-text-top">Playlists</p>
             </div>
             <ShowMore path="/playlists" />
           </div>
@@ -597,9 +581,9 @@ const Profile = ({ dropdown }) => {
           </div>
         </div>
         <div className="profile-page__artists-wrapper">
-          <div className="artist-page__header">
-            <div className="artist-page__title">
-              <p className="artist-page__title-text-top">Artists</p>
+          <div className="profile-page__header">
+            <div className="profile-page__title">
+              <p className="profile-page__title-text-top">Artists</p>
             </div>
             <ShowMore path="/artists" />
           </div>

@@ -2,10 +2,32 @@
   @media(max-width: 1024px) {
     padding: 25px 15px 150px;
   }
+
   &__top-artists-wrapper {
     position: relative;
     margin: 0 0 50px 0;
   }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 30px 0;
+  }
+
+  &__title {
+    cursor: default;
+  }
+
+  &__title-text-top {
+    font-family: $basic-font;
+    font-size: 14px;
+    font-weight: 400;
+    color: $light-grey;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
   &__top-artists-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -35,6 +57,7 @@
       grid-gap: 15px;
     }
   }
+
   &__tracks-wrapper {
     position: relative;
     margin: 0 0 50px 0;
@@ -42,49 +65,59 @@
       margin: 100px 0 0 0;
     }
   }
-  &__recent {
+
+  &__recent-wrapper {
     position: relative;
     margin: 0 0 50px 0;
+
     @media (max-width: 1024px) {
       margin: 100px 0 0 0;
     }
   }
+
   &__recent-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 30px;
+
     .grid-item {
       @media (max-width: 1440px) {
         &:last-child {
           display: none;
         }
       }
+
       @media (max-width: 1200px) {
         &:nth-child(5) {
           display: none;
         }
       }
+
       @media (max-width: 1024px) {
         &:nth-child(5) {
           display: block;
         }
       }
+
       @media (max-width: 991px) {
         &:nth-child(5) {
           display: none;
         }
       }
+
       @media (max-width: 768px) {
         &:nth-child(4) {
           display: none;
         }
       }
+
       @media (max-width: 650px) {
         &:nth-child(3) {
           display: none;
         }
       }
     }
+
     @media (max-width: 1440px) {
       grid-template-columns: repeat(5, 1fr);
     }
@@ -96,6 +129,7 @@
     @media (max-width: 1024px) {
       grid-template-columns: repeat(5, 1fr);
     }
+
     @media (max-width: 991px) {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -109,43 +143,52 @@
       grid-gap: 15px;
     }
   }
+
   &__playlists-wrapper {
     position: relative;
     margin: 0 0 50px 0;
+
     @media (max-width: 1024px) {
       margin: 100px 0 0 0;
     }
   }
+
   &__playlists-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 30px;
+
     .grid-item {
       @media (max-width: 1440px) {
         &:last-child {
           display: none;
         }
       }
+
       @media (max-width: 1200px) {
         &:nth-child(5) {
           display: none;
         }
       }
+
       @media (max-width: 1024px) {
         &:nth-child(5) {
           display: block;
         }
       }
+
       @media (max-width: 991px) {
         &:nth-child(5) {
           display: none;
         }
       }
+
       @media (max-width: 768px) {
         &:nth-child(4) {
           display: none;
         }
       }
+
       @media (max-width: 650px) {
         &:nth-child(3) {
           display: none;
@@ -163,6 +206,7 @@
     @media (max-width: 1024px) {
       grid-template-columns: repeat(5, 1fr);
     }
+
     @media (max-width: 991px) {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -176,42 +220,50 @@
       grid-gap: 15px;
     }
   }
+
   &__artists-wrapper {
     position: relative;
     @media (max-width: 1024px) {
       margin: 100px 0 0 0;
     }
   }
+
   &__artists-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 30px;
+
     .grid-item {
       @media (max-width: 1440px) {
         &:last-child {
           display: none;
         }
       }
+
       @media (max-width: 1200px) {
         &:nth-child(5) {
           display: none;
         }
       }
+
       @media (max-width: 1024px) {
         &:nth-child(5) {
           display: block;
         }
       }
+
       @media (max-width: 991px) {
         &:nth-child(5) {
           display: none;
         }
       }
+
       @media (max-width: 768px) {
         &:nth-child(4) {
           display: none;
         }
       }
+
       @media (max-width: 650px) {
         &:nth-child(3) {
           display: none;
@@ -229,6 +281,7 @@
     @media (max-width: 1024px) {
       grid-template-columns: repeat(5, 1fr);
     }
+
     @media (max-width: 991px) {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -242,12 +295,21 @@
       grid-gap: 15px;
     }
   }
+
   .show-more__button {
     @media (max-width: 1024px) {
       position: absolute;
       bottom: -60px;
       left: 50%;
       transform: translate(-50%, 0);
+    }
+  }
+
+  &__track-title {
+    flex: 0 1 70%;
+    margin: 0 15px 0 0;
+    @media (max-width: 768px) {
+      flex: 0 1 78%;
     }
   }
 }

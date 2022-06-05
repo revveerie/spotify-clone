@@ -28,7 +28,6 @@ const Categories = () => {
       },
     })
       .then((categoryResponse) => {
-        console.log(categoryResponse.data.categories);
         setCategory(categoryResponse.data.categories);
       })
 

@@ -31,7 +31,6 @@ const Featured = () => {
       },
     })
       .then((releasesResponse) => {
-        console.log(releasesResponse.data.playlists);
         setReleases(releasesResponse.data.playlists);
       })
 

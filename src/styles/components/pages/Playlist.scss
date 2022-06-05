@@ -60,6 +60,7 @@
   &__track-title {
     flex: 0 1 70%;
     margin: 0 15px 0 0;
+    
     @media (max-width: 768px) {
       flex: 0 1 78%;
     }
@@ -70,6 +71,7 @@
     justify-content: flex-end;
     flex: 0 1 5%;
     padding: 0 10px 0 0;
+
     @media (max-width: 768px) {
       display: none;
     }

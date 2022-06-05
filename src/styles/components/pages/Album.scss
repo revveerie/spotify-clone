@@ -1,4 +1,8 @@
 .basic-page {
+  &__row {
+    display: flex;
+    margin: 5px 0 0 0;
+  }
   &__top {
     position: absolute;
     top: 0;
@@ -80,6 +84,20 @@
   &__track-number {
     flex: 0 1 5%;
     margin: 0 15px 0 0;
+
+    @media (max-width: 768px) {
+      flex: 0 1 10%;
+    }
+  }
+  
+  &__track-image {
+    flex: 0 1 5%;
+    margin: 0 15px 0 0;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
 
     @media (max-width: 768px) {
       flex: 0 1 10%;
@@ -196,6 +214,48 @@
     position: relative;
     height: 12px;
     width: 12px;
+  }
+
+  &__track-title-artist {
+    font-family: $basic-font;
+    font-weight: 400;
+    color: $dark-grey;
+    font-size: 10px;
+    
+    &:hover {
+      color: $light-grey;
+    }
+  }
+
+  &__track-title-album {
+    position: relative;
+    padding: 0 7px;
+    margin: 0 5px;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    display: block; 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      top: 5px;
+      left: 0;
+      height: 2px;
+      width: 2px;
+      background: $dark-grey;
+      border-radius: 50%;
+    }
+
+    @media(max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -391,4 +451,5 @@
     position: relative;
     margin: 0 10px 0 0;
   }
+  
 }
