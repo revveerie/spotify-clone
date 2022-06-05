@@ -144,6 +144,7 @@ body {
 @import "./components/pages/Profile.scss";
 @import "./components/pages/Categories.scss";
 @import "./components/pages/Browse.scss";
+@import "./components/pages/ArtistAlbums.scss";
  
 // menu
 @import "./components/menu/Sidebar.scss";
@@ -158,6 +159,7 @@ body {
 @import "./components/cards/BasicCard.scss";
 @import "./components/cards/ArtistCard.scss";
 @import "./components/cards/PlaylistCard.scss";
+@import "./components/cards/CategoryCard.scss";
 
 // others
 @import "./components/Icon.scss";

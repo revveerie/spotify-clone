@@ -1,0 +1,20 @@
+.artist-albums {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 30px 0;
+      }
+      &__title {
+        cursor: default;
+      }
+    
+      &__title-text-top {
+        font-family: $basic-font;
+        font-size: 14px;
+        font-weight: 400;
+        color: $light-grey;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+}

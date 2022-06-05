@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Explore from "./pages/Explore.jsx";
 import Browse from "./pages/Browse.jsx";
-import MyMusic from "./pages/MyMusic.jsx";
 import Profile from "./pages/Profile.jsx";
 import Artists from "./pages/Artists.jsx";
 import Albums from "./pages/Albums.jsx";
@@ -178,7 +177,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Explore dropdown={dropdown} />} />
             <Route path="/browse" element={<Browse dropdown={dropdown} />} />
-            <Route path="/my-music" element={<MyMusic />} />
             <Route path="/profile" element={<Profile dropdown={dropdown} />} />
             <Route path="/artists" element={<Artists dropdown={dropdown} />} />
             <Route path="/albums" element={<Albums dropdown={dropdown} />} />

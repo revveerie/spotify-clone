@@ -4,6 +4,8 @@ import axios from "axios";
 
 import ArtistAlbumCard from "../cards/ArtistAlbumCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+
 const ArtistAlbums = ({ dropdown }) => {
   const { id } = useParams();
   const [artistAlbums, setArtistAlbums] = useState("");
@@ -36,7 +38,6 @@ const ArtistAlbums = ({ dropdown }) => {
       },
     })
       .then((albumsResponse) => {
-        console.log(albumsResponse.data.items);
         setArtistAlbums(albumsResponse.data.items);
       })
 
@@ -57,19 +58,12 @@ const ArtistAlbums = ({ dropdown }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
   return (
     <>
       <div className={dropdown ? "artist-albums page hidden" : "artist-albums page"} id="top">
-        <div className="artist-page__header">
-          <div className="artist-page__title">
-            <p className="artist-page__title-text-top">
+        <div className="artist-albums__header">
+          <div className="artist-albums__title">
+            <p className="artist-albums__title-text-top">
               {artistAlbums.length != 0 ? "Albums" : "Singles"} by {artist.name}
             </p>
           </div>

@@ -3,6 +3,8 @@ import axios from "axios";
 
 import BasicCard from "../cards/BasicCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+
 const NewReleases = ({ dropdown }) => {
   const [releases, setReleases] = useState("");
 
@@ -26,14 +28,6 @@ const NewReleases = ({ dropdown }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
   return (
     <>
       <div className={dropdown ? "new-releases page hidden" : "new-releases page"}>
@@ -52,7 +46,7 @@ const NewReleases = ({ dropdown }) => {
                     type={item.album_type}
                     pathArtist={`/artist/${getItem(item.artists, "id")}`}
                     key={index}
-                    id = {item.id}
+                    id={item.id}
                   />
                 </div>
               ))

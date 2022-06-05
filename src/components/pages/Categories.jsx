@@ -3,8 +3,9 @@ import axios from "axios";
 
 import CategoryCard from "../cards/CategoryCard.jsx";
 
-const Categories = ({ dropdown }) => {
+import getItem from "../../helpers/getItem.js";
 
+const Categories = ({ dropdown }) => {
   const [category, setCategory] = useState("");
 
   useEffect(() => {
@@ -25,14 +26,6 @@ const Categories = ({ dropdown }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
   return (
     <>
       <div className={dropdown ? "categories-page page hidden" : "categories-page page"}>
@@ -47,7 +40,7 @@ const Categories = ({ dropdown }) => {
                   image={getItem(item.icons, "url")}
                   name={item.name}
                   index={index}
-                  id = {item.id}
+                  id={item.id}
                 />
               ))
             : null}

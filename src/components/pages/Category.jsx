@@ -4,6 +4,8 @@ import axios from "axios";
 
 import PlaylistCard from "../cards/PlaylistCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+
 const Category = ({ dropdown }) => {
   const [category, setCategory] = useState("");
   const { id } = useParams();
@@ -24,14 +26,6 @@ const Category = ({ dropdown }) => {
 
       .catch((error) => console.log(error));
   }, []);
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
 
   return (
     <>
