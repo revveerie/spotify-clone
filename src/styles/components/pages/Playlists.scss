@@ -15,6 +15,7 @@
     @media (max-width: 1024px) {
       grid-template-columns: repeat(5, 1fr);
     }
+
     @media (max-width: 991px) {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -64,6 +65,7 @@
     &:hover {
       &:after {
         display: block;
+        
         @media (max-width: 480px) {
           display: none;
         }
@@ -106,9 +108,6 @@
     opacity: 0.7;
   }
 
-  &__last-saved {
-  }
-
   &__last-saved-bg {
     position: absolute;
     top: 0;
@@ -116,6 +115,7 @@
     height: 100%;
     width: 100%;
     z-index: 0;
+
     img {
       width: 100%;
       top: 50%;
@@ -130,6 +130,7 @@
     z-index: 1234;
     position: relative;
     display: flex;
+
     &:not(:last-child) {
       margin: 0 0 2px 0;
     }
@@ -175,6 +176,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 18px;
+
     &::before {
       content: "";
       position: absolute;

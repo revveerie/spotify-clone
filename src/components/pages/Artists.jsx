@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import ArtistCard from "../cards/ArtistCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+
 import NoFollow from "../../assets/icons/avatar-dg.png";
 
 const Artists = ({ dropdown }) => {
@@ -23,19 +25,12 @@ const Artists = ({ dropdown }) => {
       },
     })
       .then((artistsResponse) => {
+        console.log(artistsResponse.data.artists);
         setArtists(artistsResponse.data.artists);
       })
 
       .catch((error) => console.log(error));
   }, []);
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
 
   return (
     <>
@@ -56,7 +51,7 @@ const Artists = ({ dropdown }) => {
             </div>
           </div>
         ) : (
-          <div className="albums__wrapper">
+          <div className="artists__wrapper">
             {artists?.items
               ? artists.items.map((item, index) => (
                   <div className="grid-item" key={index}>

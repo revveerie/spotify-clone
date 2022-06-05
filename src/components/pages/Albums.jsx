@@ -4,37 +4,56 @@ import { Link } from "react-router-dom";
 
 import AlbumCard from "../cards/AlbumCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+
 import NoFollow from "../../assets/icons/music-album-dg.png";
 
 const Albums = ({ dropdown }) => {
   const [albums, setAlbums] = useState("");
+  const [albumsInfo, setAlbumsInfo] = useState("");
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [fetch, setFetch] = useState(true);
 
   const ALBUMS_ENDPOINT = "https://api.spotify.com/v1/me/albums";
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    if (fetch) {
+      let token = localStorage.getItem("token");
 
-    axios(ALBUMS_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((albumsResponse) => {
-        console.log(albumsResponse.data);
-        setAlbums(albumsResponse.data);
+      axios(`https://api.spotify.com/v1/me/albums?limit=50&offset=${currentOffset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((albumsResponse) => {
+          setAlbumsInfo(albumsResponse.data);
+          setAlbums([...albums, ...albumsResponse.data.items]);
+          setCurrentOffset((prevState) => prevState + 50);
+        })
+        .finally(() => setFetch(false))
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
+    }
+  }, [fetch]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
   }, []);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
+  const scrollHandler = (e) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetch(true);
     }
   };
 
@@ -49,19 +68,17 @@ const Albums = ({ dropdown }) => {
             <div className="no-follow__image">
               <img src={NoFollow} />
             </div>
-            <div className="no-follow__text">
-              Follow your first album
-            </div>
+            <div className="no-follow__text">Follow your first album</div>
             <div className="show-more__button">
-              <Link to='/' className="show-more__button-link">
-                  Explore
+              <Link to="/" className="show-more__button-link">
+                Explore
               </Link>
             </div>
           </div>
         ) : (
           <div className="albums__wrapper">
-            {albums?.items
-              ? albums.items.map((item, index) => (
+            {albums
+              ? albums.map((item, index) => (
                   <div className="grid-item" key={index}>
                     <AlbumCard
                       index={index}

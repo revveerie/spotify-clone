@@ -45,7 +45,7 @@ body {
   }
 
   &__header-text {
-    font-family: "Orkney", sans-serf;
+    font-family: $basic-font;
     font-size: 14px;
     font-weight: 400;
     color: $light-grey;
@@ -134,6 +134,7 @@ body {
 @import "./components/pages/Login.scss";
 @import "./components/pages/Explore.scss";
 @import "./components/pages/NewReleases.scss";
+@import "./components/pages/Artists.scss";
 @import "./components/pages/Albums.scss";
 @import "./components/pages/Playlists.scss";
 @import "./components/pages/Album.scss";

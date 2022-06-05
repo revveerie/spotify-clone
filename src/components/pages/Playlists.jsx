@@ -4,31 +4,60 @@ import { Link } from "react-router-dom";
 
 import PlaylistCard from "../cards/PlaylistCard.jsx";
 
+import getItem from "../../helpers/getItem.js";
+
 const Playlists = ({ dropdown }) => {
   const [playlists, setPlaylists] = useState("");
   const [saved, setSaved] = useState("");
+  const [playlistsInfo, setPlaylistsInfo] = useState("");
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [fetch, setFetch] = useState(true);
 
-  let savedBackground = true;
-
-  const PLAYLISTS_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
   const SAVED_SONGS_ENDPOINT = "https://api.spotify.com/v1/me/tracks?limit=5";
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    if (fetch) {
+      let token = localStorage.getItem("token");
 
-    axios(PLAYLISTS_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((playlistsResponse) => {
-        setPlaylists(playlistsResponse.data);
+      axios(`https://api.spotify.com/v1/me/playlists?limit=50&offset=${currentOffset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
       })
+        .then((playlistsResponse) => {
+          setPlaylistsInfo(playlistsResponse.data);
+          setPlaylists([...playlists, ...playlistsResponse.data.items]);
+          setCurrentOffset((prevState) => prevState + 50);
+        })
+        .finally(() => setFetch(false))
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
+    }
+  }, [fetch]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  const scrollHandler = (e) => {
+    if (
+      e.target.documentElement.scrollHeight -
+        (e.target.documentElement.scrollTop + window.innerHeight) <
+      100
+    ) {
+      setFetch(true);
+    }
+  };
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
 
     axios(SAVED_SONGS_ENDPOINT, {
       method: "GET",
@@ -45,14 +74,6 @@ const Playlists = ({ dropdown }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
   return (
     <>
       <div className={dropdown ? "playlists page hidden" : "playlists page"}>
@@ -68,7 +89,7 @@ const Playlists = ({ dropdown }) => {
                       <img src={getItem(image.track.album.images, "url")} />
                     </div>
                   ) : (
-                    (savedBackground = false)
+                    null
                   )
                 )
               : null}
@@ -93,8 +114,8 @@ const Playlists = ({ dropdown }) => {
                 : null}
             </div>
           </Link>
-          {playlists?.items
-            ? playlists.items.map((item, index) => (
+          {playlists
+            ? playlists.map((item, index) => (
                 <div className="grid-item" key={index}>
                   <PlaylistCard
                     index={index}

@@ -379,7 +379,7 @@ const Browse = ({ dropdown }) => {
                   <div className="show-more__button-link">Go back</div>
                 </div>
               </div>
-              <div className="albums__wrapper">
+              <div className="artists__wrapper">
                 {browseArtist?.items
                   ? browseArtist.items.map((item, index) => (
                       <div className="grid-item" key={index}>

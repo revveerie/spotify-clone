@@ -5,6 +5,10 @@ import axios from "axios";
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
 
+import getItem from "../../helpers/getItem.js";
+import getInfo from "../../helpers/getInfo.js";
+import getTimeMinSec from "../../helpers/getTimeMinSec.js";
+
 import Shuffle from "../../assets/icons/shuffle-lg.png";
 import ShuffleHover from "../../assets/icons/shuffle-gr.png";
 import MainImage from "../../assets/images/saved.png";
@@ -65,33 +69,8 @@ const Songs = ({ dropdown }) => {
     }
   };
 
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
-  };
-
-  const getInfo = (item, keyword) => {
-    for (let key in item) {
-      if (key == keyword) return item[key];
-    }
-  };
-
   const handleClick = (e) => {
     setCurrent(e);
-  };
-
-  const getTimeMinSec = (time) => {
-    let min = time / 1000 / 60;
-    let r = min % 1;
-    let sec = Math.floor(r * 60);
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    min = Math.floor(min);
-    return `${min}:${sec}`;
   };
 
   const handleClickSaved = (e, id) => {
@@ -194,47 +173,53 @@ const Songs = ({ dropdown }) => {
               {saved
                 ? saved.map((item, index) => (
                     <div
-                      className={
-                        current === item
-                          ? "basic-page__track playlist__track active"
-                          : "basic-page__track playlist__track"
-                      }
+                      className={current === item ? "basic-page__track active" : "basic-page__track"}
                       key={index}
-                      onMouseLeave = {() => handleOutSaved()}
+                      onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.track.id)}
                     >
-                      <div className="basic-page__track-number playlist__track-number">
+                      <div className="basic-page__track-number">
                         {current === item ? (
                           <AudioWave />
                         ) : (
                           <p className="basic-page__track-number-text">{index + 1}</p>
                         )}
                       </div>
-                      <div className="basic-page__track-image playlist__track-image">
+                      <div className="basic-page__track-image">
                         {getItem(item.track.album.images, "url") ? (
                           <img src={getItem(item.track.album.images, "url")} alt="" />
                         ) : (
                           <img src={NoAlbum} alt="" />
                         )}
                       </div>
-                      <div className="basic-page__track-title playlist__track-title" onClick={() => handleClick(item)}>
+                      <div
+                        className="basic-page__track-title playlist__track-title"
+                        onClick={() => handleClick(item)}
+                      >
                         <p className="basic-page__track-title-text">{item.track.name}</p>
-                        <div className="playlist__row">
+                        <div className="basic-page__row">
                           <Link
-                            className="playlist__track-title-artist"
+                            className="basic-page__track-title-artist"
                             to={`/artist/${getItem(item.track.artists, "id")}`}
                           >
                             {getItem(item.track.artists, "name")}
                           </Link>
                           <Link
-                            className="playlist__track-title-artist playlist__track-title-album"
+                            className="basic-page__track-title-artist basic-page__track-title-album"
                             to={`/album/${getInfo(item.track.album, "id")}`}
                           >
                             {getInfo(item.track.album, "name")}
                           </Link>
                         </div>
                       </div>
-                      <div className="basic-page__track-saved" onClick={() => isSaved ? onRemoveTrack(item, item.track.id) : onSaveTrack(item, item.track.id)}>
+                      <div
+                        className="basic-page__track-saved"
+                        onClick={() =>
+                          isSaved
+                            ? onRemoveTrack(item, item.track.id)
+                            : onSaveTrack(item, item.track.id)
+                        }
+                      >
                         {currentSaved === item ? (
                           isSaved ? (
                             <>
@@ -257,7 +242,7 @@ const Songs = ({ dropdown }) => {
                           <></>
                         )}
                       </div>
-                      <div className="basic-page__track-duration playlist__track-duration">
+                      <div className="basic-page__track-duration">
                         <p className="basic-page__track-duration-text">
                           {getTimeMinSec(Number(item.track.duration_ms))}
                         </p>
