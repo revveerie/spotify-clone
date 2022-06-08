@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
+import Player from "../Player.jsx";
 
 import getItem from "../../helpers/getItem.js";
 import getInfo from "../../helpers/getInfo.js";
@@ -27,6 +28,11 @@ const Songs = ({ dropdown }) => {
   const [currentSaved, setCurrentSaved] = useState(null);
   const [saveTrack, setSaveTrack] = useState(false);
   const [removeTrack, setRemoveTrack] = useState(false);
+  const [playingTrack, setPlayingTrack] = useState();
+
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
 
   useEffect(() => {
     if (fetch) {
@@ -41,6 +47,7 @@ const Songs = ({ dropdown }) => {
         },
       })
         .then((savedResponse) => {
+          console.log(savedResponse.data);
           setSavedInfo(savedResponse.data);
           setSaved([...saved, ...savedResponse.data.items]);
           setCurrentOffset((prevState) => prevState + 50);
@@ -169,6 +176,7 @@ const Songs = ({ dropdown }) => {
                 </div>
               </div>
             </div>
+            <Player trackUri={playingTrack?.uri} />
             <div className="basic-page__tracks">
               {saved
                 ? saved.map((item, index) => (
@@ -177,6 +185,7 @@ const Songs = ({ dropdown }) => {
                       key={index}
                       onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.track.id)}
+                      onClick={() => chooseTrack(item.track)}
                     >
                       <div className="basic-page__track-number">
                         {current === item ? (

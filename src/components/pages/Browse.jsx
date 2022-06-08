@@ -8,11 +8,15 @@ import AlbumCard from "../cards/AlbumCard.jsx";
 import PlaylistCard from "../cards/PlaylistCard.jsx";
 import AudioWave from "../AudioWave.jsx";
 
+import getItem from "../../helpers/getItem.js";
+import getInfo from "../../helpers/getInfo.js";
+
 import Cross from "../../assets/icons/cancel.png";
 import CrossActive from "../../assets/icons/cancel-gr.png";
 import NoFollow from "../../assets/icons/avatar-dg.png";
 import TickNotSaved from "../../assets/icons/tick-lg.png";
 import TickSaved from "../../assets/icons/tick-gr.png";
+import NoPhoto from "../../assets/icons/avatar.png";
 
 const Browse = ({ dropdown }) => {
   const [browseArtist, setBrowseArtist] = useState("");
@@ -33,9 +37,7 @@ const Browse = ({ dropdown }) => {
 
   const SPACE_DELIMITER = "%20";
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   const getInputValue = (event) => {
     let token = localStorage.getItem("token");
@@ -77,19 +79,6 @@ const Browse = ({ dropdown }) => {
     setAllAlbums(false);
     setAllTracks(false);
     setAllPlaylists(false);
-  };
-  const getInfo = (item, keyword) => {
-    for (let key in item) {
-      if (key == keyword) return item[key];
-    }
-  };
-
-  const getItem = (item, keyword) => {
-    for (let key in item) {
-      for (let innerKey in item[key]) {
-        return item[key][keyword];
-      }
-    }
   };
 
   function topFunction() {
@@ -232,19 +221,22 @@ const Browse = ({ dropdown }) => {
                         to={`/artist/${item.id}`}
                         onClick={topFunction}
                       >
-                        <div
-                          className={
-                            index == 0
-                              ? "browse__artist-image browse__artist-image_main"
-                              : "browse__artist-image"
-                          }
-                        >
-                          {getItem(item.images, "url") ? (
+                        {getItem(item.images, "url") ? (
+                          <div
+                            className={
+                              index == 0
+                                ? "browse__artist-image browse__artist-image_main"
+                                : "browse__artist-image"
+                            }
+                          >
                             <img src={getItem(item.images, "url")} alt="" />
-                          ) : (
-                            <img src={NoFollow} alt="" />
-                          )}
-                        </div>
+                          </div>
+                        ) : (
+                          <div className="artist__no-photo">
+                            <img src={NoPhoto} className="artist__no-photo-image" />
+                          </div>
+                        )}
+
                         <div className="browse__artist-name">
                           <p className="browse__artist-name-text">{item.name}</p>
                         </div>

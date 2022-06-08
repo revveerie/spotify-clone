@@ -3,14 +3,17 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 70px;
+
     @media(max-width: 1440px) {
       gap: 30px;
     }
+
     @media(max-width: 1280px) {
       grid-template-columns: 1fr 1fr;
       gap: 100px;
       row-gap: 90px;
     }
+
     @media(max-width: 650px) {
       grid-template-columns: 1fr;
       gap: 30px;
@@ -19,6 +22,7 @@
   &__wrapper {
     display: flex;
     margin: 40px 0 0 0;
+
     @media(max-width: 768px) {
         margin: 0;
     }
@@ -32,6 +36,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
     &:hover {
       .icon__image {
         opacity: 0;
@@ -45,6 +50,7 @@
         z-index: 2;
       }
     }
+
     @media(max-width: 768px) {
         width: 30px;
         height: 30px;
@@ -54,6 +60,7 @@
     position: relative;
     display: inline-block;
     height: 15px;
+
     @media(max-width: 768px) {
         height: 10px;
     }
@@ -62,6 +69,7 @@
     height: 100%;
     width: 70%;
     margin: 0 0 0 30px;
+
     @media (max-width: 1024px) {
       width: 80%;
       margin: 0 0 0 20px;
@@ -78,21 +86,26 @@
       font-family: $basic-font;
       font-weight: 200;
       letter-spacing: 2px;
+
       @media (max-width: 768px) {
         font-size: 20px;
         height: 30px;
       }
     }
   }
+
   &__result {
     margin: 30px 0 0 0;
   }
+
   &__all-result {
     margin: 30px 0 0 0;
   }
+
   &__artist-item {
     display: flex;
     align-items: center;
+
     &:not(:last-child) {
       margin: 0 0 20px 0;
     }
@@ -109,11 +122,13 @@
     overflow: hidden;
     border-radius: 50%;
     display: inline-block;
+
     img {
       height: 60px;
       width: 60px;
       object-fit: cover;
     }
+
     &_main {
       img {
         width: 100px;
@@ -127,56 +142,85 @@
     font-family: $basic-font;
     color: $light-grey;
   }
+
   &__albums {
     @media(max-width: 650px) {
       height: 360px;
     }
   }
+
   &__albums-wrapper {
     position: relative;
   }
+
   &__album-item {
 
   }
+
   &__album-image {
     &_first {
       position: absolute;
       left: 50%;
       transform: translate(-55%, 0);
+
       img {
         height: 150px;
         width: 150px;
       }
     }
+
     &_second {
       position: absolute;
       top: 40px;
       left: 50%;
       transform: translate(-55%, 0);
+
       img {
         height: 170px;
         width: 170px;
       }
     }
+
     &_third {
       position: absolute;
       top: 80px;
       left: 50%;
       transform: translate(-55%, 0);
+
       img {
         height: 190px;
         width: 190px;
       }
     }
   }
+
   &__album-name {
     position: absolute;
     top: 280px;
   }
+
   &__release-date {
     font-family: $basic-font;
     font-size: 12px;
     color: $dark-grey;
     margin: 8px 0 0 0;
+  }
+}
+
+.artist {
+  &__no-photo {
+    height: 60px;
+    width: 60px;
+    border: 1px solid #6e6e6e;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px 0 0;
+  }
+  
+  &__no-photo-image {
+    height: 30px!important;
+    width: 30px!important;
   }
 }
