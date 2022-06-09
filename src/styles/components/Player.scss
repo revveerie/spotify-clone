@@ -1,0 +1,56 @@
+.PlayerRSWP {
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  min-height: 52px;
+  font-family: $basic-font;
+}
+
+._DevicesRSWP.__1gh13jt {
+  display: none;
+}
+
+.__nnvdcq.__1nr9vyv {
+  p {
+    &:first-child {
+      font-size: 12px;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+    &:last-child {
+      font-size: 10px;
+      margin: 3px 0 0 0;
+      pointer-events: none;
+    }
+  }
+}
+
+.__73jrio button.rswp__toggle {
+    border: 1px solid $light-grey;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    svg {
+        height: 15px;
+        position: relative;
+        left: 2px;
+        &:hover {
+            color: $main-green;
+        }
+    }
+}
+
+.__73jrio button.rswp__toggle[aria-label="Pause"] {
+    svg {
+        left: 0;
+    }
+}
+
+._VolumeRSWP {
+    svg {
+        height: 20px;
+        &:hover {
+            color: $main-green;
+        }
+    }
+}

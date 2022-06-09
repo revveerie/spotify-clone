@@ -37,7 +37,7 @@ body {
 
   &.hidden {
     position: relative;
-    z-index: -1;
+    z-index: -2;
   }
 
   &__header {
@@ -166,3 +166,4 @@ body {
 @import "./components/ProfileIcon.scss";
 @import "./components/ShowMore.scss";
 @import "./components/AudioWave.scss";
+@import "./components/Player.scss";

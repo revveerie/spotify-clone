@@ -144,6 +144,9 @@ const Songs = ({ dropdown }) => {
 
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+      <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "songs page hidden" : "songs page"}>
         <div className="basic-page__top songs__top">
           <img src={SavedTop} />
@@ -176,7 +179,6 @@ const Songs = ({ dropdown }) => {
                 </div>
               </div>
             </div>
-            <Player trackUri={playingTrack?.uri} />
             <div className="basic-page__tracks">
               {saved
                 ? saved.map((item, index) => (
