@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
+import Player from "../Player.jsx";
 
 import RecentTop from "../../assets/images/recently-played-top.png";
 import RecentImage from "../../assets/images/recently-played.png";
@@ -19,6 +20,8 @@ const Recent = ({ dropdown }) => {
   const [recent, setRecent] = useState("");
   const [moreTopArtists, setMoreTopArtists] = useState(false);
   const [moreTopTracks, setMoreTopTracks] = useState(false);
+  const [playingTrack, setPlayingTrack] = useState();
+
   useEffect(() => {
     let token = localStorage.getItem("token");
 
@@ -134,8 +137,16 @@ const Recent = ({ dropdown }) => {
   const onMoreTopTracks = () => {
     moreTopTracks == false ? setMoreTopTracks(true) : setMoreTopTracks(false);
   };
+
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
+
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+        <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "songs page hidden" : "songs page"}>
         <div className="basic-page__top songs__top">
           <img src={RecentTop} />
@@ -167,6 +178,7 @@ const Recent = ({ dropdown }) => {
                     key={index}
                     onMouseLeave={() => handleOutSaved()}
                     onMouseEnter={() => handleClickSaved(item, item.track.id)}
+                    onClick={() => chooseTrack(item.track)}
                   >
                     <div className="basic-page__track-number playlist__track-number">
                       {current === item ? (

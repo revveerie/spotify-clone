@@ -7,6 +7,7 @@ import ArtistCard from "../cards/ArtistCard.jsx";
 import AlbumCard from "../cards/AlbumCard.jsx";
 import PlaylistCard from "../cards/PlaylistCard.jsx";
 import AudioWave from "../AudioWave.jsx";
+import Player from "../Player.jsx";
 
 import getItem from "../../helpers/getItem.js";
 import getInfo from "../../helpers/getInfo.js";
@@ -34,6 +35,7 @@ const Browse = ({ dropdown }) => {
   const [currentSaved, setCurrentSaved] = useState(null);
   const [saveTrack, setSaveTrack] = useState(false);
   const [removeTrack, setRemoveTrack] = useState(false);
+  const [playingTrack, setPlayingTrack] = useState();
 
   const SPACE_DELIMITER = "%20";
 
@@ -186,8 +188,15 @@ const Browse = ({ dropdown }) => {
     return `${min}:${sec}`;
   };
 
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
+
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+        <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "browse page hidden" : "browse page"}>
         <div className="browse__wrapper">
           <div className="browse__clear-wrapper" onClick={resetInput}>
@@ -297,7 +306,7 @@ const Browse = ({ dropdown }) => {
               {browseTrack?.items
                 ? browseTrack.items.map((item, index) =>
                     index < 3 ? (
-                      <div className="basic-page__track artist-page__track" key={index}>
+                      <div className="basic-page__track artist-page__track" key={index} onClick={() => chooseTrack(item)}>
                         <div className="basic-page__track-image artist-page__track-image">
                           {getItem(item.album.images, "url") ? (
                             <img src={getItem(item.album.images, "url")} alt="" />
@@ -441,6 +450,7 @@ const Browse = ({ dropdown }) => {
                       key={index}
                       onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
+                      onClick={() => chooseTrack(item)}
                     >
                       <div className="basic-page__track-number playlist__track-number">
                         {current === item ? (

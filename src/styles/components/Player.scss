@@ -2,8 +2,11 @@
   position: fixed;
   bottom: 0;
   z-index: 100;
-  min-height: 52px;
+  min-height: 52px!important;
   font-family: $basic-font;
+  @media(max-width: 1024px) {
+    bottom: 55px;
+  }
 }
 
 ._DevicesRSWP.__1gh13jt {
@@ -17,6 +20,7 @@
       letter-spacing: 2px;
       pointer-events: none;
     }
+    
     &:last-child {
       font-size: 10px;
       margin: 3px 0 0 0;
@@ -26,31 +30,103 @@
 }
 
 .__73jrio button.rswp__toggle {
-    border: 1px solid $light-grey;
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    svg {
-        height: 15px;
-        position: relative;
-        left: 2px;
-        &:hover {
-            color: $main-green;
-        }
-    }
+  border: 1px solid $light-grey;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background: url("../assets/icons/play-button-dg.png");
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-position: 55% 50%;
+
+  @media(max-width: 1024px) {
+    border: none;
+  }
+
+  &:hover {
+    background: url("../assets/icons/play-button-gr.png");
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 55% 50%;
+  }
+
+  svg {
+    display: none;
+  }
 }
 
 .__73jrio button.rswp__toggle[aria-label="Pause"] {
-    svg {
-        left: 0;
+    background: url("../assets/icons/pause-dg.png");
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    &:hover {
+      background: url("../assets/icons/pause-gr.png");
+      background-size: 20px;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
     }
 }
 
 ._VolumeRSWP {
-    svg {
-        height: 20px;
-        &:hover {
-            color: $main-green;
+  svg {
+    height: 20px;
+
+    &:hover {
+      color: $main-green;
+    }
+  }
+}
+
+.__193gk71 > div {
+    transform: rotate(90deg);
+    bottom: -110%!important;
+    right: 60px!important
+}
+
+._VolumeRSWP.__193gk71 {
+    div {
+        &:first-child {
+            box-shadow: none;
         }
     }
+}
+
+._SliderRSWP.__181lube {
+  @media(max-width: 1024px) {
+
+  }
+}
+
+._SliderRSWP {
+  @media(max-width: 1024px) {
+    position: absolute!important;
+    width: 100%;
+    bottom: 48px;
+  }
+}
+
+._ControlsRSWP.__73jrio {
+  @media(max-width: 1024px) {
+    justify-content: flex-end;
+  }
+  button {
+    @media(max-width: 1024px) {
+      position: relative;
+      right: -50px;
+    }
+  }
+}
+
+.rswp__active._InfoRSWP.__mvqn38 {
+  @media(max-width: 1024px) {
+    border: none;
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+._ContentRSWP.__1xc0f9k {
+  height: 48px!important;
 }

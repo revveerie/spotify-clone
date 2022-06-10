@@ -7,6 +7,7 @@ import PlaylistCard from "../cards/PlaylistCard.jsx";
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
 import ShowMore from "../ShowMore.jsx";
+import Player from "../Player.jsx";
 
 import getItem from "../../helpers/getItem.js";
 import getTimeMinSec from "../../helpers/getTimeMinSec.js";
@@ -30,6 +31,7 @@ const Profile = ({ dropdown }) => {
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
   const [itemsForShow, setItemsForShow] = useState("");
+  const [playingTrack, setPlayingTrack] = useState();
 
   const TOP_ARTISTS = "https://api.spotify.com/v1/me/top/artists?limit=10";
   const TOP_TRACKS = "https://api.spotify.com/v1/me/top/tracks?limit=10";
@@ -215,8 +217,15 @@ const Profile = ({ dropdown }) => {
     }
   });
 
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
+
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+        <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "profile-page page hidden" : "profile-page page"}>
         <div className="profile-page__top-artists-wrapper">
           <div className="profile-page__header">
@@ -296,6 +305,7 @@ const Profile = ({ dropdown }) => {
                       key={index}
                       onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
+                      onClick={() => chooseTrack(item)}
                     >
                       <div className="basic-page__track-number">
                         {current === item ? (
@@ -381,6 +391,7 @@ const Profile = ({ dropdown }) => {
                       key={index}
                       onMouseLeave={() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
+                      onClick={() => chooseTrack(item)}
                     >
                       <div className="basic-page__track-number">
                         {current === item ? (
@@ -484,6 +495,7 @@ const Profile = ({ dropdown }) => {
                     key={index}
                     onMouseLeave={() => handleOutSaved()}
                     onMouseEnter={() => handleClickSaved(item, item.track.id)}
+                    onClick={() => chooseTrack(item.track)}
                   >
                     <div className="basic-page__track-number">
                       {current === item ? (

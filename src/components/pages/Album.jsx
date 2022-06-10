@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
+import Player from "../Player.jsx";
 
 import getItem from "../../helpers/getItem.js";
 import getTimeMin from "../../helpers/getTimeMin.js";
@@ -30,6 +31,7 @@ const Album = ({ dropdown }) => {
   const [isFollow, setIsFollow] = useState("");
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
+  const [playingTrack, setPlayingTrack] = useState();
 
   const ALBUM_ENDPOINT = `https://api.spotify.com/v1/albums/${id}`;
   useEffect(() => {
@@ -144,6 +146,7 @@ const Album = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+
   const handleClick = (e) => {
     setCurrent(e);
   };
@@ -210,8 +213,15 @@ const Album = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
+
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+        <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "album page hidden" : "album page"}>
         <div className="basic-page__top album__top">
           <img src={getItem(album.images, "url")} />
@@ -294,6 +304,7 @@ const Album = ({ dropdown }) => {
                       key={index}
                       onMouseEnter={() => handleClickSaved(item, item.id)}
                       onMouseLeave={() => handleOutSaved()}
+                      onClick={() => chooseTrack(item)}
                     >
                       <div className="basic-page__track-number album__track-number">
                         {current === item ? (

@@ -1,4 +1,10 @@
 .browse {
+  padding: 25px 25px 64px 25px;
+
+  @media(max-width: 1024px) {
+    padding: 25px 15px 115px 15px;
+  }
+
   &__result {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -151,6 +157,9 @@
 
   &__albums-wrapper {
     position: relative;
+    @media(max-width: 1024px) {
+      padding: 0 0 140px 0;
+    }
   }
 
   &__album-item {
@@ -222,5 +231,21 @@
   &__no-photo-image {
     height: 30px!important;
     width: 30px!important;
+  }
+}
+
+.artists {
+  &__wrapper {
+    @media(max-width: 1024px) {
+      padding: 0 0 20px 0;
+    }
+  }
+}
+
+.playlists {
+  &__wrapper {
+    @media(max-width: 1024px) {
+      padding: 0 0 20px 0;
+    }
   }
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
 import ArtistAlbumCard from "../cards/ArtistAlbumCard.jsx";
+import Player from "../Player.jsx";
 
 import getItem from "../../helpers/getItem.js";
 import getInfo from "../../helpers/getInfo.js";
@@ -34,6 +35,11 @@ const Artist = ({ dropdown }) => {
   const [currentSaved, setCurrentSaved] = useState(null);
   const [artistSingles, setArtistSingles] = useState("");
   const [itemsForShow, setItemsForShow] = useState("");
+  const [playingTrack, setPlayingTrack] = useState();
+
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
 
   let savedBackground = true;
   useEffect(() => {
@@ -263,6 +269,9 @@ const Artist = ({ dropdown }) => {
 
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+        <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "artist-page page hidden" : "artist-page page"}>
         <div className="basic-page__top artist-page__top">
           <img src={getItem(artist.images, "url")} />
@@ -335,6 +344,7 @@ const Artist = ({ dropdown }) => {
                               key={index}
                               onMouseEnter={() => handleClickSaved(item, item.id)}
                               onMouseLeave={() => handleOutSaved()}
+                              onClick={() => chooseTrack(item)}
                             >
                               <div className="basic-page__track-image artist-page__track-image">
                                 {getItem(item.album.images, "url") ? (
@@ -418,6 +428,7 @@ const Artist = ({ dropdown }) => {
                               key={index}
                               onMouseEnter={() => handleClickSaved(item, item.id)}
                               onMouseLeave={() => handleOutSaved()}
+                              onClick={() => chooseTrack(item)}
                             >
                               <div className="basic-page__track-image artist-page__track-image">
                                 {getItem(item.album.images, "url") ? (

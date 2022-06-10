@@ -26,7 +26,7 @@ const ArtistCard = ({ image, artist, type, index, id }) => {
             {image != null ? (
               <img src={image} alt={name} ref={ref} style={mystyle} />
             ) : (
-              <img src={NoArtist} alt={name} />
+              <img src={NoArtist} alt={name} ref={ref} style={mystyle} />
             )}
           </div>
         </Link>

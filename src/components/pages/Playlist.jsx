@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Icon from "../Icon.jsx";
 import AudioWave from "../AudioWave.jsx";
+import Player from "../Player.jsx";
 
 import getItem from "../../helpers/getItem.js";
 import getInfo from "../../helpers/getInfo.js";
@@ -32,6 +33,7 @@ const Playlist = ({ dropdown }) => {
   const [isFollow, setIsFollow] = useState("");
   const [isSaved, setIsSaved] = useState("");
   const [currentSaved, setCurrentSaved] = useState(null);
+  const [playingTrack, setPlayingTrack] = useState();
 
   const PLAYLIST_ENDPOINT = `https://api.spotify.com/v1/playlists/${id}`;
 
@@ -228,8 +230,15 @@ const Playlist = ({ dropdown }) => {
       .catch((error) => console.log(error));
   };
 
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+  }
+
   return (
     <>
+      <div className={dropdown ? "player-hidden" : "player"}>
+        <Player trackUri={playingTrack?.uri} />
+      </div>
       <div className={dropdown ? "playlist page hidden" : "album page"}>
         <div className="basic-page__top">
           {getItem(playlist.images, "url") ? (
@@ -306,6 +315,7 @@ const Playlist = ({ dropdown }) => {
                       key={index}
                       onMouseLeave = {() => handleOutSaved()}
                       onMouseEnter={() => handleClickSaved(item, item.track.id)}
+                      onClick={() => chooseTrack(item.track)}
                     >
                       <div className="basic-page__track-number playlist__track-number">
                         {current === item ? (

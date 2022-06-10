@@ -145,7 +145,7 @@ const Songs = ({ dropdown }) => {
   return (
     <>
       <div className={dropdown ? "player-hidden" : "player"}>
-      <Player trackUri={playingTrack?.uri} />
+        <Player trackUri={playingTrack?.uri} />
       </div>
       <div className={dropdown ? "songs page hidden" : "songs page"}>
         <div className="basic-page__top songs__top">
