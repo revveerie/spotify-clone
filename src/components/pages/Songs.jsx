@@ -10,8 +10,8 @@ import getItem from "../../helpers/getItem.js";
 import getInfo from "../../helpers/getInfo.js";
 import getTimeMinSec from "../../helpers/getTimeMinSec.js";
 
-import Shuffle from "../../assets/icons/shuffle-lg.png";
-import ShuffleHover from "../../assets/icons/shuffle-gr.png";
+import Shuffle from "../../assets/icons/play-button-lg.png";
+import ShuffleHover from "../../assets/icons/play-button-gr.png";
 import MainImage from "../../assets/images/saved.png";
 import SavedTop from "../../assets/images/saved-top.png";
 import NoAlbum from "../../assets/images/no-album-image.jpg";

@@ -10,8 +10,8 @@ import getItem from "../../helpers/getItem.js";
 import getInfo from "../../helpers/getInfo.js";
 import getTimeMinSec from "../../helpers/getTimeMinSec.js";
 
-import Shuffle from "../../assets/icons/shuffle-lg.png";
-import ShuffleHover from "../../assets/icons/shuffle-gr.png";
+import Shuffle from "../../assets/icons/play-button-lg.png";
+import ShuffleHover from "../../assets/icons/play-button-gr.png";
 import Save from "../../assets/icons/tick-gr.png";
 import NoPlaylist from "../../assets/images/no-playlist-image.jpg";
 import NoAlbum from "../../assets/images/no-album-image.jpg";
