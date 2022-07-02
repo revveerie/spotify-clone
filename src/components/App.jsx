@@ -29,7 +29,7 @@ import ExitImgActive from "../assets/icons/exit-gr.png";
 
 const App = () => {
   const CLIENT_ID = "4d09e811e32a40f392771a0e479839d5";
-  const REDIRECT_URI = "http://localhost:8888/";
+  const REDIRECT_URI = "https://revveerie-spotify-clone.netlify.app";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
   const SPACE_DELIMITER = "%20";
